@@ -1,0 +1,650 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: in_ac3 - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP4270.TMP" with contents
+[
+/nologo /G6 /ML /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fp".\Release/IN_AC3.pch" /YX /Fo".\Release/" /Fd".\Release/" /FD /c 
+"C:\Projects\ac3dec\winamp\ac3decode.c"
+"C:\Projects\ac3dec\Bbdbits.cpp"
+"C:\Projects\ac3dec\Bbdmux.cpp"
+"C:\Projects\ac3dec\bit_allocate.c"
+"C:\Projects\ac3dec\bitstream.c"
+"C:\Projects\ac3dec\crc.c"
+"C:\Projects\ac3dec\debug.c"
+"C:\Projects\ac3dec\demuxbuf.cpp"
+"C:\Projects\ac3dec\downmix.c"
+"C:\Projects\ac3dec\exponent.c"
+"C:\Projects\ac3dec\imdct.c"
+"C:\Projects\ac3dec\winamp\In_ac3.c"
+"C:\Projects\ac3dec\mantissa.c"
+"C:\Projects\ac3dec\matlab.c"
+"C:\Projects\ac3dec\my_fread.cpp"
+"C:\Projects\ac3dec\parse.c"
+"C:\Projects\ac3dec\rematrix.c"
+"C:\Projects\ac3dec\ring_buffer.c"
+"C:\Projects\ac3dec\stats.c"
+"C:\Projects\ac3dec\uncouple.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP4270.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP4271.TMP" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib libc.lib /nologo /subsystem:windows /dll /incremental:no /pdb:".\Release/in_ac3.pdb" /machine:I386 /nodefaultlib /out:"D:/Apps/winamp/plugins/in_ac3.dll" /implib:".\Release/in_ac3.lib" 
+.\Release\ac3decode.obj
+.\Release\Bbdbits.obj
+.\Release\Bbdmux.obj
+.\Release\bit_allocate.obj
+.\Release\bitstream.obj
+.\Release\crc.obj
+.\Release\debug.obj
+.\Release\demuxbuf.obj
+.\Release\downmix.obj
+.\Release\exponent.obj
+.\Release\imdct.obj
+.\Release\In_ac3.obj
+.\Release\mantissa.obj
+.\Release\matlab.obj
+.\Release\my_fread.obj
+.\Release\parse.obj
+.\Release\rematrix.obj
+.\Release\ring_buffer.obj
+.\Release\stats.obj
+.\Release\uncouple.obj
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP4271.TMP"
+<h3>Output Window</h3>
+Compiling...
+ac3decode.c
+C:\Projects\ac3dec\winamp\ac3decode.c(35) : warning C4101: 't' : unreferenced local variable
+C:\Projects\ac3dec\winamp\ac3decode.c(269) : warning C4013: 'downmix' undefined; assuming extern returning int
+C:\Projects\ac3dec\winamp\ac3decode.c(296) : warning C4244: 'initializing' : conversion from 'double ' to 'long ', possible loss of data
+C:\Projects\ac3dec\winamp\ac3decode.c(308) : warning C4013: 'demux_ac3' undefined; assuming extern returning int
+C:\Projects\ac3dec\winamp\ac3decode.c(331) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\winamp\ac3decode.c(346) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+Bbdbits.cpp
+C:\Projects\ac3dec\winamp\ac3decode.c(221) : warning C4761: integral size mismatch in argument; conversion supplied
+Bbdmux.cpp
+C:\Projects\ac3dec\Bbdmux.cpp(500) : warning C4244: '=' : conversion from 'unsigned long' to 'unsigned char', possible loss of data
+bit_allocate.c
+bitstream.c
+C:\Projects\ac3dec\bit_allocate.c(308) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(183) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(348) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(366) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(368) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(370) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(371) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(383) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(385) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(482) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(489) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(492) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(482) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(489) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(492) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(482) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(489) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(492) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(482) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(489) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(492) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bit_allocate.c(453) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\bitstream.c(149) : warning C4013: 'reset_autofillhandler' undefined; assuming extern returning int
+crc.c
+debug.c
+demuxbuf.cpp
+downmix.c
+C:\Projects\ac3dec\downmix.c(28) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\downmix.c(79) : warning C4244: '=' : conversion from 'double ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(100) : warning C4101: 'delta' : unreferenced local variable
+C:\Projects\ac3dec\downmix.c(123) : warning C4101: 'delta' : unreferenced local variable
+C:\Projects\ac3dec\downmix.c(154) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(157) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(163) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(168) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(171) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(172) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(177) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(180) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(185) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(188) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(194) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(216) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(217) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(218) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(219) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(220) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(221) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(226) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(227) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(228) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(229) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(230) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(232) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(233) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(256) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(257) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(258) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(259) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(260) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(265) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(266) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(267) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(268) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(270) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(271) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(293) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(294) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(295) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(296) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(301) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(302) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(303) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(305) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(306) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(329) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(330) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(331) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(332) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(333) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(338) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(339) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(340) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(341) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(343) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(344) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(368) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(369) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(370) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(371) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(372) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(377) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(378) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(379) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(380) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(381) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(383) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(384) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(408) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(409) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(410) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(411) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(416) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(417) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(418) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(419) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(421) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(422) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(445) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(446) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(447) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(448) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(453) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(454) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(455) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(456) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(458) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(459) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(482) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(483) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(484) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(489) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(490) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(491) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(493) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(494) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(476) : warning C4101: 'lfe' : unreferenced local variable
+C:\Projects\ac3dec\downmix.c(517) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(518) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(519) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(520) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(525) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(526) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(527) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(528) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(530) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(531) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(554) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(555) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(556) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(561) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(562) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(563) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(565) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(566) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(586) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(587) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(588) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(597) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(598) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(599) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(603) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(604) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(626) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(627) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(651) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(652) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(657) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(658) : warning C4244: '=' : conversion from 'float ' to 'long ', possible loss of data
+C:\Projects\ac3dec\downmix.c(660) : warning C4244: '=' : conversion from 'long ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(647) : warning C4101: 'Acc2' : unreferenced local variable
+C:\Projects\ac3dec\downmix.c(676) : warning C4047: '=' : 'float *' differs in levels of indirection from 'float (*)[512]'
+C:\Projects\ac3dec\downmix.c(680) : warning C4244: '=' : conversion from 'float ' to 'short ', possible loss of data
+C:\Projects\ac3dec\downmix.c(701) : warning C4305: '=' : truncation from 'const double ' to 'float '
+C:\Projects\ac3dec\downmix.c(707) : warning C4305: '=' : truncation from 'const double ' to 'float '
+C:\Projects\ac3dec\downmix.c(735) : warning C4305: '=' : truncation from 'const double ' to 'float '
+C:\Projects\ac3dec\downmix.c(744) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(745) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(749) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(750) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(755) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(761) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(767) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(774) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(780) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(787) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(799) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\downmix.c(803) : warning C4244: '*=' : conversion from 'double ' to 'float ', possible loss of data
+exponent.c
+imdct.c
+C:\Projects\ac3dec\exponent.c(55) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(105) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(106) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(107) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(108) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(109) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(110) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(111) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(112) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(113) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(114) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(115) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(116) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(117) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(118) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(119) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(120) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(121) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(122) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(123) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(124) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(125) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(126) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(127) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(128) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(129) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(130) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(131) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(132) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(133) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(134) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(135) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(135) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(135) : warning C4305: 'initializing' : truncation from 'const double ' to 'const float '
+C:\Projects\ac3dec\imdct.c(173) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\imdct.c(174) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\imdct.c(180) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\imdct.c(181) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\imdct.c(195) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+C:\Projects\ac3dec\imdct.c(196) : warning C4244: '=' : conversion from 'double ' to 'float ', possible loss of data
+In_ac3.c
+C:\Projects\ac3dec\winamp\In_ac3.c(60) : warning C4101: 'c1' : unreferenced local variable
+C:\Projects\ac3dec\winamp\In_ac3.c(60) : warning C4101: 'c2' : unreferenced local variable
+C:\Projects\ac3dec\winamp\In_ac3.c(102) : warning C4013: 'OpenAc3' undefined; assuming extern returning int
+C:\Projects\ac3dec\winamp\In_ac3.c(102) : warning C4047: '=' : 'struct _iobuf *' differs in levels of indirection from 'int '
+C:\Projects\ac3dec\winamp\In_ac3.c(116) : warning C4020: 'GetFileLength' : too many actual parameters
+C:\Projects\ac3dec\winamp\In_ac3.c(127) : warning C4013: 'CloseAc3' undefined; assuming extern returning int
+C:\Projects\ac3dec\winamp\In_ac3.c(211) : warning C4101: 'hFile' : unreferenced local variable
+C:\Projects\ac3dec\winamp\In_ac3.c(241) : warning C4013: 'DecodeAc3' undefined; assuming extern returning int
+mantissa.c
+C:\Projects\ac3dec\mantissa.c(216) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\mantissa.c(235) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\mantissa.c(253) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\mantissa.c(266) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\mantissa.c(283) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\mantissa.c(295) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+matlab.c
+my_fread.cpp
+C:\Projects\ac3dec\my_fread.cpp(66) : warning C4101: 'fSyncFound' : unreferenced local variable
+C:\Projects\ac3dec\my_fread.cpp(64) : warning C4101: 'pulled' : unreferenced local variable
+C:\Projects\ac3dec\my_fread.cpp(65) : warning C4101: 'syncword' : unreferenced local variable
+C:\Projects\ac3dec\my_fread.cpp(64) : warning C4101: 'i' : unreferenced local variable
+parse.c
+C:\Projects\ac3dec\parse.c(57) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(60) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(78) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(81) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(84) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(91) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(95) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(99) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(102) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(105) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(108) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(112) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(116) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(120) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(124) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(128) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(131) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(138) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(141) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(145) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(149) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(153) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(157) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(161) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(164) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(169) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(172) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(175) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(178) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(181) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(184) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(187) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(192) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(195) : warning C4018: '<' : signed/unsigned mismatch
+C:\Projects\ac3dec\parse.c(196) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned char ', possible loss of data
+C:\Projects\ac3dec\parse.c(222) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(228) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(232) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(236) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(243) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(247) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(253) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(257) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(261) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(263) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(264) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(265) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(289) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(313) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(317) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(320) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(321) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(331) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(339) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(345) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(350) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(355) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(361) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(373) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(380) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(384) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(400) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(413) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(436) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(444) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(446) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(447) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(454) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(455) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(456) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(460) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(464) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(465) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(466) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(467) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(468) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(472) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(476) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(480) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(481) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(486) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(487) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(492) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(493) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(500) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(504) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(505) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(510) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(526) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(529) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(533) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(536) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(537) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(538) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(546) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(550) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(551) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(552) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(559) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(564) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(570) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(602) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\parse.c(611) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+rematrix.c
+ring_buffer.c
+stats.c
+C:\Projects\ac3dec\stats.c(41) : warning C4305: 'initializing' : truncation from 'const double ' to 'float '
+C:\Projects\ac3dec\stats.c(41) : warning C4305: 'initializing' : truncation from 'const double ' to 'float '
+C:\Projects\ac3dec\stats.c(44) : warning C4305: 'initializing' : truncation from 'const double ' to 'float '
+uncouple.c
+C:\Projects\ac3dec\uncouple.c(85) : warning C4244: 'function' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\uncouple.c(85) : warning C4244: 'function' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3dec\uncouple.c(85) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3dec\uncouple.c(85) : warning C4761: integral size mismatch in argument; conversion supplied
+Linking...
+   Creating library .\Release/in_ac3.lib and object .\Release/in_ac3.exp
+
+
+
+<h3>Results</h3>
+in_ac3.dll - 0 error(s), 560 warning(s)
+</pre>
+</body>
+</html>

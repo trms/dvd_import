@@ -1,0 +1,70 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ac3dec - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPA0C6.TMP" with contents
+[
+/nologo /G5 /Zp4 /ML /W3 /GR /GX /Z7 /O2 /Op /Ob1 /I "aac" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Release/" /Fp"Release/ac3dec.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Projects\ac3decode_src\decode.c"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPA0C6.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPA0C7.TMP" with contents
+[
+kernel32.lib winmm.lib user32.lib gdi32.lib msacm32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/ac3dec.pdb" /debug /machine:I386 /out:"Release/ac3dec.exe" /libpath:"aac/" 
+.\Release\Bbdbits.obj
+.\Release\Bbdmux.obj
+.\Release\bit_allocate.obj
+.\Release\bitstream.obj
+.\Release\crc.obj
+.\Release\debug.obj
+.\Release\decode.obj
+.\Release\demuxbuf.obj
+.\Release\downmix.obj
+.\Release\exponent.obj
+.\Release\imdct.obj
+.\Release\mantissa.obj
+.\Release\matlab.obj
+.\Release\my_fread.obj
+.\Release\output_aacfile.obj
+.\Release\output_wavefile.obj
+.\Release\output_winwave.obj
+.\Release\parse.obj
+.\Release\rematrix.obj
+.\Release\ring_buffer.obj
+.\Release\stats.obj
+.\Release\uncouple.obj
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPA0C7.TMP"
+<h3>Output Window</h3>
+Compiling...
+decode.c
+C:\Projects\ac3decode_src\decode.c(165) : warning C4101: 'dd' : unreferenced local variable
+C:\Projects\ac3decode_src\decode.c(236) : warning C4101: 'header' : unreferenced local variable
+C:\Projects\ac3decode_src\decode.c(509) : warning C4013: '_kbhit' undefined; assuming extern returning int
+C:\Projects\ac3decode_src\decode.c(511) : warning C4013: '_getch' undefined; assuming extern returning int
+C:\Projects\ac3decode_src\decode.c(656) : warning C4013: 'output_aacfile_open' undefined; assuming extern returning int
+C:\Projects\ac3decode_src\decode.c(736) : warning C4013: 'output_aacfile_write' undefined; assuming extern returning int
+C:\Projects\ac3decode_src\decode.c(751) : warning C4244: 'initializing' : conversion from 'double ' to 'long ', possible loss of data
+C:\Projects\ac3decode_src\decode.c(799) : warning C4244: 'initializing' : conversion from 'double ' to 'long ', possible loss of data
+C:\Projects\ac3decode_src\decode.c(829) : warning C4013: 'output_aacfile_close' undefined; assuming extern returning int
+C:\Projects\ac3decode_src\decode.c(845) : warning C4244: 'function' : conversion from 'double ' to 'long ', possible loss of data
+C:\Projects\ac3decode_src\decode.c(853) : warning C4244: 'function' : conversion from 'double ' to 'long ', possible loss of data
+C:\Projects\ac3decode_src\decode.c(490) : warning C4102: 'restart' : unreferenced label
+C:\Projects\ac3decode_src\decode.c(874) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3decode_src\decode.c(895) : warning C4244: '=' : conversion from 'unsigned long ' to 'unsigned short ', possible loss of data
+C:\Projects\ac3decode_src\decode.c(675) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3decode_src\decode.c(845) : warning C4761: integral size mismatch in argument; conversion supplied
+C:\Projects\ac3decode_src\decode.c(853) : warning C4761: integral size mismatch in argument; conversion supplied
+Linking...
+
+
+
+<h3>Results</h3>
+ac3dec.exe - 0 error(s), 17 warning(s)
+</pre>
+</body>
+</html>

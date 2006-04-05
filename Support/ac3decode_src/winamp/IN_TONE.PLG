@@ -1,0 +1,44 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: in_tone - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP7150.TMP" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib libc.lib /nologo /subsystem:windows /dll /incremental:no /pdb:".\Release/in_ac3.pdb" /machine:I386 /nodefaultlib /out:"C:/Apps/winamp/plugins/in_ac3.dll" /implib:".\Release/in_ac3.lib" 
+.\Release\ac3decode.obj
+.\Release\Bbdbits.obj
+.\Release\Bbdmux.obj
+.\Release\bit_allocate.obj
+.\Release\bitstream.obj
+.\Release\crc.obj
+.\Release\debug.obj
+.\Release\demuxbuf.obj
+.\Release\downmix.obj
+.\Release\exponent.obj
+.\Release\imdct.obj
+.\Release\In_ac3.obj
+.\Release\mantissa.obj
+.\Release\matlab.obj
+.\Release\my_fread.obj
+.\Release\parse.obj
+.\Release\rematrix.obj
+.\Release\ring_buffer.obj
+.\Release\stats.obj
+.\Release\uncouple.obj
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP7150.TMP"
+<h3>Output Window</h3>
+Linking...
+   Creating library .\Release/in_ac3.lib and object .\Release/in_ac3.exp
+
+
+
+<h3>Results</h3>
+in_ac3.dll - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

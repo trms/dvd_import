@@ -1,0 +1,3 @@
+The following binaries must be copied into the same directory as the DVD Import utility: mplex.exe, ac3dec.exe and tooLame.exe.  These all are under GPL, the source for ac3dec is in the Support subdirectory, the release of toolame is there that contains a binary, as well as an installer for DVDAuthorGUI, which includes a binary for mplex.
+
+Don't read this paragraph, just move along... la la la... To convert commercial DVDs, run DVD Decrypter (http://www.dvddecrypter.com/) in File mode to a folder on your local disk, then select the VOB for the title set you wish to convert.

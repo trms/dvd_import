@@ -1,0 +1,415 @@
+<HTML>
+
+<HEAD>
+
+<TITLE>
+VOB/AC3toWAV - Decode to re-encode or play audio from vob files</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="#000000" BACKGROUND="bg/stars0.gif" TEXT="#3090ff" LINK="#fff010" VLINK="#40f0ff" ALINK="#02cf00">
+
+<BR><BR>
+
+<CENTER>
+  <FONT SIZE=+2 COLOR="10c0ff"> <font color="fffff" size="+4">A</font> <font color="ccccc" size="+4">C</font>
+  <font color="aaaaa" size="+4">3</font> <font color="88888" size="+4">DEC.COM</font><font size="+4">
+  v0.8.16</font></FONT><BR>
+  <HR><BR>
+
+<BR><BR><BR>
+</CENTER>
+<p><u><B>NEWS / ANOUNCEMENTS</B></u><BR>
+  <font face="Verdana, Arial, Helvetica, sans-serif" size="1">
+
+
+<i><font color="#FFFFFF">17/May/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+8.17 is out now, you can now automaticaly do PCM output without that Chooser Box, so it can be scripted
+much happier now. Enjoy here, <A HREF=ac3decode817.zip>8.17 zip file</A><BR>
+Note to people who request 5.1 output in 3 wav files, yes it will be done, patience please.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+<i><font color="#FFFFFF">3/May/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+One Word,  www.ac3dec.com is all you need to remember.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+  <i><font color="#FFFFFF">25/Apr/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+On 24Mar I did upload a fixed ac3dec which fixed the 1 channel problem, some wierd compiler effect.
+Now the update, we have a new DECODEVOB which can decode vobs into m2v/ac3 files, now this special
+version will autohandle vobs that are encoded in multi angles and this will just ignore the extra
+ones and only keep angle 0. Note to hackers: the angle info is stored in the Navigation Packets
+in the second area of the packet.
+I updated decodevob a few hours after posting , fixed a bug where the last segment in an angle segment
+was misoutputed, it sok now. As far as I can see.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+
+<i><font color="#FFFFFF">23/Mar/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+AC3Dec fixes the status printouts after 1gig of wav written, some other cosmetic fixes in status also.
+But the biggest fix is DIVX2mp4, added some extra options to restore your changes, or to do custom
+ID changes, and also a bug is fixed in it.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+
+
+<i><font color="#FFFFFF">11/Mar/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+New features for ac3dec, these include better seeking without currupted audio and an insertMS option
+to insert blank MS of audio into the output file, for those needing to sync properly ;)<BR>
+Also decodeVOB has been fixed/updated, better support for output location which was part broken before
+and also better spanning from 1 vob to a second vob without missing data at all, and also fixed
+the writing of the buffered IO which didnt flush the cache if it finished half way into a block. Its all technical
+so basicly you just gota know that its all ok now. And also you can specify the buffer sizes to with -savesize and -preloadsize
+options to maxmize you thruput. Having a brand new fast HD sure makes things fast. Decode time for me of a 2:30hr ac3
+took 14minutes. So download away dudes.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+
+
+<i><font color="#FFFFFF">05/Mar/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+Ok, a small fix for ac3dec, just the last buffer wasnt outputting nicely, and some other minor bits
+fixed and you can now optionly decide the output buffer size too. AAC code started, but not complete
+ or working yet. So .814 ready now. Grab it.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+
+
+
+
+
+<i><font color="#FFFFFF">29/Feb/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+Decodevob has been updated with a little better option, you can specify the output drive now, enjoy all.<BR>
+Also I do have a future outline of plans to share with all.<BR>
+1. incorporate use of the AAC encode DLL (MPEG-2 audio) to produce mpeg-2 audio files.
+This looks easy since the encode is an easy to use DLL. Also a possibility is to use the XING encoder
+too if you wish to make mp1-layer2/layer3 audio files quicker than the slow official implementation (why are math people so bad
+at code optimization??? tables people , tsk tsk)<BR>
+2. A longer term plan is to make a version of ac3dec into a perfect Decoder DLL just like the AAC
+is formated so that it then as a decoder could be incorporated into mpeg2avi source, which btw at
+the same time mpeg2avi could do a lot of fixes like the status info to be more ac3dec like and handle
+those anoying crashes and ofcourse add cooler options to it.
+
+
+
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+<i><font color="#FFFFFF">14/Feb/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+Heres an update of <A HREF=decodevob.zip>DecodeVOB</A> 1.1 , supports a few extra commands and
+multi vob files spanning and also output of multiple AC3 files at once, -audio 0 -audio 1, you can
+put multiple of these in.<BR> Not to mention ac3dec has gone to .8.13, just a few optimizations
+in the heaftiest area (mantisa) and also more efficient buffered output to make the HD happy.<BR>
+Made a new program, <A HREF=divx2mp4.zip>DIVX2MP4</A>, this will re-convert an AVI/ASF back to MPEG4-v3
+codec IDs from the DIVX one, why? because we dont want stupid ASF files dependant on a codec which
+is hard to find , we want an ASF made with the latest codec and also be able to play back on
+any Windows OS too. Use it if you like, if not, I dont care, but remember, all the DIVX codec is, is
+the true mpeg4 codec , just the ID changed to make it work in AVIs, (Why oh why is it called divx,
+tsk tsk tsk)
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+<i><font color="#FFFFFF">05/Feb/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+Been re-writing the VOB reader in a seperate project for you all to try, get the program
+<A HREF=decodevob.zip>DecodeVOB</A> , ofcourse its in source and reads/decodes vob really fast and saves
+out the m2v or ac3 file. Enjoy it. Its a hell smaller/easier to read than BBDMUX stuff and faster. Feel free
+to incorporate it into your own code, this should without too much trouble apear in ac3dec later.<BR>
+Also ac3dec as a few tiny more features , thats all for now, enjoy your transcoding. Dont forget, keep reading
+<A HREF=http://www.2600.com>2600</A>, Viva La Resistonce and freedom to all.
+</font><font color="#FFFFFF"><BR>
+  <BR>
+
+<i><font color="#FFFFFF">25/Jan/2000
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+I think I fixed the high pitch sound, blame optimization code in uncouple.c, it should be fine, testing on one
+file I could hear an improvement.</font><font color="#FFFFFF"><BR>
+  <BR>
+
+
+<i><font color="#FFFFFF">29/Nov
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">
+Patience... been taking a break lately, will make a major improvement soon in terms of speed + more
+cool options.</font><font color="#FFFFFF"><BR>
+  <BR>
+
+<i><font color="#FFFFFF">10/Nov
+  </font></i><font color="#FFFFFF">:<br>
+  </font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><font color="#CCCCCC">New
+  beta code, in_ac3.dll is a plugin for Winamp to play AC3 files, its more or
+  less working still needs some work for perfect use ,but its at least there.<BR>
+  -44100 from 48khz conversion seams to sound ok, so give that a try.</font><font color="#FFFFFF"><BR>
+  <BR>
+
+  <i>8/Nov :</i> <br>
+  <font color="#CCCCCC">Thanks for all your emails, too busy to email all individualy,
+  but I addressed all bugs/problems , you can use dvdsoft.de's forum also to address
+  features. If you get wierd high pitch audio effects, thats some core level maths
+  stuff, I am talking to the original author on possible fixes, but only some
+  files seam to do that, not all. </font></font></font><BR>
+  <BR>
+  <BR>
+  <HR>
+  <BR>
+  <B><u>WHAT IS IT?</u></B><BR>
+  Basicly its VOBtoWAV, just try it. This source is based on the previous ac3decode
+  v0.05 from the author of mpeg2avi. <BR>
+  <BR>
+  <B><u>WHERE IS IT?</u></B><BR>
+  Its here, just <A HREF="ac3decode816.zip">download zip</A> and run the program
+  , or download the <A HREF="ac3decode_src.zip">zipped source code</A> is the
+  full source code to the program. The code is released in free source form because I like releasing
+source codes, and to any one else that doesnt, whats the problem? scared of lamers ripping you off? Thats just FUD, have the
+guts guys, release the source, then at least things can be shared/fixed to the better. The original
+  0.5 version can be found here too <A HREF=ac3dec_wave05.zip>ac3dec05.zip</A><BR>
+  <BR><BR>
+  <B><u>DOWNLOADs HERE</u></B><BR>
+<A HREF=ac3decode814.zip>ac3decode 0.8.14</A><BR>
+<A HREF=ac3decode815.zip>ac3decode 0.8.15</A><BR>
+<A HREF=ac3decode816.zip>ac3decode 0.8.16</A><BR>
+<A HREF=ac3decode817.zip>ac3decode 0.8.17</A><BR>
+<A HREF=ac3decode_src.zip>ac3decode source code</A><BR>
+<A HREF=ac3dec_wave05.zip>ac3dec05.zip original</A><BR>
+<A HREF=decodevob.zip>DecodeVOB 1.4</A><BR>
+<A HREF=divx2mp4.zip>DIVX2MP4 V2</A><BR>
+<A HREF=virtualdub_source-v1.3c.zip>VirtualDub 1.3c Source code</A><BR>
+<A HREF=Ac3_spec.zip>Ac3 Spec pdf file</A><BR>
+<A HREF=ASF0298rtf.zip _title="MS, you made it public, stick to it and dont be a dumb ass">ASF Public Specification Version 1.0 (02/98)</A><BR>
+<A HREF="http://mp3tech.free.fr/programmers/sources/mbaacenc.zip">MPEG2 (AAC) Encoder source code </A>
+<A HREF="http://members.tripod.com/~liaor/mpeg2avi.html">Mpeg2AVI-b34 source is here</A>
+<BR><BR>
+ <BR>
+   <BR>
+  <B><u>WHAT NOW?</u></B><BR>
+  Run it with "ac3dec file.vob outfile.wav" and select the code in the gui and
+  hit OK, then it will convert the vob to the new file. At any time you can hit
+  'Q' to stop it' ac3dec.exe is a Win32 command-line application. It must be run
+  from a DOS-box.<BR>
+  <BR>
+
+
+
+
+</p>
+<PRE> C:\> ac3dec.exe >input file<  [optional output filename] </PRE>
+<p><BR>
+  If the output-filename is supplied, ac3dec will create a WAVE file. Otherwise,
+  the decoded audio samples are sent to a waveOut device. AC3DEC can only play
+  AC3 bitstreams. AC3 Bitstreams may be in raw form (*.AC3) or part of an unencrypted
+  VOB file. AC3DEC does not play MPEG-audio streams.<BR>
+  <BR>
+  Playback control is very limited : 'PAUSE' and 'QUIT' </p>
+<p><b><u>COMMAND ARGS</u></b></p>
+<pre>
+<font size="1" color="#00FF00">
+   optional : -pcmwav FILE  - output data to a PCM WAV file without the Chooser Box
+   optional : -wav FILE     - output data to a WAV file
+   optional : -pcm          - automaticly select PCM output with no Chooser Dial
+   optional : -seek #       - seek to VOB LBA position (ie which sector)
+   optional : -seekmb #     - seek to file Megabyte position
+   optional : -insertms #   - insert X ms amount of silence at the start
+   optional : -allvobs      - span over multiple VOB files automaticly
+   optional : -substream 0x## - only decode X subtream (hexformat, 0x81)
+   optional : -overwrite    - overwrite output wav file without asking.
+   optional : -blocksize    - file writing buffer size.
+   optional : -gain #       - adjust global output gain (1..100) percent
+   optional : -gain2 #      - adjust global output inverse-squared gain (1..500) percent
+   optional : -gaincenter # - adjust centre channels gain level (1..500)
+   optional : -gainrear #   - adjust rear channels gain level
+   optional : -gainlfe #    - adjust lfe channel gain level
+   optional : -zerocenter   - silence centre channel
+   optional : -zerorear     - silence rear channels
+   optional : -zerolfe      - silence lfe channel
+   optional : -length       - limit the length of the decode to X seconds
+   optional : -info         - show VOB summary information
+   optional : -44100        - convert the 48000 stream to 44100 allowing othe codecs/formats
+   FUTURE TODOs
+   More speed
+   Angle handeling
+   ------------ realtime playback keyboard commands -----------
+   0 - 9    :  switches substreams in real time (0x80 to 0x89)
+   A,Z      :  + or - Gain Level
+   S,X      :  + or - Gain Rear Level
+   D,C      :  + or - Gain Center Level
+   F,V      :  + or - Gain LFE Level
+   W        :  Zero Rear Gain Level
+   E        :  Zero Center Gain Level
+   R        :  Zero LFE Gain LevelNo error - Couldn't open file ?
+   < >      :  Fastforward/Rewind 500 LBAs
+</font>   </pre>
+<p><br>
+  <B><i>Revision history</i></B> </p>
+<HR>
+<PRE>
+<font color="#0000FF">
+ v0.8.17- added -pcmwav so you can automaticly output to pcm wavs without chooser box
+
+ v0.8.16- status output fixed where it wouldnt wrap to next line.
+
+ v0.8.15- better seeking to ac3 data.
+          insertms option added to add blank silence at the front.
+          aac stuff is still in beter, its in the source but commented out because its not working.
+
+ v0.8.14- buffered write can be set to any size, and some other new args too.
+          last buffer also is saved properly.
+
+ v0.8.13- Optimized mantisas to be faster (3%), still the bbdemux code is holding it back
+          the new vob decoder has not yet been inserted.
+          Added buffered output, so only every 300k is written, not every small block.
+          All in all should be faster.
+
+ v0.8.12- Nothing amazing, just a SkipForward/Backword command in realtime listening.
+          So if its working for you, no need to download it.
+
+ v0.8.11- Fixed high pitch sound errors, I hope.
+
+ v0.8.10- made status nicer so it doesnt overlap 80 columns
+          we now have a beta in_ac3.dll plugin for Winamp
+          slightly speeded up math code too, but the de-mux is whats killing
+          its speed now, that is hell crap code that needs replacement soon.
+          Btw, I forgot to mention that the -44100 conversion option seams to work
+          ok.
+
+ v0.8.9 - added fixed elapsed time value (blame old relic code from mpeg2avi)
+          added heaps of realtime options for switching streams/ changing volumes
+          fixed -length option where it would do one more second before
+
+ v0.8.8 - again, fixed the EOF detection for all levels, should be ok now.
+          made -info act just like BBDMUX
+		  spanning is 100% now with correct EOF checks etc...
+		  version info printed all the time
+
+ v0.8.7 - again, fixed the EOF detection for all levels, should be ok now.
+          added more stat info at the end for 'jmm'
+
+ v0.8.6b- fixed reading of ac3 files, detects EOF nicely, sorry, there was
+          lots of messy code to go through.
+
+ v0.8.6 - fixed writing last segment of data, and added more precision to
+          output seconds status, fixed ac3 input reading. Thanks for checking
+          DanniDin.
+
+ v0.8.5 - correctly does multi vob spanning, ie doesnt miss packets and works
+          together with any stream
+          added option to kill rear/centre/lfe channels if you want to.
+
+ v0.8.4 - hopefully a bit more speedier, if you notice
+        - more stats/info in realtime
+
+ v0.8.3 - 50% faster so it can now basicly do 3x realtime decoding.
+        - added -info option to show VOB stream infos
+        - added -reargain for adjusting audio
+        - its handles premature ending VOBs nicely, without failing/falling over
+        - added more stats to the status texts
+
+ v0.8.2 - Audio center channel gain added
+        - Seek option now works properly
+        - the substream option works now correctly, finaly
+        - added max length ability, so you can decide to only
+          decode 10 minutes or  83 minutes exactly, either use HH:MM:SS or seconds value
+
+ v0.8.1- substream args fixed, whoops
+       - added another inverse squared curved gain control to volume enhancement
+         use as -gain2 {1...900} just experiment
+
+ v0.8  - Audio output gain added, use -gain 1 to 500 for percent.
+         it is a sliding gain, so only quieter sounds are made louder
+         without the loud sounds distorting.
+
+ v0.7  - audio downmixes speedups for other downmix combos
+         added working multivob support, any blah_1.vob goes to blah_2.vob
+         etc.. until 9
+         substream support added via -substream command, use 0x81 or 0x80
+         as the hex codes
+         * gain control is coming
+
+ v0.6  - handles more codecs
+         much faster decoding
+         handles stdin via -- filename (experimental)
+         cool processing speed statistics
+         * multi vob source support is in experimentation
+         * ground work being done for 48000hz to 44100 live conversion
+
+ v0.05 - updated bit_allocate.c (0.5.5), should fix compatibility problems
+         with some AC-3 bitstreams.
+         corrections to downmix.c, rematrix.c,
+         added phase-inversion to uncouple.c
+         minor cosmetic changes (statistics report) to user interface
+
+ v0.04 - lfe-channel now mixed at +10dB (instead of +9dB)
+         improved resistance to "bad AC3 frames"
+         updated downmix module (still not thoroughly tested)
+
+ v0.03 - ac3dec_mci renamed to ac3dec_wave, to avoid confusion
+         added ACM (audio compression manager) support, file output
+         added downmix module
+
+ v0.02 - integrated BBDMUX with ac3dec_mci, allows ac3dec
+         to directly demux AC3 audiostream (0x80BD) from *.VOB files
+         (unencrypted VOB files only!)
+
+ v0.01 - first release of AC3DEC for Win32 (ac3dec_mci),
+         output to Windows wave routines (waveOut library)
+</font></PRE>
+
+
+<BR>
+<B>OTHER OPTIONS?</B><BR>
+If you want other solutions, try looking at <b>start.at</b>/dvdsoft<BR>
+
+<BR>
+
+<BR>
+
+<BR>
+
+<BR>
+
+<BR>
+
+<A HREF="mailto:cheekyb0y@xoommail.com">EMAIL@here</A> (Note: I dont read it every day)
+<BR>
+
+<HR>
+
+<script> document.write( '<font size=-1 color=#ff0000><i>Last updated on ', document.lastModified, ' </i></font>' ); </script>
+
+<BR>
+
+<BR>
+
+
+
+</BODY>
+
+</HTML>
+
