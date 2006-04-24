@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Utilities.DVDImport
 {
@@ -116,6 +117,12 @@ namespace Utilities.DVDImport
 				secondsStr = "00:00:00";
 
 			return secondsStr;
+		}
+
+		public string MakeSafeFilename(string file)
+		{
+			string result = Regex.Replace(file, @"[^\w\d ;'\-_\+=\(\)!@#$%\^&,\.]", "");
+			return (result);
 		}
 	}
 }

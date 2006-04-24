@@ -64,6 +64,7 @@ namespace Utilities.DVDImport
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
+			CheckForIllegalCrossThreadCalls = false;
 		}
 
 		/// <summary>
@@ -548,6 +549,7 @@ namespace Utilities.DVDImport
 				#region Choose a file, default to last directory used
 				string saveFile = filename;
 				saveFileDialog1.FileName = textBox2.Text + "-" + textBox4.Text + "-" + textBox3.Text + ".mpg";
+				saveFileDialog1.FileName = new Utilities().MakeSafeFilename(saveFileDialog1.FileName);
 
 				RegistryKey rk = Registry.LocalMachine.OpenSubKey(REGISTRY_KEY);
 				if(rk != null)
@@ -1232,7 +1234,8 @@ namespace Utilities.DVDImport
 					titles.Add(file);
 				}
 			}
-			listBox1.SelectedIndex = index;
+			if(listBox1.Items.Count > 0)
+				listBox1.SelectedIndex = index;
 		}
 
 		#region Video Playback
