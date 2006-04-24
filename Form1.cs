@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Microsoft.DirectX.AudioVideoPlayback;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.Configuration;
 
 namespace Utilities.DVDImport
 {
@@ -1015,7 +1016,10 @@ namespace Utilities.DVDImport
 					process.StartInfo.RedirectStandardOutput = true;
 					process.StartInfo.RedirectStandardError = true;
 					process.StartInfo.FileName = lameCommand;
-					process.StartInfo.Arguments = "-s 48 " + audio + " " + newAudio;
+					string extraOptions = " -g";
+					if (System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions") != null)
+						extraOptions = " " + System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions")[0];
+					process.StartInfo.Arguments = "-s 48" + extraOptions + " " + audio + " " + newAudio;
 					process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 					process.StartInfo.CreateNoWindow = true;
 					process.Start();
@@ -1240,7 +1244,7 @@ namespace Utilities.DVDImport
 
 		#region Video Playback
 		private Video m_video = null;
-		private Thread m_videoThread = null;
+		//private Thread m_videoThread = null;
 		private bool stopped = false;
 		private void PlaybackProgress()
 		{
@@ -1257,7 +1261,7 @@ namespace Utilities.DVDImport
 			m_video.Stop();
 			m_video.Dispose();
 			m_video = null;
-			m_videoThread = null;
+			//m_videoThread = null;
 		}
 
 		private void button3_Click(object sender, System.EventArgs e)
