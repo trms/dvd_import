@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
@@ -23,6 +24,7 @@ namespace Utilities.DVDImport
 	{
 		private Thread thread = null;
 		private Hashtable writers = new Hashtable();
+		private Hashtable readers = new Hashtable();
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button1;
@@ -40,7 +42,6 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label volumeLabel;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-		private System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.TextBox textBox2;
@@ -50,6 +51,7 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TextBox textBox4;
 		private System.Windows.Forms.Button button6;
+		private TreeView treeView1;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -90,309 +92,316 @@ namespace Utilities.DVDImport
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button6 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.volumeLabel = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.groupBox2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(16, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Folder:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(56, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(360, 20);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(424, 16);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(24, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "...";
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(704, 248);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(48, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Import";
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(0, 280);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(760, 23);
-            this.progressBar1.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(0, 307);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(760, 16);
-            this.label2.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(8, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(248, 184);
-            this.panel1.TabIndex = 6;
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(160, 208);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(32, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.Location = new System.Drawing.Point(192, 208);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(32, 23);
-            this.button4.TabIndex = 8;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.panel1);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Location = new System.Drawing.Point(488, 8);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(264, 232);
-            this.groupBox2.TabIndex = 11;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Preview";
-            // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.Location = new System.Drawing.Point(224, 208);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(32, 23);
-            this.button5.TabIndex = 0;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(8, 8);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(464, 80);
-            this.tabControl1.TabIndex = 12;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.button6);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.comboBox1);
-            this.tabPage1.Controls.Add(this.volumeLabel);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(456, 54);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "DVD";
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(384, 16);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(64, 23);
-            this.button6.TabIndex = 14;
-            this.button6.Text = "Refresh";
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(8, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 16);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Drive:";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Location = new System.Drawing.Point(56, 16);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(64, 21);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // volumeLabel
-            // 
-            this.volumeLabel.Location = new System.Drawing.Point(120, 16);
-            this.volumeLabel.Name = "volumeLabel";
-            this.volumeLabel.Size = new System.Drawing.Size(208, 16);
-            this.volumeLabel.TabIndex = 13;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(456, 54);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "VOB File";
-            // 
-            // listBox1
-            // 
-            this.listBox1.Location = new System.Drawing.Point(16, 96);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(456, 95);
-            this.listBox1.TabIndex = 13;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.DefaultExt = "mpg";
-            this.saveFileDialog1.Filter = "MPEG Files|*.mpg";
-            this.saveFileDialog1.OverwritePrompt = false;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(80, 208);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(64, 20);
-            this.textBox2.TabIndex = 14;
-            this.textBox2.Text = "1";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(80, 240);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(392, 20);
-            this.textBox3.TabIndex = 15;
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(24, 208);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(48, 23);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "ShowID:";
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(24, 240);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 23);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Name:";
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(160, 208);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 23);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "Reel #:";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(208, 208);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(64, 20);
-            this.textBox4.TabIndex = 18;
-            this.textBox4.Text = "1";
-            // 
-            // Form1
-            // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(760, 320);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.button2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(768, 344);
-            this.Name = "Form1";
-            this.Text = "DVD Import";
-            this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox2.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+			this.label1 = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.label2 = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.button3 = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.button5 = new System.Windows.Forms.Button();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.button6 = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.volumeLabel = new System.Windows.Forms.Label();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.groupBox2.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(16, 16);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(40, 16);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Folder:";
+			// 
+			// textBox1
+			// 
+			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox1.Location = new System.Drawing.Point(56, 16);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(360, 20);
+			this.textBox1.TabIndex = 1;
+			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Location = new System.Drawing.Point(424, 16);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(24, 23);
+			this.button1.TabIndex = 2;
+			this.button1.Text = "...";
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// button2
+			// 
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Enabled = false;
+			this.button2.Location = new System.Drawing.Point(704, 248);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(48, 23);
+			this.button2.TabIndex = 3;
+			this.button2.Text = "Import";
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// progressBar1
+			// 
+			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar1.Location = new System.Drawing.Point(0, 280);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(760, 23);
+			this.progressBar1.TabIndex = 4;
+			// 
+			// label2
+			// 
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.label2.Location = new System.Drawing.Point(0, 307);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(760, 16);
+			this.label2.TabIndex = 5;
+			// 
+			// panel1
+			// 
+			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Location = new System.Drawing.Point(8, 16);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(248, 184);
+			this.panel1.TabIndex = 6;
+			// 
+			// button3
+			// 
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+			this.button3.Location = new System.Drawing.Point(160, 208);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(32, 23);
+			this.button3.TabIndex = 7;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
+			// 
+			// button4
+			// 
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+			this.button4.Location = new System.Drawing.Point(192, 208);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(32, 23);
+			this.button4.TabIndex = 8;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.panel1);
+			this.groupBox2.Controls.Add(this.button3);
+			this.groupBox2.Controls.Add(this.button4);
+			this.groupBox2.Controls.Add(this.button5);
+			this.groupBox2.Enabled = false;
+			this.groupBox2.Location = new System.Drawing.Point(488, 8);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(264, 232);
+			this.groupBox2.TabIndex = 11;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Preview";
+			// 
+			// button5
+			// 
+			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
+			this.button5.Location = new System.Drawing.Point(224, 208);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(32, 23);
+			this.button5.TabIndex = 0;
+			this.button5.Click += new System.EventHandler(this.button5_Click);
+			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Location = new System.Drawing.Point(8, 8);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(464, 80);
+			this.tabControl1.TabIndex = 12;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.button6);
+			this.tabPage1.Controls.Add(this.label3);
+			this.tabPage1.Controls.Add(this.comboBox1);
+			this.tabPage1.Controls.Add(this.volumeLabel);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Size = new System.Drawing.Size(456, 54);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "DVD";
+			// 
+			// button6
+			// 
+			this.button6.Location = new System.Drawing.Point(384, 16);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(64, 23);
+			this.button6.TabIndex = 14;
+			this.button6.Text = "Refresh";
+			this.button6.Click += new System.EventHandler(this.button6_Click);
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(8, 16);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(40, 16);
+			this.label3.TabIndex = 1;
+			this.label3.Text = "Drive:";
+			// 
+			// comboBox1
+			// 
+			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox1.Location = new System.Drawing.Point(56, 16);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(64, 21);
+			this.comboBox1.TabIndex = 0;
+			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			// 
+			// volumeLabel
+			// 
+			this.volumeLabel.Location = new System.Drawing.Point(120, 16);
+			this.volumeLabel.Name = "volumeLabel";
+			this.volumeLabel.Size = new System.Drawing.Size(208, 16);
+			this.volumeLabel.TabIndex = 13;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Controls.Add(this.label1);
+			this.tabPage2.Controls.Add(this.button1);
+			this.tabPage2.Controls.Add(this.textBox1);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Size = new System.Drawing.Size(456, 54);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "VOB File";
+			// 
+			// saveFileDialog1
+			// 
+			this.saveFileDialog1.DefaultExt = "mpg";
+			this.saveFileDialog1.Filter = "MPEG Files|*.mpg";
+			this.saveFileDialog1.OverwritePrompt = false;
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(80, 208);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(64, 20);
+			this.textBox2.TabIndex = 14;
+			this.textBox2.Text = "1";
+			// 
+			// textBox3
+			// 
+			this.textBox3.Location = new System.Drawing.Point(80, 240);
+			this.textBox3.Name = "textBox3";
+			this.textBox3.Size = new System.Drawing.Size(392, 20);
+			this.textBox3.TabIndex = 15;
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(24, 208);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(48, 23);
+			this.label4.TabIndex = 16;
+			this.label4.Text = "ShowID:";
+			// 
+			// label5
+			// 
+			this.label5.Location = new System.Drawing.Point(24, 240);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(48, 23);
+			this.label5.TabIndex = 17;
+			this.label5.Text = "Name:";
+			// 
+			// label6
+			// 
+			this.label6.Location = new System.Drawing.Point(160, 208);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(40, 23);
+			this.label6.TabIndex = 19;
+			this.label6.Text = "Reel #:";
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(208, 208);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(64, 20);
+			this.textBox4.TabIndex = 18;
+			this.textBox4.Text = "1";
+			// 
+			// treeView1
+			// 
+			this.treeView1.FullRowSelect = true;
+			this.treeView1.HideSelection = false;
+			this.treeView1.Location = new System.Drawing.Point(16, 96);
+			this.treeView1.Name = "treeView1";
+			this.treeView1.ShowPlusMinus = false;
+			this.treeView1.ShowRootLines = false;
+			this.treeView1.Size = new System.Drawing.Size(456, 97);
+			this.treeView1.TabIndex = 20;
+			this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
+			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+			// 
+			// Form1
+			// 
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+			this.ClientSize = new System.Drawing.Size(760, 320);
+			this.Controls.Add(this.treeView1);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.textBox4);
+			this.Controls.Add(this.textBox3);
+			this.Controls.Add(this.textBox2);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.tabControl1);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.progressBar1);
+			this.Controls.Add(this.button2);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MinimumSize = new System.Drawing.Size(768, 344);
+			this.Name = "Form1";
+			this.Text = "DVD Import";
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
+			this.Load += new System.EventHandler(this.Form1_Load);
+			this.groupBox2.ResumeLayout(false);
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage2.PerformLayout();
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
@@ -458,74 +467,36 @@ namespace Utilities.DVDImport
 				fs.Write(data, offset + skip, len);
 		}
 
-		private ulong VOBSize()
+		private void ReadSector(List<IFOParse.VOB> vobs, byte[] buf, long sector)
 		{
-			ulong size = 0;
-
-
-			// this is gross code, but it needs to handle both a file and
-			// a series of VOB files depending on what is selected by the
-			// user
-			string filename = titles[listBox1.SelectedIndex].ToString();
-			filename = filename.Replace("0.IFO", "1.VOB");
-
-			string tmp;
-			int vobNum;
-			int idx = filename.LastIndexOf("_");
-			if(idx == -1)
+			// find which vob has our sector
+			foreach (IFOParse.VOB vob in vobs)
 			{
-				vobNum = 0;
-				tmp = filename;
-				idx = tmp.LastIndexOf(".");
-				if(idx != -1)
-					tmp = tmp.Substring(0, idx);
-			}
-			else
-			{
-				tmp = filename.Substring(0, idx);
-				vobNum = Convert.ToInt32(filename.Substring(idx + 1, 1));
-				if(vobNum == 0)
-					vobNum++;
-			}
-
-			while(true)
-			{
-				if(vobNum != 0)
+				if (sector >= vob.FirstSector && sector < vob.LastSector)
 				{
-					filename = tmp + "_" + vobNum.ToString("0") + ".VOB";
-					vobNum++;
+					// got it
+					FileStream fs = null;
+					if (readers.Contains(vob.FileInfo.Name))
+						fs = (FileStream)readers[vob.FileInfo.Name];
+					else
+					{
+						fs = File.OpenRead(vob.Filename);
+						readers[vob.FileInfo.Name] = fs;
+					}
+					long s = (sector - vob.FirstSector) * 2048;
+					if (fs.Seek(s, SeekOrigin.Begin) != s)
+						throw new IOException("Error reading VOB file");
+					if (fs.Read(buf, 0, 2048) != 2048)
+						throw new IOException("Error reading VOB file");
+					return;
 				}
-				if(File.Exists(filename) == false)
-					break;
-				FileInfo fi = new FileInfo(filename);
-
-				size += (ulong)fi.Length;
-
-				if(vobNum == 0)
-					break;
 			}
-			return(size);
-		}
-
-		[DllImport("kernel32.dll", EntryPoint="GetDiskFreeSpaceExA")]
-		private static extern long GetDiskFreeSpaceEx(string lpDirectoryName,
-			out long lpFreeBytesAvailableToCaller,
-			out long lpTotalNumberOfBytes,
-			out long lpTotalNumberOfFreeBytes);
-
-		private ulong GetDriveSpace(string path)
-		{
-			string vol = Directory.GetDirectoryRoot(path);
-
-			long free, total, totalFree;
-			if(GetDiskFreeSpaceEx(vol, out free, out total, out totalFree) != 0)
-				return((ulong)free);
-			return(0);
+			throw new IOException("Invalid sector");
 		}
 
 		private void ProcessVOB()
 		{
-			if(listBox1.SelectedIndex == -1)
+			if(treeView1.SelectedNode == null)
 			{
 				progressBar1.Value = 0;
 				label2.Text = "";
@@ -540,15 +511,34 @@ namespace Utilities.DVDImport
 			try
 			{
 				Cursor = Cursors.WaitCursor;
-				string filename = titles[listBox1.SelectedIndex].ToString();
-				filename = filename.Replace("0.IFO", "1.VOB");
+				List<IFOParse.VOB> vobs = null;
+				IFOParse.ProgramChain pgc = null;
+				List<IFOParse.Cell> cells = null;
+				if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
+				{
+					// got single vob file
+					FileInfo fi = (FileInfo)treeView1.SelectedNode.Tag;
+					IFOParse.VOB v = new IFOParse.VOB(fi.FullName);
+					vobs = new List<IFOParse.VOB>();
+					vobs.Add(v);
+
+					// create dummy cell list
+					cells = new List<IFOParse.Cell>();
+					IFOParse.Cell c = new IFOParse.Cell();
+					c.FirstSector = 0;
+					c.LastSector = (int)v.LastSector;
+					cells.Add(c);
+				}
+				else if (treeView1.SelectedNode.Tag.GetType() == typeof(IFOParse.ProgramChain))
+				{
+					pgc = (IFOParse.ProgramChain)treeView1.SelectedNode.Tag;
+					vobs = pgc.Title.VOBs;
+					cells = pgc.Cells;
+				}
 
 				string outputDir = "";
-				string tempDir = Environment.ExpandEnvironmentVariables("%TEMP%");
-				ulong sizeNeeded = VOBSize();
-
 				#region Choose a file, default to last directory used
-				string saveFile = filename;
+				string saveFile = "";
 				saveFileDialog1.FileName = textBox2.Text + "-" + textBox4.Text + "-" + textBox3.Text + ".mpg";
 				saveFileDialog1.FileName = new Utilities().MakeSafeFilename(saveFileDialog1.FileName);
 
@@ -595,107 +585,37 @@ namespace Utilities.DVDImport
 				}
 				#endregion
 
-				string outputVol = Directory.GetDirectoryRoot(outputDir);
-				string tempVol = Directory.GetDirectoryRoot(tempDir);
-
-				bool spaceOK = true;
-				if(outputVol == tempVol)
-				{
-					ulong outputSpace = GetDriveSpace(outputVol);
-					if(outputSpace < 2 * sizeNeeded)
-						spaceOK = false;
-				}
-				else
-				{
-					ulong outputSpace = GetDriveSpace(outputVol);
-					ulong tempSpace = GetDriveSpace(tempVol);
-					if(outputSpace < sizeNeeded)
-						spaceOK = false;
-					if(tempSpace < sizeNeeded)
-						spaceOK = false;
-
-					// fall back to output location for temp files
-					if(spaceOK == false && outputSpace > 2 * sizeNeeded)
-					{
-						spaceOK = true;
-						tempDir = outputDir;
-					}
-				}
-
-				if(spaceOK == false)
-				{
-					MessageBox.Show("There does not appear to be enough space on " + outputVol + " to import.");
-					progressBar1.Value = 0;
-					label2.Text = "";
-					button1.Enabled = true;
-					button2.Enabled = true;
-					textBox1.Enabled = true;
-					thread = null;
-					Cursor = Cursors.Default;
-					return;
-				}
-
-				tempDir += "\\" + Guid.NewGuid().ToString();
-				Directory.CreateDirectory(tempDir);
-				Environment.CurrentDirectory = tempDir;
-
-
 				int videoOffset = 0;
 				int audioOffset = 0;
 				int msOffset = 0;
 				string audio = null;
 				string video = null;
 				byte[] buf = new byte[2048];
-				string tmp;
-				int vobNum;
-				int idx = filename.LastIndexOf("_");
-				if(idx == -1)
-				{
-					vobNum = 0;
-					tmp = filename;
-					idx = tmp.LastIndexOf(".");
-					if(idx != -1)
-						tmp = tmp.Substring(0, idx);
-				}
-				else
-				{
-					tmp = filename.Substring(0, idx);
-					vobNum = Convert.ToInt32(filename.Substring(idx + 1, 1));
-					if(vobNum == 0)
-						vobNum++;
-				}
+				
 				progressBar1.Minimum = 0;
 				progressBar1.Maximum = 4;
 				progressBar1.Value = 0;
-				while(true)
+
+				//long totalBytes = fi.Length;
+				//long currentBytes = 0;
+				//int len;
+				//int position = 0;
+				int vidPacks = 0;
+				int audPacks = 0;
+				int navPacks = 0;
+				foreach (IFOParse.Cell cell in cells)
 				{
-					#region find next VOB
-					if(vobNum != 0)
+					bool inCell = false;
+					for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
 					{
-						filename = tmp + "_" + vobNum.ToString("0") + ".VOB";
-						vobNum++;
-						label2.Text = "Processing " + filename + "...";
-					}
-					if(File.Exists(filename) == false)
-						break;
-
-					FileInfo fi = new FileInfo(filename);
-					#endregion
-
-					long totalBytes = fi.Length;
-					long currentBytes = 0;
-					FileStream fs = File.OpenRead(filename);
-					int len;
-					int position = 0;
-					while((len = fs.Read(buf, 0, 2048)) == 2048)
-					{
+						ReadSector(vobs, buf, sector);
 						#region update progress
-						currentBytes += len;
-						if(position++ % 10 == 0)
-							label2.Text = "Processing " + filename + "..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentBytes) / Convert.ToDouble(totalBytes))) + "%";
+						//currentBytes += len;
+						//if(position++ % 10 == 0)
+						//	label2.Text = "Processing " + filename + "..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentBytes) / Convert.ToDouble(totalBytes))) + "%";
 						#endregion
 						uint code = ReadCode(buf, 0);
-						if(code != BLOCK_START_CODE)
+						if (code != BLOCK_START_CODE)
 							continue;
 
 						int i = 0x0e;
@@ -704,15 +624,18 @@ namespace Utilities.DVDImport
 						UInt16 headerLength = ReadWord(buf, i);
 						i += 2;
 
-						switch(systemCode)
+						switch (systemCode)
 						{
 							case AC3_DETECT_BYTES:
+								if (!inCell)
+									break;
+								audPacks++;
 								#region write non-mpeg audio data to temp file
 								UInt16 flags = ReadWord(buf, i);
 								i += 2;
 								byte b = buf[i++];
 								#region find ms offset
-								if((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
+								if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
 								{
 									byte c = buf[i++];
 									int offset = (c & 0x0e) << 29;
@@ -733,9 +656,9 @@ namespace Utilities.DVDImport
 								i += 2;
 								int t = substream;
 								string name = t.ToString("000");
-								if(t >= 0xA8) // nothing
+								if (t >= 0xA8) // nothing
 									continue;
-								else if(t >= 0xA0) // PCM
+								else if (t >= 0xA0) // PCM
 								{
 									// http://dvd.sourceforge.net/dvdinfo/index.html
 									name += ".wav";
@@ -749,20 +672,20 @@ namespace Utilities.DVDImport
 									int numChannels = details & 0x07;
 									b += 3;
 								}
-								else if(t >= 0x88) // DTS
+								else if (t >= 0x88) // DTS
 									name += ".dts"; // dts audio will be ignored (most dvds are ac3, or at least have an ac3 track)
-								else if(t >= 0x80) // AC3
+								else if (t >= 0x80) // AC3
 									name += ".ac3";
 								else
 									continue;
 								FileStream w = null;
-								if(writers.Contains(name))
+								if (writers.Contains(name))
 									w = (FileStream)writers[name];
 								else
 								{
 									w = File.Create(name);
 									writers[name] = w;
-									if(name .EndsWith(".wav")) // leave room for wav header
+									if (name.EndsWith(".wav")) // leave room for wav header
 										w.Seek(44, SeekOrigin.Begin);
 								}
 								//SaveData(w, buf, i, 2048 - i, t);
@@ -770,12 +693,15 @@ namespace Utilities.DVDImport
 								#endregion
 								break;
 							case VID_DETECT_BYTES:
+								if (!inCell)
+									break;
+								vidPacks++;
 								#region write mpeg video to temp file
 								flags = ReadWord(buf, i);
 								i += 2;
 								b = buf[i++];
 								#region find ms offset
-								if((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && videoOffset == 0)
+								if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && videoOffset == 0)
 								{
 									byte c = buf[i++];
 									int offset = (c & 0x0e) << 29;
@@ -793,7 +719,7 @@ namespace Utilities.DVDImport
 								string vname = "video.m2v";
 								video = vname;
 								FileStream vw = null;
-								if(writers.Contains(vname))
+								if (writers.Contains(vname))
 									vw = (FileStream)writers[vname];
 								else
 								{
@@ -805,12 +731,15 @@ namespace Utilities.DVDImport
 								#endregion
 								break;
 							case AUD_DETECT_BYTES:
+								if (!inCell)
+									break;
+								audPacks++;
 								#region write mpeg audio to temp file
 								flags = ReadWord(buf, i);
 								i += 2;
 								b = buf[i++];
 								#region find ms offset
-								if((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
+								if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
 								{
 									byte c = buf[i++];
 									int offset = (c & 0x0e) << 29;
@@ -826,10 +755,10 @@ namespace Utilities.DVDImport
 									i += b;
 								#endregion
 								string aname = "vob.m2a";
-								if(audio == null)
+								if (audio == null)
 									audio = aname;
 								FileStream aw = null;
-								if(writers.Contains(aname))
+								if (writers.Contains(aname))
 									aw = (FileStream)writers[aname];
 								else
 								{
@@ -841,13 +770,20 @@ namespace Utilities.DVDImport
 								#endregion
 								break;
 							case NAV_DETECT_BYTES: // ignore this crap, we don't care about subtitles, etc.
+								navPacks++;
+								#region find vobID and cellID
+								int cellID = buf[0x422];
+								int vobID = (buf[0x41f] << 8) + buf[0x420];
+								if (cellID == cell.CellID && vobID == cell.VobID)
+									inCell = true;
+								else
+									inCell = false;
+								#endregion
+								break;
 							default:
 								break;
 						}
 					}
-					fs.Close();
-					if(vobNum == 0)
-						break;
 				}
 				progressBar1.Value++;
 				// calculate offset of video to audio
@@ -999,7 +935,12 @@ namespace Utilities.DVDImport
 							audio = name;
 					}
 				}
-				writers = new Hashtable();
+				writers.Clear();
+				foreach (FileStream fs in readers)
+				{
+					fs.Close();
+				}
+				readers.Clear();
 				progressBar1.Value++;
 
 				#region encode audio to mpeg if it isn't
@@ -1095,8 +1036,6 @@ namespace Utilities.DVDImport
 				progressBar1.Value++;
 				File.Delete(audio);
 				File.Delete(video);
-				Environment.CurrentDirectory = tempVol; // chdir so we can delete our temp dir
-				Directory.Delete(tempDir);
 
 				if(failed)
 					MessageBox.Show(message);
@@ -1153,7 +1092,6 @@ namespace Utilities.DVDImport
 					comboBox1.Items.Add(drive);
 			}
 			comboBox1.SelectedIndex = 0;
-
 		}
 
 		private void RefreshDVD()
@@ -1185,11 +1123,9 @@ namespace Utilities.DVDImport
 			LoadTitles();
 		}
 
-		ArrayList titles = new ArrayList();
-
 		private void LoadTitles()
 		{
-			listBox1.Items.Clear();
+			treeView1.Nodes.Clear();
 			string path = "";
 			if(tabControl1.SelectedIndex == 0)
 			{
@@ -1203,7 +1139,7 @@ namespace Utilities.DVDImport
 
 			int index = 0;
 			int maxLength = 0;
-			titles.Clear();
+			TreeNode longestNode = null;
 			foreach(string file in Directory.GetFiles(path, "*.IFO"))
 			{
 				FileInfo fi = new FileInfo(file);
@@ -1214,32 +1150,51 @@ namespace Utilities.DVDImport
 				{
 					int title = Convert.ToInt32(name.Replace("VTS_", "").Replace("_0.IFO", ""));
 					IFOParse ifo = new IFOParse(file);
-					if(ifo.Length > maxLength)
+
+					// add to tree view
+					TreeNode titleNode = new TreeNode();
+					titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio";
+					titleNode.Tag = ifo;
+					titleNode.Nodes.Clear();
+					titleNode.ToolTipText = ifo.ProgramChainCount + " programs";
+					for(int pgcNum = 0; pgcNum < ifo.ProgramChainCount; pgcNum++)
 					{
-						index = listBox1.Items.Count;
-						maxLength = ifo.Length;
+						IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
+						TreeNode n = new TreeNode();
+						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
+						n.ToolTipText = pgc.Cells.Count + " cells";
+						n.Tag = pgc;
+						titleNode.Nodes.Add(n);
+						if (pgc.Duration > maxLength)
+						{
+							longestNode = n;
+							maxLength = pgc.Duration;
+						}
 					}
-					listBox1.Items.Add("Title " + title + ": " + Utilities.SecondsToLength(ifo.Length) + " - " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio");
-					titles.Add(file);
+					treeView1.Nodes.Add(titleNode);
 				}
 				catch(Exception ex)
 				{
 					MessageBox.Show(ex.Message);
 				}
 			}
-			if(titles.Count == 0)
+			if(treeView1.Nodes.Count == 0)
 			{
 				// found no IFO files, load raw VOB list
 				foreach(string file in Directory.GetFiles(path, "*.VOB"))
 				{
 					FileInfo fi = new FileInfo(file);
 					string name = fi.Name.ToUpper();
-					listBox1.Items.Add(name + ": " + Utilities.BytesToSize(fi.Length));
-					titles.Add(file);
+
+					TreeNode titleNode = new TreeNode();
+					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
+					titleNode.Tag = fi;
+					treeView1.Nodes.Add(titleNode);
 				}
 			}
-			if(listBox1.Items.Count > 0)
-				listBox1.SelectedIndex = index;
+			if (longestNode != null)
+				treeView1.SelectedNode = longestNode;
+			treeView1.ExpandAll();
 		}
 
 		#region Video Playback
@@ -1269,7 +1224,7 @@ namespace Utilities.DVDImport
 			if(m_video != null)
 				return;
 
-			if(listBox1.SelectedIndex == -1)
+			/*if(listBox1.SelectedIndex == -1)
 				return;
 
 			string filename = titles[listBox1.SelectedIndex].ToString();
@@ -1282,7 +1237,7 @@ namespace Utilities.DVDImport
 			stopped = false;
 			m_video.Play();
 			Thread m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
-			m_videoThread.Start();
+			m_videoThread.Start();*/
 		}
 
 		private void button4_Click(object sender, System.EventArgs e)
@@ -1303,23 +1258,58 @@ namespace Utilities.DVDImport
 		}
 		#endregion
 
-		private void listBox1_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			if(listBox1.SelectedIndex == -1)
-				return;
-			string val = listBox1.Items[listBox1.SelectedIndex].ToString();
-			int idx = val.IndexOfAny(":.".ToCharArray());
-			if(idx != -1)
-				val = val.Substring(0, idx);
-			textBox3.Text = "";
-			if(tabControl1.SelectedIndex == 0)
-				textBox3.Text = volumeLabel.Text + ", ";
-			textBox3.Text += val;
-		}
-
 		private void button6_Click(object sender, System.EventArgs e)
 		{
 			RefreshDVD();
+		}
+
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			if (e.Node.Nodes.Count > 0)
+			{
+				button2.Enabled = false;
+				textBox3.Text = "";
+			}
+			else
+			{
+				button2.Enabled = true;
+
+				if (e.Node.Parent == null)
+				{
+					// got a single vob
+					string val = e.Node.Text;
+					int idx = val.IndexOfAny(":.".ToCharArray());
+					if (idx != -1)
+						val = val.Substring(0, idx);
+					textBox3.Text = "";
+					if (tabControl1.SelectedIndex == 0)
+						textBox3.Text = volumeLabel.Text + ", ";
+					textBox3.Text += val;
+				}
+				else
+				{
+					string val = e.Node.Parent.Text;
+					int idx = val.IndexOfAny(":.".ToCharArray());
+					if (idx != -1)
+						val = val.Substring(0, idx);
+					val += " - " + e.Node.Text;
+					idx = val.IndexOfAny(":.".ToCharArray());
+					if (idx != -1)
+						val = val.Substring(0, idx);
+					val = val.Replace("PGC", "Program");
+					textBox3.Text = "";
+					if (tabControl1.SelectedIndex == 0)
+						textBox3.Text = volumeLabel.Text + ", ";
+					textBox3.Text += val;
+				}
+			}
+				
+		}
+
+		private void treeView1_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+		{
+			// don't let the user double click to hide items
+			e.Cancel = true;
 		}
 	}
 }
