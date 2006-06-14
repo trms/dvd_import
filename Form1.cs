@@ -467,6 +467,33 @@ namespace Utilities.DVDImport
 				fs.Write(data, offset + skip, len);
 		}
 
+		private void ReadSector(List<IFOParse.VOB> vobs, byte[] buf, long sector, int offset)
+		{
+			// find which vob has our sector
+			foreach (IFOParse.VOB vob in vobs)
+			{
+				if (sector >= vob.FirstSector && sector < vob.LastSector)
+				{
+					// got it
+					FileStream fs = null;
+					if (readers.Contains(vob.FileInfo.Name))
+						fs = (FileStream)readers[vob.FileInfo.Name];
+					else
+					{
+						fs = File.OpenRead(vob.Filename);
+						readers[vob.FileInfo.Name] = fs;
+					}
+					long s = (sector - vob.FirstSector) * 2048 + offset;
+					if (fs.Seek(s, SeekOrigin.Begin) != s)
+						throw new IOException("Error reading VOB file");
+					if (fs.Read(buf, 0, buf.Length) != buf.Length)
+						throw new IOException("Error reading VOB file");
+					return;
+				}
+			}
+			throw new IOException("Invalid sector");
+		}
+
 		private void ReadSector(List<IFOParse.VOB> vobs, byte[] buf, long sector)
 		{
 			// find which vob has our sector
@@ -603,9 +630,28 @@ namespace Utilities.DVDImport
 				int vidPacks = 0;
 				int audPacks = 0;
 				int navPacks = 0;
-				foreach (IFOParse.Cell cell in cells)
+				//FileStream vobOut = File.Create("test.vob");
+				DSUtils ds = new DSUtils();
+				ArrayList ranges = new ArrayList();
+				ArrayList vobNames = new ArrayList();
+				for (int c = 0; c < cells.Count; c++)
 				{
+					ranges.Add(cells[c].FirstSector);
+					ranges.Add(cells[c].LastSector);
+				}
+				for (int v = 0; v < vobs.Count; v++)
+				{
+					vobNames.Add(vobs[v].FileInfo.FullName);
+					vobNames.Add(vobs[v].Sectors);
+				}
+				ds.Preview(ranges, vobNames);
+				/*foreach (IFOParse.Cell cell in cells)
+				{
+					label2.Text = cell.CellID + " " + cell.FirstSector + "-" + cell.LastSector;
 					bool inCell = false;
+					// treat a single vob file with no ifo file as all data
+					if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
+						inCell = true;
 					for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
 					{
 						ReadSector(vobs, buf, sector);
@@ -769,7 +815,7 @@ namespace Utilities.DVDImport
 								SaveData(aw, buf, i, (headerLength - 3 - b), 1);
 								#endregion
 								break;
-							case NAV_DETECT_BYTES: // ignore this crap, we don't care about subtitles, etc.
+							case NAV_DETECT_BYTES:
 								navPacks++;
 								#region find vobID and cellID
 								int cellID = buf[0x422];
@@ -783,9 +829,13 @@ namespace Utilities.DVDImport
 							default:
 								break;
 						}
+						//if(inCell)
+						vobOut.Write(buf, 0, buf.Length);
 					}
 				}
+				vobOut.Close();*/
 				progressBar1.Value++;
+				return;
 				// calculate offset of video to audio
 				msOffset = videoOffset - audioOffset;
 				if(bs != null)
@@ -1084,6 +1134,11 @@ namespace Utilities.DVDImport
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
+			//DSUtils ds = new DSUtils();
+			//ds.Test(@"C:\Documents and Settings\sjann\Desktop\t\test.vob");
+			//return;
+
+
 			comboBox1.Items.Clear();
 			string[] drives = Environment.GetLogicalDrives();
 			foreach(string drive in drives)

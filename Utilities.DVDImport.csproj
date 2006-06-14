@@ -123,6 +123,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="DSUtils\DSUtils.vcproj">
+      <Project>{EA2D3DAF-AEBD-4296-9038-985281F9B8ED}</Project>
+      <Name>DSUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
