@@ -521,6 +521,105 @@ namespace Utilities.DVDImport
 			throw new IOException("Invalid sector");
 		}
 
+		private int Offset(List<IFOParse.Cell> cells, List<IFOParse.VOB> vobs)
+		{
+			int videoOffset = 0;
+			int audioOffset = 0;
+			byte[] buf = new byte[2048];
+			bool haveAudioOffset = false;
+			bool haveVideoOffset = false;
+
+
+			foreach (IFOParse.Cell cell in cells)
+			{
+				for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
+				{
+					ReadSector(vobs, buf, sector);
+					uint code = ReadCode(buf, 0);
+					if (code != BLOCK_START_CODE)
+						continue;
+
+					int i = 0x0e;
+					ulong systemCode = ReadCode(buf, i);
+					i += 4;
+					UInt16 headerLength = ReadWord(buf, i);
+					i += 2;
+
+					switch (systemCode)
+					{
+						case AC3_DETECT_BYTES:
+							UInt16 flags = ReadWord(buf, i);
+							i += 2;
+							byte b = buf[i++];
+							#region find ms offset
+							if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && haveAudioOffset == false)
+							{
+								byte c = buf[i++];
+								int offset = (c & 0x0e) << 29;
+								offset += (ReadWord(buf, i) & 0xfffe) << 14;
+								i += 2;
+								offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+								i += 2;
+								offset /= 90;
+								i += b - 5;
+								audioOffset = offset;
+								haveAudioOffset = true;
+							}
+							#endregion
+							break;
+						case VID_DETECT_BYTES:
+							flags = ReadWord(buf, i);
+							i += 2;
+							b = buf[i++];
+							#region find ms offset
+							if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && haveVideoOffset == false)
+							{
+								byte c = buf[i++];
+								int offset = (c & 0x0e) << 29;
+								offset += (ReadWord(buf, i) & 0xfffe) << 14;
+								i += 2;
+								offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+								i += 2;
+								offset /= 90;
+								i += b - 5;
+								videoOffset = offset;
+								haveVideoOffset = true;
+							}
+							#endregion
+							break;
+						case AUD_DETECT_BYTES:
+							flags = ReadWord(buf, i);
+							i += 2;
+							b = buf[i++];
+							#region find ms offset
+							if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && haveAudioOffset == false)
+							{
+								byte c = buf[i++];
+								int offset = (c & 0x0e) << 29;
+								offset += (ReadWord(buf, i) & 0xfffe) << 14;
+								i += 2;
+								offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+								i += 2;
+								offset /= 90;
+								i += b - 5;
+								audioOffset = offset;
+								haveAudioOffset = true;
+							}
+							#endregion
+							break;
+						case NAV_DETECT_BYTES:
+						default:
+							break;
+					}
+					if (haveAudioOffset && haveVideoOffset)
+						break;
+				}
+				if (haveAudioOffset && haveVideoOffset)
+					break;
+			}
+			return (videoOffset - audioOffset);
+		}
+
 		private void ProcessVOB()
 		{
 			if(treeView1.SelectedNode == null)
@@ -1216,7 +1315,8 @@ namespace Utilities.DVDImport
 					{
 						IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
 						TreeNode n = new TreeNode();
-						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
+						int offset = Offset(pgc.Cells, pgc.Title.VOBs);
+						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration) + " (" + offset + "ms)";
 						n.ToolTipText = pgc.Cells.Count + " cells";
 						n.Tag = pgc;
 						titleNode.Nodes.Add(n);
@@ -1242,7 +1342,21 @@ namespace Utilities.DVDImport
 					string name = fi.Name.ToUpper();
 
 					TreeNode titleNode = new TreeNode();
-					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
+
+					List<IFOParse.VOB> vobs = new List<IFOParse.VOB>();
+					IFOParse.VOB v = new IFOParse.VOB(file);
+					vobs = new List<IFOParse.VOB>();
+					vobs.Add(v);
+
+					// create dummy cell list
+					List<IFOParse.Cell> cells = new List<IFOParse.Cell>();
+					IFOParse.Cell c = new IFOParse.Cell();
+					c.FirstSector = 0;
+					c.LastSector = (int)v.LastSector;
+					cells.Add(c);
+					int offset = Offset(cells, vobs);
+
+					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length) + " (" + offset + "ms)";
 					titleNode.Tag = fi;
 					treeView1.Nodes.Add(titleNode);
 				}
