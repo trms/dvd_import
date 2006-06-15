@@ -23,8 +23,8 @@ namespace Utilities.DVDImport
 	public class Form1 : System.Windows.Forms.Form
 	{
 		private Thread thread = null;
-		private Hashtable writers = new Hashtable();
-		private Hashtable readers = new Hashtable();
+		private Dictionary<string, FileStream> writers = new Dictionary<string, FileStream>();
+		private Dictionary<string, FileStream> readers = new Dictionary<string, FileStream>();
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button1;
@@ -314,6 +314,7 @@ namespace Utilities.DVDImport
 			// 
 			// textBox2
 			// 
+			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.textBox2.Location = new System.Drawing.Point(80, 208);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(64, 20);
@@ -322,6 +323,7 @@ namespace Utilities.DVDImport
 			// 
 			// textBox3
 			// 
+			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.textBox3.Location = new System.Drawing.Point(80, 240);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(392, 20);
@@ -329,6 +331,7 @@ namespace Utilities.DVDImport
 			// 
 			// label4
 			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label4.Location = new System.Drawing.Point(24, 208);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(48, 23);
@@ -337,6 +340,7 @@ namespace Utilities.DVDImport
 			// 
 			// label5
 			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label5.Location = new System.Drawing.Point(24, 240);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 23);
@@ -345,6 +349,7 @@ namespace Utilities.DVDImport
 			// 
 			// label6
 			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.Location = new System.Drawing.Point(160, 208);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(40, 23);
@@ -353,6 +358,7 @@ namespace Utilities.DVDImport
 			// 
 			// textBox4
 			// 
+			this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.textBox4.Location = new System.Drawing.Point(208, 208);
 			this.textBox4.Name = "textBox4";
 			this.textBox4.Size = new System.Drawing.Size(64, 20);
@@ -361,6 +367,8 @@ namespace Utilities.DVDImport
 			// 
 			// treeView1
 			// 
+			this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)));
 			this.treeView1.FullRowSelect = true;
 			this.treeView1.HideSelection = false;
 			this.treeView1.Location = new System.Drawing.Point(16, 96);
@@ -451,6 +459,18 @@ namespace Utilities.DVDImport
 			return(x);
 		}
 
+		private int ReadPTS(byte[] buf, int offset)
+		{
+			long a1, a2, a3;
+			int pts;
+
+			a1 = (buf[offset] & 0xe) >> 1;
+			a2 = ((buf[offset + 1] << 8) | buf[offset + 2]) >> 1;
+			a3 = ((buf[offset + 3] << 8) | buf[offset + 4]) >> 1;
+			pts = (int)(((a1) << 30) | (a2 << 15) | a3);
+			return(pts);
+		}
+
 		private void SaveData(FileStream fs, byte[] data, int offset, int len, int id)
 		{
 			//uint x=0xffffffff;
@@ -476,7 +496,7 @@ namespace Utilities.DVDImport
 				{
 					// got it
 					FileStream fs = null;
-					if (readers.Contains(vob.FileInfo.Name))
+					if (readers.ContainsKey(vob.FileInfo.Name))
 						fs = (FileStream)readers[vob.FileInfo.Name];
 					else
 					{
@@ -503,7 +523,7 @@ namespace Utilities.DVDImport
 				{
 					// got it
 					FileStream fs = null;
-					if (readers.Contains(vob.FileInfo.Name))
+					if (readers.ContainsKey(vob.FileInfo.Name))
 						fs = (FileStream)readers[vob.FileInfo.Name];
 					else
 					{
@@ -529,7 +549,6 @@ namespace Utilities.DVDImport
 			bool haveAudioOffset = false;
 			bool haveVideoOffset = false;
 
-
 			foreach (IFOParse.Cell cell in cells)
 			{
 				for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
@@ -539,75 +558,25 @@ namespace Utilities.DVDImport
 					if (code != BLOCK_START_CODE)
 						continue;
 
-					int i = 0x0e;
-					ulong systemCode = ReadCode(buf, i);
-					i += 4;
-					UInt16 headerLength = ReadWord(buf, i);
-					i += 2;
+					ulong systemCode = ReadCode(buf, 0x0e);
 
 					switch (systemCode)
 					{
-						case AC3_DETECT_BYTES:
-							UInt16 flags = ReadWord(buf, i);
-							i += 2;
-							byte b = buf[i++];
-							#region find ms offset
-							if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && haveAudioOffset == false)
-							{
-								byte c = buf[i++];
-								int offset = (c & 0x0e) << 29;
-								offset += (ReadWord(buf, i) & 0xfffe) << 14;
-								i += 2;
-								offset += (ReadWord(buf, i) >> 1) & 0x7fff;
-								i += 2;
-								offset /= 90;
-								i += b - 5;
-								audioOffset = offset;
-								haveAudioOffset = true;
-							}
-							#endregion
-							break;
-						case VID_DETECT_BYTES:
-							flags = ReadWord(buf, i);
-							i += 2;
-							b = buf[i++];
-							#region find ms offset
-							if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && haveVideoOffset == false)
-							{
-								byte c = buf[i++];
-								int offset = (c & 0x0e) << 29;
-								offset += (ReadWord(buf, i) & 0xfffe) << 14;
-								i += 2;
-								offset += (ReadWord(buf, i) >> 1) & 0x7fff;
-								i += 2;
-								offset /= 90;
-								i += b - 5;
-								videoOffset = offset;
-								haveVideoOffset = true;
-							}
-							#endregion
-							break;
 						case AUD_DETECT_BYTES:
-							flags = ReadWord(buf, i);
-							i += 2;
-							b = buf[i++];
-							#region find ms offset
-							if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && haveAudioOffset == false)
+						case AC3_DETECT_BYTES:
+							if ((buf[0x15] & 0x80) != 0 && haveAudioOffset == false)
 							{
-								byte c = buf[i++];
-								int offset = (c & 0x0e) << 29;
-								offset += (ReadWord(buf, i) & 0xfffe) << 14;
-								i += 2;
-								offset += (ReadWord(buf, i) >> 1) & 0x7fff;
-								i += 2;
-								offset /= 90;
-								i += b - 5;
-								audioOffset = offset;
+								audioOffset = ReadPTS(buf, 0x17);
 								haveAudioOffset = true;
 							}
-							#endregion
 							break;
 						case NAV_DETECT_BYTES:
+							if (haveVideoOffset == false)
+							{
+								videoOffset = (int)ReadCode(buf, 0x39);
+								haveVideoOffset = true;
+							}
+							break;
 						default:
 							break;
 					}
@@ -617,7 +586,19 @@ namespace Utilities.DVDImport
 				if (haveAudioOffset && haveVideoOffset)
 					break;
 			}
-			return (videoOffset - audioOffset);
+			foreach (FileStream fs in readers.Values)
+			{
+				fs.Close();
+			}
+			readers.Clear();
+
+			int msOffset = audioOffset - videoOffset;
+			if (msOffset < 0)
+				msOffset -= 44;
+			else
+				msOffset += 44;
+			msOffset /= 90;
+			return (msOffset);
 		}
 
 		private void ProcessVOB()
@@ -1085,7 +1066,7 @@ namespace Utilities.DVDImport
 					}
 				}
 				writers.Clear();
-				foreach (FileStream fs in readers)
+				foreach (FileStream fs in readers.Values)
 				{
 					fs.Close();
 				}
