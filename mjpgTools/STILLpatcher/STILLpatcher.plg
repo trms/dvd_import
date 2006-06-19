@@ -1,0 +1,597 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: STILLpatcher - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP58.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/STILLpatcher.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\STILLpatcher\MPeG.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP58.tmp" 
+Creating temporary file "C:\TEMP\RSP59.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/STILLpatcher.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\STILLpatcher\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP59.tmp" 
+Creating command line "link.exe -lib /nologo /out:"Debug\STILLpatcher.lib"  .\Debug\MPeG.obj .\Debug\StdAfx.obj "
+<h3>Output Window</h3>
+Compiling...
+StdAfx.cpp
+Compiling...
+MPeG.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+STILLpatcher.lib - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: jpeglib - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP5A.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/jpeglib.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\jpeglib\jcapimin.c"
+"D:\Data\mjpgTools\jpeglib\jcapistd.c"
+"D:\Data\mjpgTools\jpeglib\jccoefct.c"
+"D:\Data\mjpgTools\jpeglib\jccolor.c"
+"D:\Data\mjpgTools\jpeglib\jcdctmgr.c"
+"D:\Data\mjpgTools\jpeglib\jchuff.c"
+"D:\Data\mjpgTools\jpeglib\jcinit.c"
+"D:\Data\mjpgTools\jpeglib\jcmainct.c"
+"D:\Data\mjpgTools\jpeglib\jcmarker.c"
+"D:\Data\mjpgTools\jpeglib\jcmaster.c"
+"D:\Data\mjpgTools\jpeglib\jcomapi.c"
+"D:\Data\mjpgTools\jpeglib\jcparam.c"
+"D:\Data\mjpgTools\jpeglib\jcphuff.c"
+"D:\Data\mjpgTools\jpeglib\jcprepct.c"
+"D:\Data\mjpgTools\jpeglib\jcsample.c"
+"D:\Data\mjpgTools\jpeglib\jctrans.c"
+"D:\Data\mjpgTools\jpeglib\jdapimin.c"
+"D:\Data\mjpgTools\jpeglib\jdapistd.c"
+"D:\Data\mjpgTools\jpeglib\jdatadst.c"
+"D:\Data\mjpgTools\jpeglib\jdatasrc.c"
+"D:\Data\mjpgTools\jpeglib\jdcoefct.c"
+"D:\Data\mjpgTools\jpeglib\jdcolor.c"
+"D:\Data\mjpgTools\jpeglib\jddctmgr.c"
+"D:\Data\mjpgTools\jpeglib\jdhuff.c"
+"D:\Data\mjpgTools\jpeglib\jdinput.c"
+"D:\Data\mjpgTools\jpeglib\jdmainct.c"
+"D:\Data\mjpgTools\jpeglib\jdmarker.c"
+"D:\Data\mjpgTools\jpeglib\jdmaster.c"
+"D:\Data\mjpgTools\jpeglib\jdmerge.c"
+"D:\Data\mjpgTools\jpeglib\jdphuff.c"
+"D:\Data\mjpgTools\jpeglib\jdpostct.c"
+"D:\Data\mjpgTools\jpeglib\jdsample.c"
+"D:\Data\mjpgTools\jpeglib\jdtrans.c"
+"D:\Data\mjpgTools\jpeglib\jerror.c"
+"D:\Data\mjpgTools\jpeglib\jfdctflt.c"
+"D:\Data\mjpgTools\jpeglib\jfdctfst.c"
+"D:\Data\mjpgTools\jpeglib\jfdctint.c"
+"D:\Data\mjpgTools\jpeglib\jidctflt.c"
+"D:\Data\mjpgTools\jpeglib\jidctfst.c"
+"D:\Data\mjpgTools\jpeglib\jidctint.c"
+"D:\Data\mjpgTools\jpeglib\jidctred.c"
+"D:\Data\mjpgTools\jpeglib\jmemmgr.c"
+"D:\Data\mjpgTools\jpeglib\jmemnobs.c"
+"D:\Data\mjpgTools\jpeglib\jquant1.c"
+"D:\Data\mjpgTools\jpeglib\jquant2.c"
+"D:\Data\mjpgTools\jpeglib\jutils.c"
+"D:\Data\mjpgTools\jpeglib\tools.c"
+]
+Creating command line "cl.exe @C:\TEMP\RSP5A.tmp" 
+Creating temporary file "C:\TEMP\RSP5B.tmp" with contents
+[
+/nologo /out:"Debug\jpeglib.lib" 
+.\Debug\jcapimin.obj
+.\Debug\jcapistd.obj
+.\Debug\jccoefct.obj
+.\Debug\jccolor.obj
+.\Debug\jcdctmgr.obj
+.\Debug\jchuff.obj
+.\Debug\jcinit.obj
+.\Debug\jcmainct.obj
+.\Debug\jcmarker.obj
+.\Debug\jcmaster.obj
+.\Debug\jcomapi.obj
+.\Debug\jcparam.obj
+.\Debug\jcphuff.obj
+.\Debug\jcprepct.obj
+.\Debug\jcsample.obj
+.\Debug\jctrans.obj
+.\Debug\jdapimin.obj
+.\Debug\jdapistd.obj
+.\Debug\jdatadst.obj
+.\Debug\jdatasrc.obj
+.\Debug\jdcoefct.obj
+.\Debug\jdcolor.obj
+.\Debug\jddctmgr.obj
+.\Debug\jdhuff.obj
+.\Debug\jdinput.obj
+.\Debug\jdmainct.obj
+.\Debug\jdmarker.obj
+.\Debug\jdmaster.obj
+.\Debug\jdmerge.obj
+.\Debug\jdphuff.obj
+.\Debug\jdpostct.obj
+.\Debug\jdsample.obj
+.\Debug\jdtrans.obj
+.\Debug\jerror.obj
+.\Debug\jfdctflt.obj
+.\Debug\jfdctfst.obj
+.\Debug\jfdctint.obj
+.\Debug\jidctflt.obj
+.\Debug\jidctfst.obj
+.\Debug\jidctint.obj
+.\Debug\jidctred.obj
+.\Debug\jmemmgr.obj
+.\Debug\jmemnobs.obj
+.\Debug\jquant1.obj
+.\Debug\jquant2.obj
+.\Debug\jutils.obj
+.\Debug\tools.obj
+]
+Creating command line "link.exe -lib @C:\TEMP\RSP5B.tmp"
+<h3>Output Window</h3>
+Compiling...
+jcapimin.c
+jcapistd.c
+jccoefct.c
+jccolor.c
+jcdctmgr.c
+jchuff.c
+jcinit.c
+jcmainct.c
+jcmarker.c
+jcmaster.c
+jcomapi.c
+jcparam.c
+jcphuff.c
+jcprepct.c
+jcsample.c
+jctrans.c
+jdapimin.c
+jdapistd.c
+jdatadst.c
+jdatasrc.c
+jdcoefct.c
+jdcolor.c
+jddctmgr.c
+jdhuff.c
+jdinput.c
+jdmainct.c
+jdmarker.c
+jdmaster.c
+jdmerge.c
+jdphuff.c
+jdpostct.c
+jdsample.c
+jdtrans.c
+jerror.c
+jfdctflt.c
+jfdctfst.c
+jfdctint.c
+jidctflt.c
+jidctfst.c
+jidctint.c
+jidctred.c
+jmemmgr.c
+jmemnobs.c
+jquant1.c
+jquant2.c
+jutils.c
+tools.c
+Creating library...
+Creating temporary file "C:\TEMP\RSP5C.tmp" with contents
+[
+/nologo /o"Debug/jpeglib.bsc" 
+.\Debug\jcapimin.sbr
+.\Debug\jcapistd.sbr
+.\Debug\jccoefct.sbr
+.\Debug\jccolor.sbr
+.\Debug\jcdctmgr.sbr
+.\Debug\jchuff.sbr
+.\Debug\jcinit.sbr
+.\Debug\jcmainct.sbr
+.\Debug\jcmarker.sbr
+.\Debug\jcmaster.sbr
+.\Debug\jcomapi.sbr
+.\Debug\jcparam.sbr
+.\Debug\jcphuff.sbr
+.\Debug\jcprepct.sbr
+.\Debug\jcsample.sbr
+.\Debug\jctrans.sbr
+.\Debug\jdapimin.sbr
+.\Debug\jdapistd.sbr
+.\Debug\jdatadst.sbr
+.\Debug\jdatasrc.sbr
+.\Debug\jdcoefct.sbr
+.\Debug\jdcolor.sbr
+.\Debug\jddctmgr.sbr
+.\Debug\jdhuff.sbr
+.\Debug\jdinput.sbr
+.\Debug\jdmainct.sbr
+.\Debug\jdmarker.sbr
+.\Debug\jdmaster.sbr
+.\Debug\jdmerge.sbr
+.\Debug\jdphuff.sbr
+.\Debug\jdpostct.sbr
+.\Debug\jdsample.sbr
+.\Debug\jdtrans.sbr
+.\Debug\jerror.sbr
+.\Debug\jfdctflt.sbr
+.\Debug\jfdctfst.sbr
+.\Debug\jfdctint.sbr
+.\Debug\jidctflt.sbr
+.\Debug\jidctfst.sbr
+.\Debug\jidctint.sbr
+.\Debug\jidctred.sbr
+.\Debug\jmemmgr.sbr
+.\Debug\jmemnobs.sbr
+.\Debug\jquant1.sbr
+.\Debug\jquant2.sbr
+.\Debug\jutils.sbr
+.\Debug\tools.sbr]
+Creating command line "bscmake.exe @C:\TEMP\RSP5C.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+jpeglib.lib - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: mjpeglib - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP5D.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/mjpeglib.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\mjpeglib\avilib.c"
+"D:\Data\mjpgTools\mjpeglib\colorspace.c"
+"D:\Data\mjpgTools\mjpeglib\editlist.c"
+"D:\Data\mjpgTools\mjpeglib\jpegutils.c"
+"D:\Data\mjpgTools\mjpeglib\lav_common.c"
+"D:\Data\mjpgTools\mjpeglib\lav_io.c"
+"D:\Data\mjpgTools\mjpeglib\mjpeg_logging.c"
+"D:\Data\mjpgTools\mjpeglib\mpegconsts.c"
+"D:\Data\mjpgTools\mjpeglib\subsample.c"
+"D:\Data\mjpgTools\mjpeglib\tools.c"
+"D:\Data\mjpgTools\mjpeglib\yuv4mpeg.c"
+"D:\Data\mjpgTools\mjpeglib\yuv4mpeg_ratio.c"
+"D:\Data\mjpgTools\mjpeglib\yuvscaler.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP5D.tmp" 
+Creating temporary file "C:\TEMP\RSP5E.tmp" with contents
+[
+/nologo /out:"Debug\mjpeglib.lib" 
+.\Debug\avilib.obj
+.\Debug\colorspace.obj
+.\Debug\editlist.obj
+.\Debug\jpegutils.obj
+.\Debug\lav_common.obj
+.\Debug\lav_io.obj
+.\Debug\mjpeg_logging.obj
+.\Debug\mpegconsts.obj
+.\Debug\subsample.obj
+.\Debug\tools.obj
+.\Debug\yuv4mpeg.obj
+.\Debug\yuv4mpeg_ratio.obj
+.\Debug\yuvscaler.obj
+]
+Creating command line "link.exe -lib @C:\TEMP\RSP5E.tmp"
+<h3>Output Window</h3>
+Compiling...
+avilib.c
+colorspace.c
+editlist.c
+jpegutils.c
+lav_common.c
+lav_io.c
+mjpeg_logging.c
+mpegconsts.c
+subsample.c
+tools.c
+yuv4mpeg.c
+yuv4mpeg_ratio.c
+yuvscaler.cpp
+Creating library...
+Creating temporary file "C:\TEMP\RSP5F.tmp" with contents
+[
+/nologo /o"Debug/mjpeglib.bsc" 
+.\Debug\avilib.sbr
+.\Debug\colorspace.sbr
+.\Debug\editlist.sbr
+.\Debug\jpegutils.sbr
+.\Debug\lav_common.sbr
+.\Debug\lav_io.sbr
+.\Debug\mjpeg_logging.sbr
+.\Debug\mpegconsts.sbr
+.\Debug\subsample.sbr
+.\Debug\tools.sbr
+.\Debug\yuv4mpeg.sbr
+.\Debug\yuv4mpeg_ratio.sbr
+.\Debug\yuvscaler.sbr]
+Creating command line "bscmake.exe @C:\TEMP\RSP5F.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+mjpeglib.lib - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: mpg2enc - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP60.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/mpg2enc.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\mpg2enc\conform.c"
+"D:\Data\mjpgTools\mpg2enc\fdctref.c"
+"D:\Data\mjpgTools\mpg2enc\idct.c"
+"D:\Data\mjpgTools\mpg2enc\motionest.c"
+"D:\Data\mjpgTools\mpg2enc\motionsearch.c"
+"D:\Data\mjpgTools\mpg2enc\mpeg2enc.c"
+"D:\Data\mjpgTools\mpg2enc\MpegEnc.cpp"
+"D:\Data\mjpgTools\mpg2enc\predict.c"
+"D:\Data\mjpgTools\mpg2enc\putbits.c"
+"D:\Data\mjpgTools\mpg2enc\puthdr.c"
+"D:\Data\mjpgTools\mpg2enc\putmpg.c"
+"D:\Data\mjpgTools\mpg2enc\putpic.c"
+"D:\Data\mjpgTools\mpg2enc\putseq.c"
+"D:\Data\mjpgTools\mpg2enc\putvlc.c"
+"D:\Data\mjpgTools\mpg2enc\quantize.c"
+"D:\Data\mjpgTools\mpg2enc\ratectl.c"
+"D:\Data\mjpgTools\mpg2enc\readpic.c"
+"D:\Data\mjpgTools\mpg2enc\stats.c"
+"D:\Data\mjpgTools\mpg2enc\transfrm.c"
+"D:\Data\mjpgTools\mpg2enc\types.c"
+"D:\Data\mjpgTools\mpg2enc\writepic.c"
+]
+Creating command line "cl.exe @C:\TEMP\RSP60.tmp" 
+Creating temporary file "C:\TEMP\RSP61.tmp" with contents
+[
+/nologo /out:"Debug\mpg2enc.lib" 
+.\Debug\conform.obj
+.\Debug\fdctref.obj
+.\Debug\idct.obj
+.\Debug\motionest.obj
+.\Debug\motionsearch.obj
+.\Debug\mpeg2enc.obj
+.\Debug\MpegEnc.obj
+.\Debug\predict.obj
+.\Debug\putbits.obj
+.\Debug\puthdr.obj
+.\Debug\putmpg.obj
+.\Debug\putpic.obj
+.\Debug\putseq.obj
+.\Debug\putvlc.obj
+.\Debug\quantize.obj
+.\Debug\ratectl.obj
+.\Debug\readpic.obj
+.\Debug\stats.obj
+.\Debug\transfrm.obj
+.\Debug\types.obj
+.\Debug\writepic.obj
+]
+Creating command line "link.exe -lib @C:\TEMP\RSP61.tmp"
+<h3>Output Window</h3>
+Compiling...
+conform.c
+fdctref.c
+idct.c
+motionest.c
+motionsearch.c
+mpeg2enc.c
+MpegEnc.cpp
+predict.c
+putbits.c
+puthdr.c
+putmpg.c
+putpic.c
+putseq.c
+putvlc.c
+quantize.c
+ratectl.c
+readpic.c
+stats.c
+transfrm.c
+types.c
+writepic.c
+Creating library...
+Creating temporary file "C:\TEMP\RSP62.tmp" with contents
+[
+/nologo /o"Debug/mpg2enc.bsc" 
+.\Debug\conform.sbr
+.\Debug\fdctref.sbr
+.\Debug\idct.sbr
+.\Debug\motionest.sbr
+.\Debug\motionsearch.sbr
+.\Debug\mpeg2enc.sbr
+.\Debug\MpegEnc.sbr
+.\Debug\predict.sbr
+.\Debug\putbits.sbr
+.\Debug\puthdr.sbr
+.\Debug\putmpg.sbr
+.\Debug\putpic.sbr
+.\Debug\putseq.sbr
+.\Debug\putvlc.sbr
+.\Debug\quantize.sbr
+.\Debug\ratectl.sbr
+.\Debug\readpic.sbr
+.\Debug\stats.sbr
+.\Debug\transfrm.sbr
+.\Debug\types.sbr
+.\Debug\writepic.sbr]
+Creating command line "bscmake.exe @C:\TEMP\RSP62.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+mpg2enc.lib - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: mplex - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP63.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/mplex.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\mplex\ac3strm_in.cpp"
+"D:\Data\mjpgTools\mplex\audiostrm_out.cpp"
+"D:\Data\mjpgTools\mplex\bits.cpp"
+"D:\Data\mjpgTools\mplex\buffer.cpp"
+"D:\Data\mjpgTools\mplex\inputstrm.cpp"
+"D:\Data\mjpgTools\mplex\interact.cpp"
+"D:\Data\mjpgTools\mplex\mpastrm_in.cpp"
+"D:\Data\mjpgTools\mplex\multplex.cpp"
+"D:\Data\mjpgTools\mplex\padstrm.cpp"
+"D:\Data\mjpgTools\mplex\stillsstream.cpp"
+"D:\Data\mjpgTools\mplex\systems.cpp"
+"D:\Data\mjpgTools\mplex\types.cpp"
+"D:\Data\mjpgTools\mplex\vector.cpp"
+"D:\Data\mjpgTools\mplex\videostrm_in.cpp"
+"D:\Data\mjpgTools\mplex\videostrm_out.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP63.tmp" 
+Creating temporary file "C:\TEMP\RSP64.tmp" with contents
+[
+/nologo /out:"Debug\mplex.lib" 
+.\Debug\ac3strm_in.obj
+.\Debug\audiostrm_out.obj
+.\Debug\bits.obj
+.\Debug\buffer.obj
+.\Debug\inputstrm.obj
+.\Debug\interact.obj
+.\Debug\mpastrm_in.obj
+.\Debug\multplex.obj
+.\Debug\padstrm.obj
+.\Debug\stillsstream.obj
+.\Debug\systems.obj
+.\Debug\types.obj
+.\Debug\vector.obj
+.\Debug\videostrm_in.obj
+.\Debug\videostrm_out.obj
+]
+Creating command line "link.exe -lib @C:\TEMP\RSP64.tmp"
+<h3>Output Window</h3>
+Compiling...
+ac3strm_in.cpp
+audiostrm_out.cpp
+bits.cpp
+buffer.cpp
+inputstrm.cpp
+interact.cpp
+mpastrm_in.cpp
+multplex.cpp
+padstrm.cpp
+stillsstream.cpp
+systems.cpp
+types.cpp
+vector.cpp
+videostrm_in.cpp
+videostrm_out.cpp
+d:\data\mjpgtools\mplex\videostrm_in.cpp(292) : error C2520: conversion from unsigned __int64 to double not implemented, use signed __int64
+d:\data\mjpgtools\mplex\videostrm_in.cpp(351) : error C2520: conversion from unsigned __int64 to double not implemented, use signed __int64
+Error executing cl.exe.
+Creating temporary file "C:\TEMP\RSP65.tmp" with contents
+[
+/nologo /o"Debug/mplex.bsc" 
+.\Debug\ac3strm_in.sbr
+.\Debug\audiostrm_out.sbr
+.\Debug\bits.sbr
+.\Debug\buffer.sbr
+.\Debug\inputstrm.sbr
+.\Debug\interact.sbr
+.\Debug\mpastrm_in.sbr
+.\Debug\multplex.sbr
+.\Debug\padstrm.sbr
+.\Debug\stillsstream.sbr
+.\Debug\systems.sbr
+.\Debug\types.sbr
+.\Debug\vector.sbr
+.\Debug\videostrm_in.sbr
+.\Debug\videostrm_out.sbr]
+Creating command line "bscmake.exe @C:\TEMP\RSP65.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+mplex.lib - 2 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: tools - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP66.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /Fp"Debug/tools.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Data\mjpgTools\tools\cdjpeg.c"
+"D:\Data\mjpgTools\tools\rdbmp.c"
+"D:\Data\mjpgTools\tools\rdcolmap.c"
+"D:\Data\mjpgTools\tools\rdgif.c"
+"D:\Data\mjpgTools\tools\rdppm.c"
+"D:\Data\mjpgTools\tools\rdrle.c"
+"D:\Data\mjpgTools\tools\rdswitch.c"
+"D:\Data\mjpgTools\tools\rdtarga.c"
+"D:\Data\mjpgTools\tools\tools.cpp"
+"D:\Data\mjpgTools\tools\wrbmp.c"
+"D:\Data\mjpgTools\tools\wrgif.c"
+"D:\Data\mjpgTools\tools\wrppm.c"
+"D:\Data\mjpgTools\tools\wrrle.c"
+"D:\Data\mjpgTools\tools\wrtarga.c"
+]
+Creating command line "cl.exe @C:\TEMP\RSP66.tmp" 
+Creating temporary file "C:\TEMP\RSP67.tmp" with contents
+[
+/nologo /out:"Debug\tools.lib" 
+.\Debug\cdjpeg.obj
+.\Debug\rdbmp.obj
+.\Debug\rdcolmap.obj
+.\Debug\rdgif.obj
+.\Debug\rdppm.obj
+.\Debug\rdrle.obj
+.\Debug\rdswitch.obj
+.\Debug\rdtarga.obj
+.\Debug\tools.obj
+.\Debug\wrbmp.obj
+.\Debug\wrgif.obj
+.\Debug\wrppm.obj
+.\Debug\wrrle.obj
+.\Debug\wrtarga.obj
+]
+Creating command line "link.exe -lib @C:\TEMP\RSP67.tmp"
+<h3>Output Window</h3>
+Compiling...
+cdjpeg.c
+rdbmp.c
+rdcolmap.c
+rdgif.c
+rdppm.c
+rdrle.c
+rdswitch.c
+rdtarga.c
+tools.cpp
+wrbmp.c
+wrgif.c
+wrppm.c
+wrrle.c
+wrtarga.c
+Creating library...
+
+
+
+<h3>Results</h3>
+tools.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -13,6 +13,7 @@ namespace Utilities {
 		public:
 			void Test(String ^stream);
 			long Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
+			long DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
 		};
 	}
 }

@@ -63,6 +63,7 @@
 				AdditionalDependencies="$(NoInherit) strmiids.lib winmm.lib gdi32.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="C:\Program Files\Microsoft DirectX SDK (December 2005)\Lib\x86;C:\Program Files\Microsoft Platform SDK\Lib"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"

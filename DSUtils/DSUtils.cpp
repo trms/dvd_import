@@ -429,3 +429,76 @@ cleanup:
     CoUninitialize();
     return(hr);
 }
+
+long Utilities::DVDImport::DSUtils::DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs)
+{
+    HRESULT hr = S_OK;
+	CMemReader *rdr = 0;
+	int vobCount = vobs->Count / 2;
+	int cellCount = ranges->Count / 2;
+	LPTSTR *vobNames = new LPWSTR[vobCount];
+	int *vobSectors = new int[vobCount];
+	int *cellStarts = new int[cellCount];
+	int *cellEnds = new int[cellCount];
+	System::Collections::ArrayList ^stringList = gcnew System::Collections::ArrayList();
+
+	// load vob info
+	for(int i = 0; i < vobCount; i++)
+	{
+		IntPtr str = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(vobs[i * 2]->ToString());
+		LPTSTR file = (LPTSTR)str.ToPointer();
+		stringList->Add(str);
+		vobNames[i] = file;
+		vobSectors[i] = System::Convert::ToInt32(vobs[(i * 2) + 1]);
+	}
+
+	// load cell info
+	for(int i = 0; i < cellCount; i++)
+	{
+		cellStarts[i] = (int)ranges[i * 2];
+		cellEnds[i] = (int)ranges[(i * 2) + 1];
+	}
+
+	// this type seems to work for a vob stream
+    CMediaType mt;
+    mt.majortype = MEDIATYPE_Stream;
+    mt.subtype = MEDIASUBTYPE_MPEG1System;
+
+	CoInitialize(NULL);
+
+    CVOBStream Stream(vobCount, vobNames, vobSectors, cellCount, cellStarts, cellEnds);
+
+    rdr = new CMemReader(&Stream, &mt, &hr);
+    if(FAILED(hr) || rdr == NULL)
+		goto cleanup;
+
+    //  Make sure we don't accidentally go away!
+    rdr->AddRef();
+
+    IFilterGraph *pFG = NULL;
+    hr = SelectAndRender(rdr, &pFG);
+
+    if(SUCCEEDED(hr))
+    {
+        //  Play the file
+        HRESULT hr = PlayFileWait(pFG);
+        if(FAILED(hr))
+			goto cleanup;
+    }
+
+//	if(rdr != 0)
+//        delete rdr;
+    rdr->Release();
+	RELEASE(pFG);
+
+cleanup:
+	for(int i = 0; i < stringList->Count; i++)
+		System::Runtime::InteropServices::Marshal::FreeHGlobal((IntPtr)stringList[i]);
+	delete vobNames;
+	delete vobSectors;
+	delete cellStarts;
+	delete cellEnds;
+
+    CoUninitialize();
+    return(hr);
+}
