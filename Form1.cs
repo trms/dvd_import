@@ -52,6 +52,7 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.TextBox textBox4;
 		private System.Windows.Forms.Button button6;
 		private TreeView treeView1;
+		private DSUtils m_ds = null;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -711,20 +712,9 @@ namespace Utilities.DVDImport
 				int audPacks = 0;
 				int navPacks = 0;
 				//FileStream vobOut = File.Create("test.vob");
-				DSUtils ds = new DSUtils();
-				ArrayList ranges = new ArrayList();
-				ArrayList vobNames = new ArrayList();
-				for (int c = 0; c < cells.Count; c++)
-				{
-					ranges.Add(cells[c].FirstSector);
-					ranges.Add(cells[c].LastSector);
-				}
-				for (int v = 0; v < vobs.Count; v++)
-				{
-					vobNames.Add(vobs[v].FileInfo.FullName);
-					vobNames.Add(vobs[v].Sectors);
-				}
-				ds.Preview(ranges, vobNames);
+				
+
+
 				/*foreach (IFOParse.Cell cell in cells)
 				{
 					label2.Text = cell.CellID + " " + cell.FirstSector + "-" + cell.LastSector;
@@ -1348,63 +1338,103 @@ namespace Utilities.DVDImport
 		}
 
 		#region Video Playback
-		private Video m_video = null;
-		//private Thread m_videoThread = null;
-		private bool stopped = false;
+		private Thread m_videoThread = null;
 		private void PlaybackProgress()
 		{
-			if(m_video == null)
-				return;
-
-			while(stopped == false && m_video != null && (m_video.Playing || m_video.Paused))
+			lock (this)
 			{
-				if(m_video.Duration != 0 && m_video.CurrentPosition >= m_video.Duration)
-					break;
-				Thread.Sleep(100);
+				if (m_ds == null)
+					return;
 			}
 
-			m_video.Stop();
-			m_video.Dispose();
-			m_video = null;
-			//m_videoThread = null;
+			while(true)
+			{
+				lock (this)
+				{
+					if (m_ds.IsPlaying() == false)
+						break;
+				}
+				Thread.Sleep(250);
+			}
+
+			lock (this)
+			{
+				//m_ds.Stop();
+				//m_ds = null;
+				//m_videoThread = null;
+			}
 		}
 
 		private void button3_Click(object sender, System.EventArgs e)
 		{
-			if(m_video != null)
-				return;
+			lock (this)
+			{
+				List<IFOParse.VOB> vobs = null;
+				IFOParse.ProgramChain pgc = null;
+				List<IFOParse.Cell> cells = null;
+				if (treeView1.SelectedNode == null)
+					return;
+				if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
+				{
+					// got single vob file
+					FileInfo fi = (FileInfo)treeView1.SelectedNode.Tag;
+					IFOParse.VOB v = new IFOParse.VOB(fi.FullName);
+					vobs = new List<IFOParse.VOB>();
+					vobs.Add(v);
 
-			/*if(listBox1.SelectedIndex == -1)
-				return;
+					// create dummy cell list
+					cells = new List<IFOParse.Cell>();
+					IFOParse.Cell c = new IFOParse.Cell();
+					c.FirstSector = 0;
+					c.LastSector = (int)v.LastSector;
+					cells.Add(c);
+				}
+				else if (treeView1.SelectedNode.Tag.GetType() == typeof(IFOParse.ProgramChain))
+				{
+					pgc = (IFOParse.ProgramChain)treeView1.SelectedNode.Tag;
+					vobs = pgc.Title.VOBs;
+					cells = pgc.Cells;
+				}
 
-			string filename = titles[listBox1.SelectedIndex].ToString();
-			Size size = panel1.Size;
-			filename = filename.Replace("0.IFO", "1.VOB");
-			m_video = new Video(filename);
-			m_video.Owner = panel1;
-			panel1.Size = size;
-			m_video.Size = size;
-			stopped = false;
-			m_video.Play();
-			Thread m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
-			m_videoThread.Start();*/
+
+				m_ds = new DSUtils();
+				ArrayList ranges = new ArrayList();
+				ArrayList vobNames = new ArrayList();
+				for (int c = 0; c < cells.Count; c++)
+				{
+					ranges.Add(cells[c].FirstSector);
+					ranges.Add(cells[c].LastSector);
+				}
+				for (int v = 0; v < vobs.Count; v++)
+				{
+					vobNames.Add(vobs[v].FileInfo.FullName);
+					vobNames.Add(vobs[v].Sectors);
+				}
+				m_ds.Preview(ranges, vobNames, panel1.Handle);
+
+				m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
+				m_videoThread.Start();
+			}
 		}
 
 		private void button4_Click(object sender, System.EventArgs e)
 		{
-			if(m_video == null)
-				return;
-			stopped = true;
+			lock (this)
+			{
+				if (m_ds == null)
+					return;
+				m_ds.Stop();
+			}
 		}
 
 		private void button5_Click(object sender, System.EventArgs e)
 		{
-			if(m_video == null)
-				return;
-			if(m_video.Paused)
-				m_video.Play();
-			else
-				m_video.Pause();
+			lock (this)
+			{
+				if (m_ds == null)
+					return;
+				m_ds.Pause();
+			}
 		}
 		#endregion
 
@@ -1418,11 +1448,13 @@ namespace Utilities.DVDImport
 			if (e.Node.Nodes.Count > 0)
 			{
 				button2.Enabled = false;
+				groupBox2.Enabled = false;
 				textBox3.Text = "";
 			}
 			else
 			{
 				button2.Enabled = true;
+				groupBox2.Enabled = true;
 
 				if (e.Node.Parent == null)
 				{

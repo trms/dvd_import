@@ -5,20 +5,6 @@
 using namespace System;
 #define RELEASE(i) {if (i) i->Release(); i = NULL;}
 
-namespace Utilities {
-	namespace DVDImport {
-
-		public ref class DSUtils
-		{
-		public:
-			void Test(String ^stream);
-			long Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
-			long DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
-		};
-	}
-}
-
-
 class CVOBStream : public CAsyncStream
 {
 public:
@@ -37,6 +23,7 @@ public:
 		m_vobNames = vobNames;
 		m_vobSectors = vobSectors;
 		m_vobFiles = new HANDLE[vobCount];
+
 		for(int i = 0; i < vobCount; i++)
 		{
 			m_vobFiles[i] = CreateFile(m_vobNames[i],
@@ -257,3 +244,21 @@ public:
         m_mt = *pmt;
     }
 };
+
+
+namespace Utilities {
+	namespace DVDImport {
+
+		public ref class DSUtils
+		{
+		public:
+			void Test(String ^stream);
+			long Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs, System::IntPtr hwnd);
+			void Stop();
+			void Pause();
+			bool IsPlaying();
+			long DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
+
+		};
+	}
+}

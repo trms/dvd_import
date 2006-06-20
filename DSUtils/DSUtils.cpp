@@ -29,9 +29,13 @@
 DEFINE_GUID(CLSID_AC3ParserFilter,
 0x280A3020, 0x86CF, 0x11D1, 0xAB, 0xE6, 0x00, 0xA0, 0xC9, 0x05, 0xF3, 0x75);
 
-/*  Function prototypes */
-HRESULT SelectAndRender(CMemReader *pReader, IFilterGraph **pFG);
-HRESULT PlayFileWait(IFilterGraph *pFG);
+IMediaControl *pMC = 0;
+IMediaEvent   *pME = 0;
+IVideoWindow  *pVW = 0;
+IFilterGraph *pFG = 0;
+CMemReader *rdr = 0;
+bool m_paused = false;
+
 
 IPin *GetPin(IBaseFilter *pFilter, PIN_DIRECTION dir)
 {
@@ -135,17 +139,16 @@ HRESULT SelectAndRender(CMemReader *pReader, IFilterGraph **ppFG)
 }
 
 
-HRESULT PlayFileWait(IFilterGraph *pFG)
+HRESULT PlayFile(IFilterGraph *pFG, HWND parent)
 {
     CheckPointer(pFG,E_POINTER);
 
     HRESULT hr;
-    IMediaControl *pMC=0;
-    IMediaEvent   *pME=0;
 
     hr = pFG->QueryInterface(IID_IMediaControl, (void **)&pMC);
     if(FAILED(hr))
     {
+		pMC = 0;
         return hr;
     }
 
@@ -153,28 +156,40 @@ HRESULT PlayFileWait(IFilterGraph *pFG)
     if(FAILED(hr))
     {
         pMC->Release();
+		pMC = 0;
+		pME = 0;
         return hr;
     }
+
+	hr = pFG->QueryInterface(IID_IVideoWindow, (void **)&pVW);
+    if(FAILED(hr))
+    {
+        pME->Release();
+        pMC->Release();
+ 		pMC = 0;
+		pME = 0;
+		pVW = 0;
+       return hr;
+    }
+
+	pVW->put_Owner((LONG_PTR)parent);
+	pVW->HideCursor(OATRUE);
+	pVW->put_Top(0);
+	pVW->put_Left(0);
+	WINDOWINFO wi;
+	GetWindowInfo(parent, &wi);
+	pVW->put_Width(wi.rcClient.right - wi.rcClient.left);
+	pVW->put_Height(wi.rcClient.bottom - wi.rcClient.top);
+	pVW->put_WindowStyle(WS_CHILD | WS_CLIPSIBLINGS);
 
     OAEVENT oEvent;
     hr = pME->GetEventHandle(&oEvent);
     if(SUCCEEDED(hr))
     {
-		_tprintf(_T("playing\n"));
+		//_tprintf(_T("playing\n"));
         hr = pMC->Run();
-
-        if(SUCCEEDED(hr))
-        {
-            LONG levCode;
-			_tprintf(_T("wait for completion\n"));
-            hr = pME->WaitForCompletion(INFINITE, &levCode);
-        }
-    }
-	_tprintf(_T("done\n"));
-
-    pMC->Release();
-    pME->Release();
-
+		m_paused = false;
+	}
     return hr;
 }
 
@@ -357,10 +372,12 @@ void Utilities::DVDImport::DSUtils::Test(String ^stream)
     return;
 }
 
-long Utilities::DVDImport::DSUtils::Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs)
+long Utilities::DVDImport::DSUtils::Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs, System::IntPtr hwnd)
 {
     HRESULT hr = S_OK;
-	CMemReader *rdr = 0;
+	if(pMC != 0)
+		return(hr);
+
 	int vobCount = vobs->Count / 2;
 	int cellCount = ranges->Count / 2;
 	LPTSTR *vobNames = new LPWSTR[vobCount];
@@ -393,41 +410,91 @@ long Utilities::DVDImport::DSUtils::Preview(System::Collections::ArrayList ^rang
 
 	CoInitialize(NULL);
 
-    CVOBStream Stream(vobCount, vobNames, vobSectors, cellCount, cellStarts, cellEnds);
+    CVOBStream *Stream = new CVOBStream(vobCount, vobNames, vobSectors, cellCount, cellStarts, cellEnds);
 
-    rdr = new CMemReader(&Stream, &mt, &hr);
+    rdr = new CMemReader(Stream, &mt, &hr);
     if(FAILED(hr) || rdr == NULL)
 		goto cleanup;
 
     //  Make sure we don't accidentally go away!
     rdr->AddRef();
 
-    IFilterGraph *pFG = NULL;
+    pFG = 0;
     hr = SelectAndRender(rdr, &pFG);
 
     if(SUCCEEDED(hr))
     {
         //  Play the file
-        HRESULT hr = PlayFileWait(pFG);
+		HRESULT hr = PlayFile(pFG, (HWND)hwnd.ToPointer());
         if(FAILED(hr))
 			goto cleanup;
     }
 
 //	if(rdr != 0)
 //        delete rdr;
-    rdr->Release();
-	RELEASE(pFG);
+    //rdr->Release();
+	//RELEASE(pFG);
 
 cleanup:
-	for(int i = 0; i < stringList->Count; i++)
-		System::Runtime::InteropServices::Marshal::FreeHGlobal((IntPtr)stringList[i]);
-	delete vobNames;
-	delete vobSectors;
-	delete cellStarts;
-	delete cellEnds;
+	//for(int i = 0; i < stringList->Count; i++)
+	//	System::Runtime::InteropServices::Marshal::FreeHGlobal((IntPtr)stringList[i]);
+	//delete vobNames;
+	//delete vobSectors;
+	//delete cellStarts;
+	//delete cellEnds;
 
-    CoUninitialize();
     return(hr);
+}
+
+void Utilities::DVDImport::DSUtils::Stop()
+{
+	if(pMC == 0)
+		return;
+
+	pMC->Stop();
+    
+	pVW->Release();
+    pMC->Release();
+    pME->Release();
+
+	pVW = 0;
+	pMC = 0;
+	pME = 0;
+
+	rdr->Release();
+	RELEASE(pFG);
+	pFG = 0;
+    CoUninitialize();
+
+	m_paused = false;
+}
+
+void Utilities::DVDImport::DSUtils::Pause()
+{
+	if(pMC == 0)
+		return;
+
+	if(m_paused)
+	{
+		pMC->Run();
+		m_paused = false;
+	}
+	else
+	{
+		pMC->Pause();
+		m_paused = true;
+	}
+}
+
+bool Utilities::DVDImport::DSUtils::IsPlaying()
+{
+	LONG levCode;
+	if(pMC == 0)
+		return(false);
+	HRESULT hr = pME->WaitForCompletion(10, &levCode);
+	if(SUCCEEDED(hr) && levCode != EC_COMPLETE)
+		return(true);
+	return(false);
 }
 
 long Utilities::DVDImport::DSUtils::DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs)
@@ -481,7 +548,7 @@ long Utilities::DVDImport::DSUtils::DemuxAudio(System::Collections::ArrayList ^r
     if(SUCCEEDED(hr))
     {
         //  Play the file
-        HRESULT hr = PlayFileWait(pFG);
+        HRESULT hr = PlayFile(pFG, 0);
         if(FAILED(hr))
 			goto cleanup;
     }
