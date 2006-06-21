@@ -66,8 +66,14 @@ namespace Utilities.DVDImport
 				radioButton2.Checked = true;
 			}
 			string tempPath = Settings.Default.TempPath;
-			if(tempPath == null || tempPath == "")
-				tempPath = Environment.GetEnvironmentVariable("TEMP");
+			if (tempPath == null || tempPath == "")
+			{
+				string tmp = Environment.GetEnvironmentVariable("TEMP");
+				if (tmp == null || tmp == "")
+					tmp = "C:\\";
+				DirectoryInfo di = new DirectoryInfo(tmp);
+				tempPath = di.FullName;
+			}
 			linkLabel1.Text = tempPath;
 		}
 
