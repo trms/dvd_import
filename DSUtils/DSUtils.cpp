@@ -34,6 +34,7 @@ IMediaEvent   *pME = 0;
 IVideoWindow  *pVW = 0;
 IFilterGraph *pFG = 0;
 CMemReader *rdr = 0;
+CVOBStream *stream = 0;
 bool m_paused = false;
 
 
@@ -89,7 +90,6 @@ HRESULT SelectAndRender(CMemReader *pReader, IFilterGraph **ppFG)
         return hr;
     }
 
-	  _tprintf(_T("got inst\n"));
     /*  Add our filter */
     hr = (*ppFG)->AddFilter(pReader, 0);
 
@@ -98,7 +98,6 @@ HRESULT SelectAndRender(CMemReader *pReader, IFilterGraph **ppFG)
         return hr;
     }
 
-	  _tprintf(_T("added filter\n"));
     /*  Get a GraphBuilder interface from the filter graph */
     IGraphBuilder *pBuilder;
 
@@ -107,7 +106,6 @@ HRESULT SelectAndRender(CMemReader *pReader, IFilterGraph **ppFG)
     {
         return hr;
     }
-	  _tprintf(_T("got gb\n"));
 
 	IPin *pPin = GetPin(pReader, PINDIR_OUTPUT);
 
@@ -131,8 +129,6 @@ HRESULT SelectAndRender(CMemReader *pReader, IFilterGraph **ppFG)
 	if(pPin != 0)
 		hr = pBuilder->Render(pPin);
 
-
-	  _tprintf(_T("rendered\n"));
     /* Release interface and return */
     pBuilder->Release();
     return hr;
@@ -182,14 +178,14 @@ HRESULT PlayFile(IFilterGraph *pFG, HWND parent)
 	pVW->put_Height(wi.rcClient.bottom - wi.rcClient.top);
 	pVW->put_WindowStyle(WS_CHILD | WS_CLIPSIBLINGS);
 
-    OAEVENT oEvent;
-    hr = pME->GetEventHandle(&oEvent);
-    if(SUCCEEDED(hr))
-    {
+    //OAEVENT oEvent;
+    //hr = pME->GetEventHandle(&oEvent);
+    //if(SUCCEEDED(hr))
+    //{
 		//_tprintf(_T("playing\n"));
         hr = pMC->Run();
 		m_paused = false;
-	}
+	//}
     return hr;
 }
 
@@ -410,9 +406,8 @@ long Utilities::DVDImport::DSUtils::Preview(System::Collections::ArrayList ^rang
 
 	CoInitialize(NULL);
 
-    CVOBStream *Stream = new CVOBStream(vobCount, vobNames, vobSectors, cellCount, cellStarts, cellEnds);
-
-    rdr = new CMemReader(Stream, &mt, &hr);
+    stream = new CVOBStream(vobCount, vobNames, vobSectors, cellCount, cellStarts, cellEnds);
+    rdr = new CMemReader(stream, &mt, &hr);
     if(FAILED(hr) || rdr == NULL)
 		goto cleanup;
 
@@ -436,12 +431,12 @@ long Utilities::DVDImport::DSUtils::Preview(System::Collections::ArrayList ^rang
 	//RELEASE(pFG);
 
 cleanup:
-	//for(int i = 0; i < stringList->Count; i++)
-	//	System::Runtime::InteropServices::Marshal::FreeHGlobal((IntPtr)stringList[i]);
-	//delete vobNames;
-	//delete vobSectors;
-	//delete cellStarts;
-	//delete cellEnds;
+	for(int i = 0; i < stringList->Count; i++)
+		System::Runtime::InteropServices::Marshal::FreeHGlobal((IntPtr)stringList[i]);
+	delete vobNames;
+	delete vobSectors;
+	delete cellStarts;
+	delete cellEnds;
 
     return(hr);
 }
@@ -451,22 +446,18 @@ void Utilities::DVDImport::DSUtils::Stop()
 	if(pMC == 0)
 		return;
 
-	pMC->Stop();
-    
-	pVW->Release();
-    pMC->Release();
-    pME->Release();
-
-	pVW = 0;
-	pMC = 0;
-	pME = 0;
-
-	rdr->Release();
-	RELEASE(pFG);
-	pFG = 0;
-    CoUninitialize();
-
-	m_paused = false;
+	if(SUCCEEDED(pMC->Stop()))
+	{
+		rdr->Release();
+		RELEASE(pVW);
+		RELEASE(pMC);
+		RELEASE(pME);
+		RELEASE(pFG);
+		delete stream;
+		stream = 0;
+		CoUninitialize();
+		m_paused = false;
+	}
 }
 
 void Utilities::DVDImport::DSUtils::Pause()
@@ -491,8 +482,10 @@ bool Utilities::DVDImport::DSUtils::IsPlaying()
 	LONG levCode;
 	if(pMC == 0)
 		return(false);
-	HRESULT hr = pME->WaitForCompletion(10, &levCode);
-	if(SUCCEEDED(hr) && levCode != EC_COMPLETE)
+	if(m_paused)
+		return(true);
+	HRESULT hr = pME->WaitForCompletion(0, &levCode);
+	if(hr == E_ABORT || (SUCCEEDED(hr) && levCode == 0))
 		return(true);
 	return(false);
 }

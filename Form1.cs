@@ -53,6 +53,10 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.Button button6;
 		private TreeView treeView1;
 		private DSUtils m_ds = null;
+		private Button button7;
+		private TrackBar trackBar1;
+		private Label label7;
+		private Label label8;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -121,10 +125,15 @@ namespace Utilities.DVDImport
 			this.label6 = new System.Windows.Forms.Label();
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.button7 = new System.Windows.Forms.Button();
+			this.trackBar1 = new System.Windows.Forms.TrackBar();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -381,10 +390,52 @@ namespace Utilities.DVDImport
 			this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
+			// button7
+			// 
+			this.button7.Location = new System.Drawing.Point(623, 248);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(75, 23);
+			this.button7.TabIndex = 21;
+			this.button7.Text = "Options...";
+			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.button7_Click);
+			// 
+			// trackBar1
+			// 
+			this.trackBar1.Location = new System.Drawing.Point(368, 197);
+			this.trackBar1.Maximum = 20;
+			this.trackBar1.Minimum = -20;
+			this.trackBar1.Name = "trackBar1";
+			this.trackBar1.Size = new System.Drawing.Size(104, 42);
+			this.trackBar1.TabIndex = 22;
+			this.trackBar1.TickFrequency = 5;
+			this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+			// 
+			// label7
+			// 
+			this.label7.Location = new System.Drawing.Point(290, 197);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(72, 19);
+			this.label7.TabIndex = 23;
+			this.label7.Text = "Audio Level:";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(290, 216);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(72, 19);
+			this.label8.TabIndex = 24;
+			this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(760, 320);
+			this.Controls.Add(this.label8);
+			this.Controls.Add(this.label7);
+			this.Controls.Add(this.trackBar1);
+			this.Controls.Add(this.button7);
 			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.textBox4);
@@ -409,6 +460,7 @@ namespace Utilities.DVDImport
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -693,9 +745,8 @@ namespace Utilities.DVDImport
 				}
 				#endregion
 
-				int videoOffset = 0;
 				int audioOffset = 0;
-				int msOffset = 0;
+				int videoOffset = 0;
 				string audio = null;
 				string video = null;
 				byte[] buf = new byte[2048];
@@ -711,11 +762,11 @@ namespace Utilities.DVDImport
 				int vidPacks = 0;
 				int audPacks = 0;
 				int navPacks = 0;
-				//FileStream vobOut = File.Create("test.vob");
+				FileStream vobOut = File.Create("test.vob");
 				
 
 
-				/*foreach (IFOParse.Cell cell in cells)
+				foreach (IFOParse.Cell cell in cells)
 				{
 					label2.Text = cell.CellID + " " + cell.FirstSector + "-" + cell.LastSector;
 					bool inCell = false;
@@ -743,8 +794,8 @@ namespace Utilities.DVDImport
 						switch (systemCode)
 						{
 							case AC3_DETECT_BYTES:
-								if (!inCell)
-									break;
+								//if (!inCell)
+								//	break;
 								audPacks++;
 								#region write non-mpeg audio data to temp file
 								UInt16 flags = ReadWord(buf, i);
@@ -795,7 +846,7 @@ namespace Utilities.DVDImport
 								else
 									continue;
 								FileStream w = null;
-								if (writers.Contains(name))
+								if (writers.ContainsKey(name))
 									w = (FileStream)writers[name];
 								else
 								{
@@ -809,8 +860,8 @@ namespace Utilities.DVDImport
 								#endregion
 								break;
 							case VID_DETECT_BYTES:
-								if (!inCell)
-									break;
+								//if (!inCell)
+								//	break;
 								vidPacks++;
 								#region write mpeg video to temp file
 								flags = ReadWord(buf, i);
@@ -835,7 +886,7 @@ namespace Utilities.DVDImport
 								string vname = "video.m2v";
 								video = vname;
 								FileStream vw = null;
-								if (writers.Contains(vname))
+								if (writers.ContainsKey(vname))
 									vw = (FileStream)writers[vname];
 								else
 								{
@@ -847,8 +898,8 @@ namespace Utilities.DVDImport
 								#endregion
 								break;
 							case AUD_DETECT_BYTES:
-								if (!inCell)
-									break;
+								//if (!inCell)
+								//	break;
 								audPacks++;
 								#region write mpeg audio to temp file
 								flags = ReadWord(buf, i);
@@ -870,11 +921,11 @@ namespace Utilities.DVDImport
 								else
 									i += b;
 								#endregion
-								string aname = "vob.m2a";
+								string aname = "vob.mp2";
 								if (audio == null)
 									audio = aname;
 								FileStream aw = null;
-								if (writers.Contains(aname))
+								if (writers.ContainsKey(aname))
 									aw = (FileStream)writers[aname];
 								else
 								{
@@ -903,11 +954,9 @@ namespace Utilities.DVDImport
 						vobOut.Write(buf, 0, buf.Length);
 					}
 				}
-				vobOut.Close();*/
+				vobOut.Close();
 				progressBar1.Value++;
 				return;
-				// calculate offset of video to audio
-				msOffset = videoOffset - audioOffset;
 				if(bs != null)
 					bs.TRMSFinalize();
 				bs = null;
@@ -916,144 +965,14 @@ namespace Utilities.DVDImport
 					FileStream fs = (FileStream)writers[name];
 					fs.Close();
 
+					if (name.EndsWith(".m2v"))
+						video = name;
+					else if (name.EndsWith(".ac3") || name.EndsWith(".dts") || name.EndsWith(".wav") || name.EndsWith(".mp2"))
+						audio = name;
+
 					// delete anything after the first audio and video streams in the file
 					if(audio != null && name != video && name != audio)
 						File.Delete(name);
-
-					if(name.ToLower().EndsWith(".ac3"))
-					{
-						label2.Text = "Converting AC3 to wav...";
-						string wav = name;
-						wav = wav.Replace(".ac3", ".wav");
-						#region decode ac3
-						try
-						{
-							File.Delete(wav);
-						}
-						catch{}
-						FileInfo fi = new FileInfo(Application.ExecutablePath);
-						string command = fi.Directory + "\\ac3dec.exe";
-						Process p = new Process();
-						p.StartInfo.UseShellExecute = false;
-						p.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-						p.StartInfo.RedirectStandardOutput = true;
-						p.StartInfo.RedirectStandardError = true;
-						p.StartInfo.FileName = command;
-						p.StartInfo.Arguments = name + " -pcmwav " + wav;
-						p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-						p.StartInfo.CreateNoWindow = true;
-						p.Start();
-						string line;
-						bool success = false;
-						StreamReader sr = p.StandardOutput;
-						while((line = sr.ReadLine()) != null)
-						{
-							if(line == "Decoding complete.")
-								success = true;
-						}
-						p.WaitForExit();
-						#endregion
-						File.Delete(name);
-						if(success)
-						{
-							if(audio == null)
-								audio = wav;
-						}
-						else
-						{
-							try
-							{
-								File.Delete(wav);
-							}
-							catch{}
-						}
-					}
-					else if(name.ToLower().EndsWith(".wav"))
-					{
-						label2.Text = "Writing LPCM wave header...";
-						#region Write out .wav file header
-						FileInfo fi = new FileInfo(name);
-						FileStream w = File.OpenWrite(name);
-						byte[] hdr = new byte[44];
-						// ChunkID
-						hdr[0] = (byte)'R';
-						hdr[1] = (byte)'I';
-						hdr[2] = (byte)'F';
-						hdr[3] = (byte)'F';
-
-						// ChunkSize
-						long size = fi.Length - 8;
-						hdr[7] = (byte)(size & 0xFF000000 >> 24);
-						hdr[6] = (byte)(size & 0xFF0000 >> 16);
-						hdr[5] = (byte)(size & 0xFF00 >> 8);
-						hdr[4] = (byte)(size & 0xFF);
-
-						// Format
-						hdr[8] = (byte)'W';
-						hdr[9] = (byte)'A';
-						hdr[10] = (byte)'V';
-						hdr[11] = (byte)'E';
-
-						// Subchunk1ID
-						hdr[12] = (byte)'f';
-						hdr[13] = (byte)'m';
-						hdr[14] = (byte)'t';
-						hdr[15] = (byte)' ';
-
-						// Subchunk1Size
-						hdr[19] = 0;
-						hdr[18] = 0;
-						hdr[17] = 0;
-						hdr[16] = 16; // size of format subchunk, 16 = PCM
-
-						// AudioFormat
-						hdr[21] = 0;
-						hdr[20] = 1; // 1 = PCM
-
-						// NumChannels
-						hdr[23] = 0;
-						hdr[22] = 2; // Stereo
-
-						// SampleRate
-						hdr[27] = 0;
-						hdr[26] = 0;
-						hdr[25] = 0xBB;
-						hdr[24] = 0x80; // 48kHz
-
-						// ByteRate
-						hdr[31] = 0;
-						hdr[30] = 0x02;
-						hdr[29] = 0xEE;
-						hdr[28] = 0; // == SampleRate * NumChannels * BitsPerSample/8
-
-						// BlockAlign
-						hdr[33] = 0;
-						hdr[32] = 4; // == NumChannels * BitsPerSample/8
-
-						// BitsPerSample
-						hdr[35] = 0;
-						hdr[34] = 16;
-
-						// Subchunk2ID
-						hdr[36] = (byte)'d';
-						hdr[37] = (byte)'a';
-						hdr[38] = (byte)'t';
-						hdr[39] = (byte)'a';
-
-						// Subchunk2Size
-						size = fi.Length - hdr.Length;
-						hdr[43] = (byte)(size & 0xFF000000 >> 24);
-						hdr[42] = (byte)(size & 0xFF0000 >> 16);
-						hdr[41] = (byte)(size & 0xFF00 >> 8);
-						hdr[40] = (byte)(size & 0xFF);
-
-						w.Seek(0, SeekOrigin.Begin); // write header at beginning of file
-						w.Write(hdr, 0, hdr.Length);
-						w.Close();
-						#endregion
-						if(audio == null)
-							audio = name;
-					}
 				}
 				writers.Clear();
 				foreach (FileStream fs in readers.Values)
@@ -1063,102 +982,11 @@ namespace Utilities.DVDImport
 				readers.Clear();
 				progressBar1.Value++;
 
-				#region encode audio to mpeg if it isn't
-				FileInfo appPath = new FileInfo(Application.ExecutablePath);
-				Process process = null;
-				if(audio != null && audio.EndsWith(".wav"))
-				{
-					label2.Text = "Converting wav to mpeg audio " + audio + "...";
-					string newAudio = audio.Replace(".wav", ".mp2");
-					string lameCommand = appPath.Directory + "\\tooLame.exe";
-					process= new Process();
-					process.StartInfo.UseShellExecute = false;
-					process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-					process.StartInfo.RedirectStandardOutput = true;
-					process.StartInfo.RedirectStandardError = true;
-					process.StartInfo.FileName = lameCommand;
-					string extraOptions = " -g";
-					if (System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions") != null)
-						extraOptions = " " + System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions")[0];
-					process.StartInfo.Arguments = "-s 48" + extraOptions + " " + audio + " " + newAudio;
-					process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-					process.StartInfo.CreateNoWindow = true;
-					process.Start();
-					string line;
-					bool success = false;
-					StreamReader sr = process.StandardError;
-					while((line = sr.ReadLine()) != null)
-					{
-						if(line == "Done")
-							success = true;
-					}
-					process.WaitForExit();
-					if(success)
-					{
-						File.Delete(audio);
-						audio = newAudio;
-					}
-					else
-					{
-						try
-						{
-							File.Delete(audio);
-						}
-						catch{}
-						try
-						{
-							File.Delete(newAudio);
-						}
-						catch{}
-						audio = null;
-					}
-				}
-				#endregion
+				audio = ConvertAudio(audio);
 				progressBar1.Value++;
 
-				#region multiplex elementary streams together
-				string output = saveFile;
-				label2.Text = "Multiplexing with " + msOffset + "ms offset: " + output + "...";
-#if MPLEX
-				string mplexCommand = appPath.Directory + "\\mplex.exe";
-#else
-			string mplexCommand = appPath.Directory + "\\tcmplex-panteltje.exe";
-#endif
-				process = new Process();
-				process.StartInfo.UseShellExecute = false;
-				process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-				process.StartInfo.RedirectStandardOutput = true;
-				process.StartInfo.RedirectStandardError = true;
-				process.StartInfo.FileName = mplexCommand;
-#if MPLEX
-				process.StartInfo.Arguments = "-M -S 0 -f 3 -O " + msOffset.ToString() + "ms -o \"" + output + "\" \"" + video + "\" \"" + audio + "\"";
-#else
-			process.StartInfo.Arguments = "-i \"" + video + "\" -0 \"" + audio + "\" -o \"" + output + "\" -m 2 -D " + videoOffset + "," + audioOffset;
-#endif
-				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				process.StartInfo.CreateNoWindow = true;
-				process.Start();
-				string mplexLine;
-				StreamReader mplexsr = process.StandardError;
-				bool failed = false;
-				string message = "";
-				while((mplexLine = mplexsr.ReadLine()) != null)
-				{
-					if(mplexLine.StartsWith("**ERROR:"))
-					{
-						message = mplexLine;
-						failed = true;
-					}
-				}
-				process.WaitForExit();
-				#endregion
-
-				progressBar1.Value++;
-				File.Delete(audio);
-				File.Delete(video);
-
-				if(failed)
-					MessageBox.Show(message);
+				MultiplexGlue mg = new MultiplexGlue();
+				mg.Multiplex(video, audio, Offset(cells, vobs), saveFile);
 			}
 			catch(Exception ex)
 			{
@@ -1175,6 +1003,194 @@ namespace Utilities.DVDImport
 				Cursor = Cursors.Default;
 				progressBar1.Value = 0;
 			}
+		}
+
+		private string ConvertAudio(string filename)
+		{
+			string output = filename;
+			FileInfo appPath = new FileInfo(Application.ExecutablePath);
+
+			if (filename.ToLower().EndsWith(".ac3"))
+			{
+				label2.Text = "Converting AC3 to wav...";
+				output = output.Replace(".ac3", ".wav");
+				#region decode ac3
+				try
+				{
+					File.Delete(output);
+				}
+				catch { }
+				string command = appPath.Directory + "\\ac3dec.exe";
+				if (File.Exists(command) == false)
+					return (null);
+				Process p = new Process();
+				p.StartInfo.UseShellExecute = false;
+				p.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+				p.StartInfo.RedirectStandardOutput = true;
+				p.StartInfo.RedirectStandardError = true;
+				p.StartInfo.FileName = command;
+				p.StartInfo.Arguments = filename + " -pcmwav " + output;
+				p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				p.StartInfo.CreateNoWindow = true;
+				p.Start();
+				string line;
+				bool success = false;
+				StreamReader sr = p.StandardOutput;
+				while ((line = sr.ReadLine()) != null)
+				{
+					if (line == "Decoding complete.")
+						success = true;
+				}
+				p.WaitForExit();
+				#endregion
+				File.Delete(filename);
+				if(success == false)
+				{
+					try
+					{
+						File.Delete(output);
+					}
+					catch { }
+					return (null);
+				}
+			}
+			else if (filename.ToLower().EndsWith(".wav"))
+			{
+				label2.Text = "Writing LPCM wave header...";
+				#region Write out .wav file header
+				FileInfo fi = new FileInfo(filename);
+				FileStream w = File.OpenWrite(filename);
+				byte[] hdr = new byte[44];
+				// ChunkID
+				hdr[0] = (byte)'R';
+				hdr[1] = (byte)'I';
+				hdr[2] = (byte)'F';
+				hdr[3] = (byte)'F';
+
+				// ChunkSize
+				long size = fi.Length - 8;
+				hdr[7] = (byte)(size & 0xFF000000 >> 24);
+				hdr[6] = (byte)(size & 0xFF0000 >> 16);
+				hdr[5] = (byte)(size & 0xFF00 >> 8);
+				hdr[4] = (byte)(size & 0xFF);
+
+				// Format
+				hdr[8] = (byte)'W';
+				hdr[9] = (byte)'A';
+				hdr[10] = (byte)'V';
+				hdr[11] = (byte)'E';
+
+				// Subchunk1ID
+				hdr[12] = (byte)'f';
+				hdr[13] = (byte)'m';
+				hdr[14] = (byte)'t';
+				hdr[15] = (byte)' ';
+
+				// Subchunk1Size
+				hdr[19] = 0;
+				hdr[18] = 0;
+				hdr[17] = 0;
+				hdr[16] = 16; // size of format subchunk, 16 = PCM
+
+				// AudioFormat
+				hdr[21] = 0;
+				hdr[20] = 1; // 1 = PCM
+
+				// NumChannels
+				hdr[23] = 0;
+				hdr[22] = 2; // Stereo
+
+				// SampleRate
+				hdr[27] = 0;
+				hdr[26] = 0;
+				hdr[25] = 0xBB;
+				hdr[24] = 0x80; // 48kHz
+
+				// ByteRate
+				hdr[31] = 0;
+				hdr[30] = 0x02;
+				hdr[29] = 0xEE;
+				hdr[28] = 0; // == SampleRate * NumChannels * BitsPerSample/8
+
+				// BlockAlign
+				hdr[33] = 0;
+				hdr[32] = 4; // == NumChannels * BitsPerSample/8
+
+				// BitsPerSample
+				hdr[35] = 0;
+				hdr[34] = 16;
+
+				// Subchunk2ID
+				hdr[36] = (byte)'d';
+				hdr[37] = (byte)'a';
+				hdr[38] = (byte)'t';
+				hdr[39] = (byte)'a';
+
+				// Subchunk2Size
+				size = fi.Length - hdr.Length;
+				hdr[43] = (byte)(size & 0xFF000000 >> 24);
+				hdr[42] = (byte)(size & 0xFF0000 >> 16);
+				hdr[41] = (byte)(size & 0xFF00 >> 8);
+				hdr[40] = (byte)(size & 0xFF);
+
+				w.Seek(0, SeekOrigin.Begin); // write header at beginning of file
+				w.Write(hdr, 0, hdr.Length);
+				w.Close();
+				#endregion
+			}
+			#region encode audio to mpeg if it isn't
+			Process process = null;
+			if (output.EndsWith(".wav"))
+			{
+				label2.Text = "Converting wav to mpeg audio " + output + "...";
+				string newAudio = output.Replace(".wav", ".mp2");
+				string lameCommand = appPath.Directory + "\\tooLame.exe";
+				if (File.Exists(lameCommand) == false)
+					return (null);
+				process = new Process();
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+				process.StartInfo.RedirectStandardOutput = true;
+				process.StartInfo.RedirectStandardError = true;
+				process.StartInfo.FileName = lameCommand;
+				string extraOptions = " -g";
+				if (System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions") != null)
+					extraOptions = " " + System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions")[0];
+				process.StartInfo.Arguments = "-s 48" + extraOptions + " " + output + " " + newAudio;
+				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				process.StartInfo.CreateNoWindow = true;
+				process.Start();
+				string line;
+				bool success = false;
+				StreamReader sr = process.StandardError;
+				while ((line = sr.ReadLine()) != null)
+				{
+					if (line == "Done")
+						success = true;
+				}
+				process.WaitForExit();
+				if (success)
+				{
+					File.Delete(output);
+					output = newAudio;
+				}
+				else
+				{
+					try
+					{
+						File.Delete(output);
+					}
+					catch { }
+					try
+					{
+						File.Delete(newAudio);
+					}
+					catch { }
+					return (null);
+				}
+			}
+			#endregion
+			return (output);
 		}
 
 		private void button2_Click(object sender, System.EventArgs e)
@@ -1204,6 +1220,14 @@ namespace Utilities.DVDImport
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
+			if (Settings.Default.IsFirstRun == true)
+			{
+				Settings.Default.Upgrade();
+				Settings.Default.IsFirstRun = false;
+				Settings.Default.Save();
+			}
+
+			SetupControls();
 			//DSUtils ds = new DSUtils();
 			//ds.Test(@"C:\Documents and Settings\sjann\Desktop\t\test.vob");
 			//return;
@@ -1359,9 +1383,9 @@ namespace Utilities.DVDImport
 
 			lock (this)
 			{
-				//m_ds.Stop();
-				//m_ds = null;
-				//m_videoThread = null;
+				m_ds.Stop();
+				m_ds = null;
+				m_videoThread = null;
 			}
 		}
 
@@ -1492,6 +1516,28 @@ namespace Utilities.DVDImport
 		{
 			// don't let the user double click to hide items
 			e.Cancel = true;
+		}
+
+		private void SetupControls()
+		{
+			label7.Visible = Settings.Default.AudioMode;
+			label8.Visible = Settings.Default.AudioMode;
+			trackBar1.Visible = Settings.Default.AudioMode;
+			label8.Text = trackBar1.Value + "dB";
+		}
+
+		private void button7_Click(object sender, EventArgs e)
+		{
+			this.Enabled = false;
+			Options o = new Options();
+			o.ShowDialog();
+			this.Enabled = true;
+			SetupControls();
+		}
+
+		private void trackBar1_Scroll(object sender, EventArgs e)
+		{
+			label8.Text = trackBar1.Value + "dB";
 		}
 	}
 }

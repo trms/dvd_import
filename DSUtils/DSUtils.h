@@ -20,13 +20,13 @@ public:
         m_dwTimeStart = timeGetTime();
 
 		m_vobCount = vobCount;
-		m_vobNames = vobNames;
-		m_vobSectors = vobSectors;
+		//m_vobNames = new LPWSTR[vobCount];
+		m_vobSectors = new int[vobCount];
 		m_vobFiles = new HANDLE[vobCount];
 
 		for(int i = 0; i < vobCount; i++)
 		{
-			m_vobFiles[i] = CreateFile(m_vobNames[i],
+			m_vobFiles[i] = CreateFile(vobNames[i],
                               GENERIC_READ,
                               FILE_SHARE_READ,
                               NULL,
@@ -35,18 +35,33 @@ public:
                               NULL);
 			if(m_vobFiles[i] == INVALID_HANDLE_VALUE)
 				throw("Can't open VOB");
+			m_vobSectors[i] = vobSectors[i];
+			//m_vobNames[i] = new WCHAR[wcslen(vobNames[i])];
+			//wcscpy(m_vobNames[i], vobNames[i]);
 		}
 		m_cellCount = cellCount;
-		m_cellStarts = cellStarts;
-		m_cellEnds = cellEnds;
-
+		// copy cell info
+		m_cellStarts = new int[cellCount];
+		m_cellEnds = new int[cellCount];
+		for(int i = 0; i < cellCount; i++)
+		{
+			m_cellStarts[i] = cellStarts[i];
+			m_cellEnds[i] = cellEnds[i];
+		}
     }
 
 	  ~CVOBStream()
 	  {
 		  for(int i = 0; i < m_vobCount; i++)
+		  {
 			  CloseHandle(m_vobFiles[i]);
+			  //delete m_vobNames[i];
+		  }
 		  delete m_vobFiles;
+		  delete m_vobSectors;
+		  //delete m_vobNames;
+		  delete m_cellStarts;
+		  delete m_cellEnds;
 	  }
 
     HRESULT SetPointer(LONGLONG llPos)
@@ -108,7 +123,7 @@ public:
 				bufOffset += bufLen;
 			}
 			*pdwBytesRead = bufOffset;
-			m_llPosition += *pdwBytesRead;
+			m_llPosition += (LONGLONG)*pdwBytesRead;
 		}
 		catch( ... )
 		{
@@ -147,7 +162,7 @@ private:
     DWORD          m_dwKBPerSec;
     DWORD          m_dwTimeStart;
 	int m_vobCount;
-	LPWSTR *m_vobNames;
+	//LPWSTR *m_vobNames;
 	int *m_vobSectors;
 	HANDLE *m_vobFiles;
 	int m_cellCount;
