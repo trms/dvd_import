@@ -540,6 +540,20 @@ namespace Utilities.DVDImport
 				fs.Write(data, offset + skip, len);
 		}
 
+		private string m_tempPath = "";
+		private string TempPath
+		{
+			get
+			{
+				if (m_tempPath == "")
+				{
+					m_tempPath = Settings.Default.TempPath + "\\" + Guid.NewGuid().ToString() + "\\";
+					Directory.CreateDirectory(m_tempPath);
+				}
+				return (m_tempPath);
+			}
+		}
+
 		private void ReadSector(List<IFOParse.VOB> vobs, byte[] buf, long sector, int offset)
 		{
 			// find which vob has our sector
@@ -696,7 +710,7 @@ namespace Utilities.DVDImport
 					cells = pgc.Cells;
 				}
 
-				string outputDir = "";
+				//string outputDir = "";
 				#region Choose a file, default to last directory used
 				string saveFile = "";
 				saveFileDialog1.FileName = textBox2.Text + "-" + textBox4.Text + "-" + textBox3.Text + ".mpg";
@@ -728,7 +742,7 @@ namespace Utilities.DVDImport
 					{
 						RegistryKey saveKey = Registry.LocalMachine.CreateSubKey(REGISTRY_KEY);
 						saveKey.SetValue("DefaultDirectory", fi.Directory.FullName);
-						outputDir = fi.Directory.FullName;
+						//outputDir = fi.Directory.FullName;
 					}
 					catch{}
 				}
@@ -759,20 +773,20 @@ namespace Utilities.DVDImport
 				//long currentBytes = 0;
 				//int len;
 				//int position = 0;
-				int vidPacks = 0;
-				int audPacks = 0;
-				int navPacks = 0;
-				FileStream vobOut = File.Create("test.vob");
+				//int vidPacks = 0;
+				//int audPacks = 0;
+				//int navPacks = 0;
+				//FileStream vobOut = File.Create(TempPath + "test.vob");
 				
 
 
 				foreach (IFOParse.Cell cell in cells)
 				{
 					label2.Text = cell.CellID + " " + cell.FirstSector + "-" + cell.LastSector;
-					bool inCell = false;
+					//bool inCell = false;
 					// treat a single vob file with no ifo file as all data
-					if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
-						inCell = true;
+					//if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
+						//inCell = true;
 					for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
 					{
 						ReadSector(vobs, buf, sector);
@@ -796,7 +810,7 @@ namespace Utilities.DVDImport
 							case AC3_DETECT_BYTES:
 								//if (!inCell)
 								//	break;
-								audPacks++;
+								//audPacks++;
 								#region write non-mpeg audio data to temp file
 								UInt16 flags = ReadWord(buf, i);
 								i += 2;
@@ -850,7 +864,7 @@ namespace Utilities.DVDImport
 									w = (FileStream)writers[name];
 								else
 								{
-									w = File.Create(name);
+									w = File.Create(TempPath + name);
 									writers[name] = w;
 									if (name.EndsWith(".wav")) // leave room for wav header
 										w.Seek(44, SeekOrigin.Begin);
@@ -862,7 +876,7 @@ namespace Utilities.DVDImport
 							case VID_DETECT_BYTES:
 								//if (!inCell)
 								//	break;
-								vidPacks++;
+								//vidPacks++;
 								#region write mpeg video to temp file
 								flags = ReadWord(buf, i);
 								i += 2;
@@ -890,7 +904,7 @@ namespace Utilities.DVDImport
 									vw = (FileStream)writers[vname];
 								else
 								{
-									vw = File.Create(vname);
+									vw = File.Create(TempPath + vname);
 									writers[vname] = vw;
 								}
 								//SaveData(vw, buf, i, 2048 - i, 1);
@@ -900,7 +914,7 @@ namespace Utilities.DVDImport
 							case AUD_DETECT_BYTES:
 								//if (!inCell)
 								//	break;
-								audPacks++;
+								//audPacks++;
 								#region write mpeg audio to temp file
 								flags = ReadWord(buf, i);
 								i += 2;
@@ -929,7 +943,7 @@ namespace Utilities.DVDImport
 									aw = (FileStream)writers[aname];
 								else
 								{
-									aw = File.Create(aname);
+									aw = File.Create(TempPath + aname);
 									writers[aname] = aw;
 								}
 								//SaveData(aw, buf, i, 2048 - i, 0);
@@ -937,26 +951,25 @@ namespace Utilities.DVDImport
 								#endregion
 								break;
 							case NAV_DETECT_BYTES:
-								navPacks++;
+								//navPacks++;
 								#region find vobID and cellID
 								int cellID = buf[0x422];
 								int vobID = (buf[0x41f] << 8) + buf[0x420];
-								if (cellID == cell.CellID && vobID == cell.VobID)
-									inCell = true;
-								else
-									inCell = false;
+								//if (cellID == cell.CellID && vobID == cell.VobID)
+								//	inCell = true;
+								//else
+								//	inCell = false;
 								#endregion
 								break;
 							default:
 								break;
 						}
 						//if(inCell)
-						vobOut.Write(buf, 0, buf.Length);
+						//vobOut.Write(buf, 0, buf.Length);
 					}
 				}
-				vobOut.Close();
+				//vobOut.Close();
 				progressBar1.Value++;
-				return;
 				if(bs != null)
 					bs.TRMSFinalize();
 				bs = null;
@@ -982,11 +995,11 @@ namespace Utilities.DVDImport
 				readers.Clear();
 				progressBar1.Value++;
 
-				audio = ConvertAudio(audio);
+				audio = ConvertAudio(TempPath + audio);
 				progressBar1.Value++;
 
 				MultiplexGlue mg = new MultiplexGlue();
-				mg.Multiplex(video, audio, Offset(cells, vobs), saveFile);
+				mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
 			}
 			catch(Exception ex)
 			{
@@ -1004,8 +1017,21 @@ namespace Utilities.DVDImport
 				progressBar1.Value = 0;
 			}
 		}
-
 		private string ConvertAudio(string filename)
+		{
+			if (Settings.Default.AudioMode)
+				return (ConvertAudioDS(filename));
+			else
+				return (ConvertAudioOld(filename));
+		}
+
+		private string ConvertAudioDS(string filename)
+		{
+			DSUtils ds = new DSUtils();
+			return (ds.ConvertAudio(filename, trackBar1.Value));
+		}
+
+		private string ConvertAudioOld(string filename)
 		{
 			string output = filename;
 			FileInfo appPath = new FileInfo(Application.ExecutablePath);
@@ -1029,7 +1055,7 @@ namespace Utilities.DVDImport
 				p.StartInfo.RedirectStandardOutput = true;
 				p.StartInfo.RedirectStandardError = true;
 				p.StartInfo.FileName = command;
-				p.StartInfo.Arguments = filename + " -pcmwav " + output;
+				p.StartInfo.Arguments = "\"" + filename + "\" -pcmwav \"" + output + "\"";
 				p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 				p.StartInfo.CreateNoWindow = true;
 				p.Start();
@@ -1156,7 +1182,7 @@ namespace Utilities.DVDImport
 				string extraOptions = " -g";
 				if (System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions") != null)
 					extraOptions = " " + System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions")[0];
-				process.StartInfo.Arguments = "-s 48" + extraOptions + " " + output + " " + newAudio;
+				process.StartInfo.Arguments = "-s 48" + extraOptions + " \"" + output + "\" \"" + newAudio + "\"";
 				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 				process.StartInfo.CreateNoWindow = true;
 				process.Start();
@@ -1228,9 +1254,8 @@ namespace Utilities.DVDImport
 			}
 
 			SetupControls();
-			//DSUtils ds = new DSUtils();
-			//ds.Test(@"C:\Documents and Settings\sjann\Desktop\t\test.vob");
-			//return;
+			DSUtils ds = new DSUtils();
+			ds.ConvertAudio(@"D:\Documents\128.ac3", 0);
 
 
 			comboBox1.Items.Clear();
@@ -1434,7 +1459,7 @@ namespace Utilities.DVDImport
 					vobNames.Add(vobs[v].FileInfo.FullName);
 					vobNames.Add(vobs[v].Sectors);
 				}
-				m_ds.Preview(ranges, vobNames, panel1.Handle);
+				m_ds.Preview(ranges, vobNames, panel1.Handle, trackBar1.Value);
 
 				m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
 				m_videoThread.Start();

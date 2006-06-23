@@ -268,11 +268,12 @@ namespace Utilities {
 		{
 		public:
 			void Test(String ^stream);
-			long Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs, System::IntPtr hwnd);
+			long Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs, System::IntPtr hwnd, int level);
 			void Stop();
 			void Pause();
 			bool IsPlaying();
 			long DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
+			System::String ^ConvertAudio(System::String ^filename, int level);
 
 		};
 	}
