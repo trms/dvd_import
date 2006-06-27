@@ -57,6 +57,9 @@ namespace Utilities.DVDImport
 		private TrackBar trackBar1;
 		private Label label7;
 		private Label label8;
+		private GroupBox groupBox1;
+		private CheckBox checkBox2;
+		private CheckBox checkBox1;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -105,6 +108,12 @@ namespace Utilities.DVDImport
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.label2 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.trackBar1 = new System.Windows.Forms.TrackBar();
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -126,14 +135,12 @@ namespace Utilities.DVDImport
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.button7 = new System.Windows.Forms.Button();
-			this.trackBar1 = new System.Windows.Forms.TrackBar();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
+			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -202,6 +209,69 @@ namespace Utilities.DVDImport
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(248, 184);
 			this.panel1.TabIndex = 6;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.checkBox2);
+			this.groupBox1.Controls.Add(this.checkBox1);
+			this.groupBox1.Controls.Add(this.label7);
+			this.groupBox1.Controls.Add(this.label8);
+			this.groupBox1.Controls.Add(this.trackBar1);
+			this.groupBox1.Location = new System.Drawing.Point(313, 96);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(159, 112);
+			this.groupBox1.TabIndex = 25;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Audio Processing";
+			// 
+			// checkBox2
+			// 
+			this.checkBox2.AutoSize = true;
+			this.checkBox2.Location = new System.Drawing.Point(9, 88);
+			this.checkBox2.Name = "checkBox2";
+			this.checkBox2.Size = new System.Drawing.Size(130, 17);
+			this.checkBox2.TabIndex = 28;
+			this.checkBox2.Text = "Dynamic Compression";
+			this.checkBox2.UseVisualStyleBackColor = true;
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(8, 65);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(72, 17);
+			this.checkBox1.TabIndex = 27;
+			this.checkBox1.Text = "Normalize";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			// 
+			// label7
+			// 
+			this.label7.Location = new System.Drawing.Point(6, 16);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(39, 19);
+			this.label7.TabIndex = 23;
+			this.label7.Text = "Level:";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(6, 39);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(39, 19);
+			this.label8.TabIndex = 24;
+			this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// trackBar1
+			// 
+			this.trackBar1.Location = new System.Drawing.Point(51, 16);
+			this.trackBar1.Maximum = 20;
+			this.trackBar1.Minimum = -20;
+			this.trackBar1.Name = "trackBar1";
+			this.trackBar1.Size = new System.Drawing.Size(104, 42);
+			this.trackBar1.TabIndex = 22;
+			this.trackBar1.TickFrequency = 5;
+			this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
 			// 
 			// button3
 			// 
@@ -400,41 +470,11 @@ namespace Utilities.DVDImport
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
-			// trackBar1
-			// 
-			this.trackBar1.Location = new System.Drawing.Point(368, 197);
-			this.trackBar1.Maximum = 20;
-			this.trackBar1.Minimum = -20;
-			this.trackBar1.Name = "trackBar1";
-			this.trackBar1.Size = new System.Drawing.Size(104, 42);
-			this.trackBar1.TabIndex = 22;
-			this.trackBar1.TickFrequency = 5;
-			this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-			// 
-			// label7
-			// 
-			this.label7.Location = new System.Drawing.Point(290, 197);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(72, 19);
-			this.label7.TabIndex = 23;
-			this.label7.Text = "Audio Level:";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// label8
-			// 
-			this.label8.Location = new System.Drawing.Point(290, 216);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(72, 19);
-			this.label8.TabIndex = 24;
-			this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(760, 320);
-			this.Controls.Add(this.label8);
-			this.Controls.Add(this.label7);
-			this.Controls.Add(this.trackBar1);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.button7);
 			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.label6);
@@ -455,12 +495,14 @@ namespace Utilities.DVDImport
 			this.Text = "DVD Import";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.Load += new System.EventHandler(this.Form1_Load);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1019,68 +1061,7 @@ namespace Utilities.DVDImport
 		}
 		private string ConvertAudio(string filename)
 		{
-			if (Settings.Default.AudioMode)
-				return (ConvertAudioDS(filename));
-			else
-				return (ConvertAudioOld(filename));
-		}
-
-		private string ConvertAudioDS(string filename)
-		{
-			DSUtils ds = new DSUtils();
-			return (ds.ConvertAudio(filename, trackBar1.Value));
-		}
-
-		private string ConvertAudioOld(string filename)
-		{
-			string output = filename;
-			FileInfo appPath = new FileInfo(Application.ExecutablePath);
-
-			if (filename.ToLower().EndsWith(".ac3"))
-			{
-				label2.Text = "Converting AC3 to wav...";
-				output = output.Replace(".ac3", ".wav");
-				#region decode ac3
-				try
-				{
-					File.Delete(output);
-				}
-				catch { }
-				string command = appPath.Directory + "\\ac3dec.exe";
-				if (File.Exists(command) == false)
-					return (null);
-				Process p = new Process();
-				p.StartInfo.UseShellExecute = false;
-				p.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-				p.StartInfo.RedirectStandardOutput = true;
-				p.StartInfo.RedirectStandardError = true;
-				p.StartInfo.FileName = command;
-				p.StartInfo.Arguments = "\"" + filename + "\" -pcmwav \"" + output + "\"";
-				p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				p.StartInfo.CreateNoWindow = true;
-				p.Start();
-				string line;
-				bool success = false;
-				StreamReader sr = p.StandardOutput;
-				while ((line = sr.ReadLine()) != null)
-				{
-					if (line == "Decoding complete.")
-						success = true;
-				}
-				p.WaitForExit();
-				#endregion
-				File.Delete(filename);
-				if(success == false)
-				{
-					try
-					{
-						File.Delete(output);
-					}
-					catch { }
-					return (null);
-				}
-			}
-			else if (filename.ToLower().EndsWith(".wav"))
+			if (filename.ToLower().EndsWith(".wav"))
 			{
 				label2.Text = "Writing LPCM wave header...";
 				#region Write out .wav file header
@@ -1163,6 +1144,115 @@ namespace Utilities.DVDImport
 				w.Write(hdr, 0, hdr.Length);
 				w.Close();
 				#endregion
+			}
+			
+			if (Settings.Default.AudioMode)
+				return (ConvertAudioNew(filename));
+			else
+				return (ConvertAudioOld(filename));
+		}
+
+		private string ConvertAudioNew(string filename)
+		{
+			string output = filename;
+			FileInfo appPath = new FileInfo(Application.ExecutablePath);
+			int idx = output.LastIndexOf('.');
+			if (idx != -1)
+				output = output.Substring(0, idx);
+			output += ".mp2";
+			
+			#region encode audio
+			Process process = null;
+			label2.Text = "Converting to mpeg audio " + output + "...";
+			string newAudio = output.Replace(".wav", ".mp2");
+			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
+			if (File.Exists(besweetCommand) == false)
+				return (null);
+			process = new Process();
+			process.StartInfo.UseShellExecute = false;
+			process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+			process.StartInfo.RedirectStandardOutput = true;
+			process.StartInfo.RedirectStandardError = true;
+			process.StartInfo.FileName = besweetCommand;
+			process.StartInfo.Arguments = "-core( -input \"" + filename + "\" -output \"" + output + "\" ) -toolame( -m j -b 192 )";
+			string dynamicCompression = "";
+			if (checkBox2.Checked)
+				dynamicCompression += " -c normal";
+			if (checkBox1.Checked)
+				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db --maximize )";
+			else
+				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db -g " + trackBar1.Value + "db )";
+			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			process.StartInfo.CreateNoWindow = true;
+			process.Start();
+			string line;
+			bool success = false;
+			StreamReader sr = process.StandardError;
+			while ((line = sr.ReadLine()) != null)
+			{
+				if (line == "Conversion Completed !")
+					success = true;
+			}
+			process.WaitForExit();
+
+			try
+			{
+				File.Delete(filename);
+			}
+			catch { }
+			#endregion
+
+			return (output);
+		}
+
+		private string ConvertAudioOld(string filename)
+		{
+			string output = filename;
+			FileInfo appPath = new FileInfo(Application.ExecutablePath);
+
+			if (filename.ToLower().EndsWith(".ac3"))
+			{
+				label2.Text = "Converting AC3 to wav...";
+				output = output.Replace(".ac3", ".wav");
+				#region decode ac3
+				try
+				{
+					File.Delete(output);
+				}
+				catch { }
+				string command = appPath.Directory + "\\ac3dec.exe";
+				if (File.Exists(command) == false)
+					return (null);
+				Process p = new Process();
+				p.StartInfo.UseShellExecute = false;
+				p.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+				p.StartInfo.RedirectStandardOutput = true;
+				p.StartInfo.RedirectStandardError = true;
+				p.StartInfo.FileName = command;
+				p.StartInfo.Arguments = "\"" + filename + "\" -pcmwav \"" + output + "\"";
+				p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				p.StartInfo.CreateNoWindow = true;
+				p.Start();
+				string line;
+				bool success = false;
+				StreamReader sr = p.StandardOutput;
+				while ((line = sr.ReadLine()) != null)
+				{
+					if (line == "Decoding complete.")
+						success = true;
+				}
+				p.WaitForExit();
+				#endregion
+				File.Delete(filename);
+				if(success == false)
+				{
+					try
+					{
+						File.Delete(output);
+					}
+					catch { }
+					return (null);
+				}
 			}
 			#region encode audio to mpeg if it isn't
 			Process process = null;
@@ -1254,9 +1344,6 @@ namespace Utilities.DVDImport
 			}
 
 			SetupControls();
-			DSUtils ds = new DSUtils();
-			ds.ConvertAudio(@"D:\Documents\128.ac3", 0);
-
 
 			comboBox1.Items.Clear();
 			string[] drives = Environment.GetLogicalDrives();
@@ -1545,10 +1632,16 @@ namespace Utilities.DVDImport
 
 		private void SetupControls()
 		{
-			label7.Visible = Settings.Default.AudioMode;
-			label8.Visible = Settings.Default.AudioMode;
-			trackBar1.Visible = Settings.Default.AudioMode;
+			groupBox1.Visible = Settings.Default.AudioMode;
 			label8.Text = trackBar1.Value + "dB";
+			if (Settings.Default.AudioMode)
+				treeView1.Width = tabControl1.Width - groupBox1.Width - 10;
+			else
+				treeView1.Width = tabControl1.Width;
+			trackBar1.Enabled = !checkBox1.Checked;
+			label7.Enabled = !checkBox1.Checked;
+			label8.Enabled = !checkBox1.Checked;
+
 		}
 
 		private void button7_Click(object sender, EventArgs e)
@@ -1563,6 +1656,15 @@ namespace Utilities.DVDImport
 		private void trackBar1_Scroll(object sender, EventArgs e)
 		{
 			label8.Text = trackBar1.Value + "dB";
+		}
+
+		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		{
+			trackBar1.Value = 0;
+			label8.Text = trackBar1.Value + "dB";
+			trackBar1.Enabled = !checkBox1.Checked;
+			label7.Enabled = !checkBox1.Checked;
+			label8.Enabled = !checkBox1.Checked;
 		}
 	}
 }

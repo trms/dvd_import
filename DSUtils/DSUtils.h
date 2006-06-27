@@ -272,8 +272,9 @@ namespace Utilities {
 			void Stop();
 			void Pause();
 			bool IsPlaying();
+			bool IsPlaying(HRESULT *hrRet);
 			long DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
-			System::String ^ConvertAudio(System::String ^filename, int level);
+			System::String ^ConvertAudio(System::String ^filename, int level, bool compress);
 
 		};
 	}

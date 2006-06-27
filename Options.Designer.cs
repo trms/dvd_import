@@ -81,10 +81,10 @@ namespace Utilities.DVDImport
 			this.radioButton2.AutoSize = true;
 			this.radioButton2.Location = new System.Drawing.Point(118, 57);
 			this.radioButton2.Name = "radioButton2";
-			this.radioButton2.Size = new System.Drawing.Size(187, 17);
+			this.radioButton2.Size = new System.Drawing.Size(181, 17);
 			this.radioButton2.TabIndex = 6;
 			this.radioButton2.TabStop = true;
-			this.radioButton2.Text = "DirectShow (with level adjustment)";
+			this.radioButton2.Text = "Advanced (with level adjustment)";
 			this.radioButton2.UseVisualStyleBackColor = true;
 			// 
 			// button1

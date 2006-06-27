@@ -45,9 +45,11 @@ namespace Utilities.DVDImport
 			FileInfo appPath = new FileInfo(Application.ExecutablePath);
 			string ac3decCommand = appPath.Directory + "\\ac3dec.exe";
 			string lameCommand = appPath.Directory + "\\tooLame.exe";
-			if (File.Exists(ac3decCommand) && File.Exists(lameCommand))
+			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
+			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand))
 			{
 				radioButton1.Enabled = true;
+				radioButton2.Enabled = true;
 				if (Settings.Default.AudioMode == true)
 				{
 					radioButton1.Checked = false;
@@ -61,9 +63,11 @@ namespace Utilities.DVDImport
 			}
 			else
 			{
+				MessageBox.Show("Check installation, helper utilities are not installed properly", "Installation Error", MessageBoxButtons.OK);
 				radioButton1.Enabled = false;
+				radioButton2.Enabled = false;
 				radioButton1.Checked = false;
-				radioButton2.Checked = true;
+				radioButton2.Checked = false;
 			}
 			string tempPath = Settings.Default.TempPath;
 			if (tempPath == null || tempPath == "")
@@ -76,6 +80,5 @@ namespace Utilities.DVDImport
 			}
 			linkLabel1.Text = tempPath;
 		}
-
 	}
 }

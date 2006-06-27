@@ -19,6 +19,7 @@
 #include "asyncio.h"
 #include "asyncrdr.h"
 #include "DSUtils.h"
+#include "..\Components/ILMAVol.h"
 
 //#import "C:\\WINDOWS\\System32\\mpg2splt.ax"
 
@@ -483,12 +484,23 @@ void Utilities::DVDImport::DSUtils::Pause()
 
 bool Utilities::DVDImport::DSUtils::IsPlaying()
 {
+	return(IsPlaying(0));
+}
+
+bool Utilities::DVDImport::DSUtils::IsPlaying(HRESULT *hrRet)
+{
 	LONG levCode;
 	if(pME == 0)
 		return(false);
 	if(m_paused)
 		return(true);
 	HRESULT hr = pME->WaitForCompletion(0, &levCode);
+	if(hrRet)
+	{
+		*hrRet = hr;
+		if(SUCCEEDED(hr))
+			*hrRet = levCode;
+	}
 	if(hr == E_ABORT || (SUCCEEDED(hr) && levCode == 0))
 		return(true);
 	return(false);
@@ -616,7 +628,7 @@ IBaseFilter *GetFilter(IGraphBuilder *pGB, bool video)
 	return(0);
 }
 
-System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^filename, int level)
+System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^filename, int level, bool compress)
 {
 	IntPtr str = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(filename);
 	LPTSTR file = (LPTSTR)str.ToPointer();
@@ -634,9 +646,13 @@ System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^file
 	IPin *pWriterPin = 0;
 	IPin *pWAVIn = 0;
 	IPin *pWAVOut = 0;
+	IPin *pLMVolIn = 0;
+	IPin *pLMVolOut = 0;
 	IBaseFilter *pFileSinkBase = 0;
 	IFileSinkFilter2 *pFileSink = 0;
-	IBaseFilter *pDeDynamic = 0;
+	IBaseFilter *pWAVDest = 0;
+	IBaseFilter *pLMVolBase = 0;
+	ILMAVolume *pLMVol = 0;
 
     /*  Create filter graph */
     HRESULT hr = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC,
@@ -674,10 +690,14 @@ System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^file
 		if (FAILED(hr))
 			goto cleanup;
 
-		hr = CoCreateInstance(CLSID_DeDynamic, 0, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**)&pDeDynamic);
+		hr = CoCreateInstance(CLSID_WavDest, 0, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**)&pWAVDest);
 		if (FAILED(hr))
 			goto cleanup;
-		hr = pBuilder->AddFilter(pDeDynamic, L"DeDynamic");
+		hr = pBuilder->AddFilter(pWAVDest, L"WAV Dest");
+		if (FAILED(hr))
+			goto cleanup;
+
+		hr = CoCreateInstance(CLSID_LMAVolume, 0, CLSCTX_INPROC_SERVER, IID_ILMAVolume, (void**)&pLMVol);
 		if (FAILED(hr))
 			goto cleanup;
 
@@ -688,6 +708,12 @@ System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^file
 			goto cleanup;
 		}
 		hr = pFileSink->QueryInterface(IID_IBaseFilter, (void**)&pFileSinkBase);
+		if (FAILED(hr))
+			goto cleanup;
+		hr = pLMVol->QueryInterface(IID_IBaseFilter, (void**)&pLMVolBase);
+		if (FAILED(hr))
+			goto cleanup;
+		hr = pBuilder->AddFilter(pLMVolBase, L"LMAVolume");
 		if (FAILED(hr))
 			goto cleanup;
 
@@ -706,14 +732,32 @@ System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^file
 		hr = pFileSink->SetMode(AM_FILE_OVERWRITE);
 		if (FAILED(hr))
 			goto cleanup;
-		pWAVIn = GetPin(pDeDynamic, PINDIR_INPUT);
-		pWAVOut = GetPin(pDeDynamic, PINDIR_OUTPUT);
+
+		// set volume parameters
+		hr = pLMVol->SetMute(FALSE);
+		if (FAILED(hr))
+			goto cleanup;
+		hr = pLMVol->SetAmplitude(level);
+		if (FAILED(hr))
+			goto cleanup;
+
+		//pWAVIn = GetPin(pWAVDest, PINDIR_INPUT);
+		//pWAVOut = GetPin(pWAVDest, PINDIR_OUTPUT);
+		pLMVolIn = GetPin(pLMVolBase, PINDIR_INPUT);
+		pLMVolOut = GetPin(pLMVolBase, PINDIR_OUTPUT);
 		pWriterPin = GetPin(pFileSinkBase, PINDIR_INPUT);
-		//if(pAudioSrc != 0 && pWAVIn != 0)
-		//	hr = pBuilder->Connect(pAudioSrc, pWAVIn);
-		//if(SUCCEEDED(hr) && pWAVOut != 0 && pWriterPin != 0)
-		//	hr = pBuilder->Connect(pWAVOut, pWriterPin);
-		hr = pBuilder->Connect(pAudioSrc, pWriterPin);
+
+
+		//hr = pBuilder->Connect(pAudioSrc, pWriterPin); // write directly
+		// pAudioSrc -> pLMVolIn
+		if(pAudioSrc != 0 && pLMVolIn != 0)
+			hr = pBuilder->Connect(pAudioSrc, pLMVolIn);
+		// pLMVolOut -> pWAVIn
+		if(SUCCEEDED(hr) && pLMVolOut != 0 && pWAVIn != 0)
+			hr = pBuilder->Connect(pLMVolOut, pWAVIn);
+		// pWAVOut -> pWriterPin
+		if(SUCCEEDED(hr) && pWAVOut != 0 && pWriterPin != 0)
+			hr = pBuilder->Connect(pWAVOut, pWriterPin);
 		if (FAILED(hr))
 			goto cleanup;
 	}
@@ -731,20 +775,30 @@ System::String ^Utilities::DVDImport::DSUtils::ConvertAudio(System::String ^file
     //if(FAILED(hr))
 	//	goto cleanup;
 
-	hr = pMC->Run();
-    if(FAILED(hr))
-		goto cleanup;
+	while(true)
+	{
+		hr = pMC->Run();
+		if(FAILED(hr))
+			goto cleanup;
 
-	//LONG levCode;
-	//hr = pME->WaitForCompletion(INFINITE, &levCode);
-	m_paused = false;
-	while(IsPlaying())
-		Sleep(250);
+		//LONG levCode;
+		//hr = pME->WaitForCompletion(INFINITE, &levCode);
+		m_paused = false;
+		while(IsPlaying(&hr))
+			Sleep(250);
+		if(SUCCEEDED(hr))
+			break;
+		hr = pMC->Stop();
+	}
 
 cleanup:
+	RELEASE(pLMVol);
+	RELEASE(pLMVolBase);
 	RELEASE(pWAVIn);
 	RELEASE(pWAVOut);
-	RELEASE(pDeDynamic);
+	RELEASE(pLMVolIn);
+	RELEASE(pLMVolOut);
+	RELEASE(pWAVDest);
     RELEASE(pWriterPin);
     RELEASE(pFileSink);
     RELEASE(pFileSinkBase);
