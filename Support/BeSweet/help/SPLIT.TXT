@@ -1,0 +1,22 @@
+this manual lists all the available switches under the -split( ) section of BeSweet v1.5.
+beware : switches are case-sensitive.
+
+-start TIME
+-----------
+
+Default: 0
+
+This sets the start-time offset of the track.
+Value is set in seconds.
+
+-end END
+---------
+
+Default: end
+
+This sets the end-time offset of the track.
+Value is set in seconds.
+
+
+note that time values are absolute. 
+for instance, a command including -split( -start 6 -end 10 ), will end up with a track of 4 seconds long.

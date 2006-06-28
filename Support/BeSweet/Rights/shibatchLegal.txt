@@ -1,0 +1,42 @@
+  Shibatch library by Naoki Shibata & DSPguru.
+
+includes :
+
+1.  A fast and high quality sampling rate converter SSRC
+                                           written by Naoki Shibata
+
+<Features>
+  This program converts sampling rate of PCM wav file. Also, this program has
+a function to apply dither to its output and extend perceived dynamic range.
+  Sampling rates of 44.1kHz and 48kHz are populary used, but ratio of these
+two frequency is 147:160, and it's not a small numbers. Therefore, sampling
+rate conversion without degradation of sound quality requires filter with very
+large order, and it's difficult to achive both quality and speed. This program
+achived relatively fast and high quality with two different kinds of filters
+combined skillfully.
+
+2.  Shibatch Super Equalizer ver 0.03 
+
+Shibatch Super Equalizer is a graphic and parametric equalizer plugin
+for winamp. This plugin uses 16383th order FIR filter with FFT algorithm.
+It's equalization is very precise. Equalization setting can be done
+for each channel separately.
+
+
+<Conditions of distribution>
+  This program(except FFT part) is distributed under LGPL. 
+
+  FFT part is a routine made by Mr.Ooura. This routine is a freeware. Contact
+Mr.Ooura for details of distributing licenses.
+
+http://momonga.t.u-tokyo.ac.jp/~ooura/fft.html
+
+
+
+Contact 
+--------
+1. Original author
+Homepage : http://shibatch.sourceforge.net/
+e-mail   : shibatch@users.sourceforge.net
+2. Dll coder
+Homepage : http://DSPguru.doom9.net

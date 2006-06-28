@@ -1,0 +1,42 @@
+this manual lists all the available switches under the -shibatch( ) section of BeSweet v1.5.
+beware : switches are case-sensitive.
+
+
+--rate
+-------
+
+Default: not used
+
+This sets the destination sample frequency.
+
+
+--normalize
+-----------
+
+Default: not used
+
+This raise up the digital volume of the audio to the maximum level.
+
+--att
+------
+
+Default : 0 (dB)
+
+This sets the total value of attenation.
+Values should be in dB.
+
+
+-equ
+-----
+
+Default : not used.
+
+Sets the name of equalizer preset file.
+
+
+-q
+--
+Default : 0.8.
+
+Sets the level of equalizer quality.
+values vary from 0 to 1.

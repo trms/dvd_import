@@ -25,7 +25,7 @@ namespace Utilities.DVDImport {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AudioMode {
             get {
                 return ((bool)(this["AudioMode"]));
@@ -56,6 +56,42 @@ namespace Utilities.DVDImport {
             }
             set {
                 this["IsFirstRun"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Normalize {
+            get {
+                return ((bool)(this["Normalize"]));
+            }
+            set {
+                this["Normalize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DynamicCompress {
+            get {
+                return ((bool)(this["DynamicCompress"]));
+            }
+            set {
+                this["DynamicCompress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AudioLevel {
+            get {
+                return ((int)(this["AudioLevel"]));
+            }
+            set {
+                this["AudioLevel"] = value;
             }
         }
     }

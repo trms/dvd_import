@@ -60,6 +60,9 @@ namespace Utilities.DVDImport
 		private GroupBox groupBox1;
 		private CheckBox checkBox2;
 		private CheckBox checkBox1;
+		private Process process = null;
+		private Label label9;
+		private Label label10;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -117,6 +120,8 @@ namespace Utilities.DVDImport
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
 			this.button5 = new System.Windows.Forms.Button();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -175,7 +180,7 @@ namespace Utilities.DVDImport
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button2.Enabled = false;
-			this.button2.Location = new System.Drawing.Point(704, 248);
+			this.button2.Location = new System.Drawing.Point(704, 285);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(48, 23);
 			this.button2.TabIndex = 3;
@@ -184,20 +189,22 @@ namespace Utilities.DVDImport
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar1.Location = new System.Drawing.Point(0, 280);
+			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar1.Location = new System.Drawing.Point(0, 311);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(760, 23);
+			this.progressBar1.Size = new System.Drawing.Size(760, 7);
+			this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progressBar1.TabIndex = 4;
+			this.progressBar1.Visible = false;
 			// 
 			// label2
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.Location = new System.Drawing.Point(0, 307);
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.Location = new System.Drawing.Point(-1, 292);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(760, 16);
+			this.label2.Size = new System.Drawing.Size(612, 15);
 			this.label2.TabIndex = 5;
 			// 
 			// panel1
@@ -207,7 +214,7 @@ namespace Utilities.DVDImport
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.Location = new System.Drawing.Point(8, 16);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(248, 184);
+			this.panel1.Size = new System.Drawing.Size(248, 222);
 			this.panel1.TabIndex = 6;
 			// 
 			// groupBox1
@@ -277,7 +284,7 @@ namespace Utilities.DVDImport
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-			this.button3.Location = new System.Drawing.Point(160, 208);
+			this.button3.Location = new System.Drawing.Point(160, 247);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(32, 23);
 			this.button3.TabIndex = 7;
@@ -287,7 +294,7 @@ namespace Utilities.DVDImport
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-			this.button4.Location = new System.Drawing.Point(192, 208);
+			this.button4.Location = new System.Drawing.Point(192, 247);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(32, 23);
 			this.button4.TabIndex = 8;
@@ -299,22 +306,46 @@ namespace Utilities.DVDImport
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.panel1);
+			this.groupBox2.Controls.Add(this.label10);
+			this.groupBox2.Controls.Add(this.label9);
 			this.groupBox2.Controls.Add(this.button3);
 			this.groupBox2.Controls.Add(this.button4);
 			this.groupBox2.Controls.Add(this.button5);
 			this.groupBox2.Enabled = false;
 			this.groupBox2.Location = new System.Drawing.Point(488, 8);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(264, 232);
+			this.groupBox2.Size = new System.Drawing.Size(264, 271);
 			this.groupBox2.TabIndex = 11;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Preview";
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(7, 252);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(74, 13);
+			this.label10.TabIndex = 10;
+			this.label10.Text = "affect preview";
+			this.label10.Visible = false;
+			// 
+			// label9
+			// 
+			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.Location = new System.Drawing.Point(7, 237);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(133, 13);
+			this.label9.TabIndex = 9;
+			this.label9.Text = "Audio Processing does not";
+			this.label9.Visible = false;
 			// 
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-			this.button5.Location = new System.Drawing.Point(224, 208);
+			this.button5.Location = new System.Drawing.Point(224, 247);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(32, 23);
 			this.button5.TabIndex = 0;
@@ -395,7 +426,7 @@ namespace Utilities.DVDImport
 			// textBox2
 			// 
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.textBox2.Location = new System.Drawing.Point(80, 208);
+			this.textBox2.Location = new System.Drawing.Point(75, 229);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(64, 20);
 			this.textBox2.TabIndex = 14;
@@ -404,7 +435,7 @@ namespace Utilities.DVDImport
 			// textBox3
 			// 
 			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.textBox3.Location = new System.Drawing.Point(80, 240);
+			this.textBox3.Location = new System.Drawing.Point(75, 261);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(392, 20);
 			this.textBox3.TabIndex = 15;
@@ -412,7 +443,7 @@ namespace Utilities.DVDImport
 			// label4
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label4.Location = new System.Drawing.Point(24, 208);
+			this.label4.Location = new System.Drawing.Point(19, 229);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(48, 23);
 			this.label4.TabIndex = 16;
@@ -421,7 +452,7 @@ namespace Utilities.DVDImport
 			// label5
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label5.Location = new System.Drawing.Point(24, 240);
+			this.label5.Location = new System.Drawing.Point(19, 261);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 23);
 			this.label5.TabIndex = 17;
@@ -430,7 +461,7 @@ namespace Utilities.DVDImport
 			// label6
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label6.Location = new System.Drawing.Point(160, 208);
+			this.label6.Location = new System.Drawing.Point(155, 229);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(40, 23);
 			this.label6.TabIndex = 19;
@@ -439,7 +470,7 @@ namespace Utilities.DVDImport
 			// textBox4
 			// 
 			this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.textBox4.Location = new System.Drawing.Point(208, 208);
+			this.textBox4.Location = new System.Drawing.Point(203, 229);
 			this.textBox4.Name = "textBox4";
 			this.textBox4.Size = new System.Drawing.Size(64, 20);
 			this.textBox4.TabIndex = 18;
@@ -455,14 +486,15 @@ namespace Utilities.DVDImport
 			this.treeView1.Name = "treeView1";
 			this.treeView1.ShowPlusMinus = false;
 			this.treeView1.ShowRootLines = false;
-			this.treeView1.Size = new System.Drawing.Size(456, 97);
+			this.treeView1.Size = new System.Drawing.Size(456, 127);
 			this.treeView1.TabIndex = 20;
 			this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
 			// button7
 			// 
-			this.button7.Location = new System.Drawing.Point(623, 248);
+			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button7.Location = new System.Drawing.Point(623, 285);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(75, 23);
 			this.button7.TabIndex = 21;
@@ -488,7 +520,6 @@ namespace Utilities.DVDImport
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.button2);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(768, 344);
 			this.Name = "Form1";
@@ -499,6 +530,7 @@ namespace Utilities.DVDImport
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
 			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
@@ -592,6 +624,8 @@ namespace Utilities.DVDImport
 					m_tempPath = Settings.Default.TempPath + "\\" + Guid.NewGuid().ToString() + "\\";
 					Directory.CreateDirectory(m_tempPath);
 				}
+				if (!Directory.Exists(m_tempPath))
+					Directory.CreateDirectory(m_tempPath);
 				return (m_tempPath);
 			}
 		}
@@ -710,28 +744,100 @@ namespace Utilities.DVDImport
 			return (msOffset);
 		}
 
-		private void ProcessVOB()
+		#region Thread Safe UI calls
+		delegate void SetStatusTextCallback(string text);
+		private void SetStatusText(string text)
 		{
-			if(treeView1.SelectedNode == null)
+			if (label2.InvokeRequired)
 			{
-				progressBar1.Value = 0;
-				label2.Text = "";
-				button1.Enabled = true;
-				button2.Enabled = true;
-				textBox1.Enabled = true;
-				thread = null;
-				Cursor = Cursors.Default;
-				return;
+				SetStatusTextCallback d = new SetStatusTextCallback(SetStatusText);
+				this.Invoke(d, new object[] { text });
 			}
+			else
+				label2.Text = text;
+		}
 
-			try
+		delegate void SetProgressCallback(int progress);
+		private void SetProgress(int progress)
+		{
+			if (progressBar1.InvokeRequired)
+			{
+				SetProgressCallback d = new SetProgressCallback(SetProgress);
+				this.Invoke(d, new object[] { progress });
+			}
+			else
+			{
+				progressBar1.Minimum = 0;
+				progressBar1.Maximum = 1000;
+				progressBar1.Value = progress;
+			}
+		}
+
+		delegate void NullCallback();
+		private void DisableForm()
+		{
+			if (this.InvokeRequired)
+			{
+				NullCallback d = new NullCallback(DisableForm);
+				this.Invoke(d);
+			}
+			else
 			{
 				Cursor = Cursors.WaitCursor;
+				progressBar1.Visible = true;
+				textBox1.Enabled = false;
+				button1.Enabled = false;
+				button2.Enabled = false;
+				button3.Enabled = false;
+				groupBox1.Enabled = false;
+				groupBox2.Enabled = false;
+				treeView1.Enabled = false;
+				tabControl1.Enabled = false;
+				button7.Enabled = false;
+				textBox2.Enabled = false;
+				textBox3.Enabled = false;
+				textBox4.Enabled = false;
+			}
+		}
+
+		private void EnableForm()
+		{
+			if (this.InvokeRequired)
+			{
+				NullCallback d = new NullCallback(EnableForm);
+				this.Invoke(d);
+			}
+			else
+			{
+				Cursor = Cursors.Default;
+				progressBar1.Visible = false;
+				textBox1.Enabled = true;
+				button1.Enabled = true;
+				button2.Enabled = true;
+				button3.Enabled = true;
+				groupBox1.Enabled = true;
+				groupBox2.Enabled = true;
+				treeView1.Enabled = true;
+				tabControl1.Enabled = true;
+				button7.Enabled = true;
+				textBox2.Enabled = true;
+				textBox3.Enabled = true;
+				textBox4.Enabled = true;
+			}
+		}
+		#endregion
+
+		private void ProcessVOB()
+		{
+			try
+			{
+				DisableForm();
 				List<IFOParse.VOB> vobs = null;
 				IFOParse.ProgramChain pgc = null;
 				List<IFOParse.Cell> cells = null;
 				if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
 				{
+					// treat a single vob file with no ifo file as all data
 					// got single vob file
 					FileInfo fi = (FileInfo)treeView1.SelectedNode.Tag;
 					IFOParse.VOB v = new IFOParse.VOB(fi.FullName);
@@ -759,24 +865,24 @@ namespace Utilities.DVDImport
 				saveFileDialog1.FileName = new Utilities().MakeSafeFilename(saveFileDialog1.FileName);
 
 				RegistryKey rk = Registry.LocalMachine.OpenSubKey(REGISTRY_KEY);
-				if(rk != null)
+				if (rk != null)
 				{
 					string initialDir = rk.GetValue("DefaultDirectory").ToString();
-					if(initialDir != null && Directory.Exists(initialDir))
+					if (initialDir != null && Directory.Exists(initialDir))
 						saveFileDialog1.InitialDirectory = initialDir;
 				}
 				DialogResult dr = saveFileDialog1.ShowDialog();
-				if(dr == DialogResult.OK && File.Exists(saveFileDialog1.FileName))
+				if (dr == DialogResult.OK && File.Exists(saveFileDialog1.FileName))
 				{
 					dr = DialogResult.Cancel;
 					// ask about overwriting
-					if(MessageBox.Show(saveFileDialog1.FileName + " already exists.\nDo you want to replace it?", "Save As", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+					if (MessageBox.Show(saveFileDialog1.FileName + " already exists.\nDo you want to replace it?", "Save As", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 					{
 						dr = DialogResult.OK;
 						File.Delete(saveFileDialog1.FileName);
 					}
 				}
-				if(dr == DialogResult.OK)
+				if (dr == DialogResult.OK)
 				{
 					saveFile = saveFileDialog1.FileName;
 					FileInfo fi = new FileInfo(saveFile);
@@ -786,57 +892,47 @@ namespace Utilities.DVDImport
 						saveKey.SetValue("DefaultDirectory", fi.Directory.FullName);
 						//outputDir = fi.Directory.FullName;
 					}
-					catch{}
+					catch { }
 				}
 				else
 				{
-					progressBar1.Value = 0;
-					label2.Text = "";
-					button1.Enabled = true;
-					button2.Enabled = true;
-					textBox1.Enabled = true;
+					SetProgress(0);
+					SetStatusText("");
+					EnableForm();
 					thread = null;
-					Cursor = Cursors.Default;
 					return;
 				}
 				#endregion
 
+				SetProgress(0);
 				int audioOffset = 0;
 				int videoOffset = 0;
 				string audio = null;
 				string video = null;
 				byte[] buf = new byte[2048];
-				
-				progressBar1.Minimum = 0;
-				progressBar1.Maximum = 4;
-				progressBar1.Value = 0;
-
-				//long totalBytes = fi.Length;
-				//long currentBytes = 0;
-				//int len;
-				//int position = 0;
-				//int vidPacks = 0;
-				//int audPacks = 0;
-				//int navPacks = 0;
-				//FileStream vobOut = File.Create(TempPath + "test.vob");
-				
-
-
-				foreach (IFOParse.Cell cell in cells)
+				long totalSectors = 0;
+				long currentSector = 0;
+				// find total number of sectors for all cells
+				for (int cellNum = 0; cellNum < cells.Count; cellNum++)
 				{
-					label2.Text = cell.CellID + " " + cell.FirstSector + "-" + cell.LastSector;
-					//bool inCell = false;
-					// treat a single vob file with no ifo file as all data
-					//if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
-						//inCell = true;
+					IFOParse.Cell cell = cells[cellNum];
+					totalSectors += cell.LastSector - cell.FirstSector;
+				}
+
+				SetStatusText("Reading from DVD...");
+				for (int cellNum = 0; cellNum < cells.Count; cellNum++)
+				{
+					IFOParse.Cell cell = cells[cellNum];
+					ulong updateInterval = 0;
 					for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
 					{
 						ReadSector(vobs, buf, sector);
-						#region update progress
-						//currentBytes += len;
-						//if(position++ % 10 == 0)
-						//	label2.Text = "Processing " + filename + "..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentBytes) / Convert.ToDouble(totalBytes))) + "%";
-						#endregion
+						if (updateInterval++ % 10 == 0)
+						{
+							//SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
+							SetProgress(Convert.ToInt32(500.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
+						}
+						currentSector++;
 						uint code = ReadCode(buf, 0);
 						if (code != BLOCK_START_CODE)
 							continue;
@@ -1006,16 +1102,13 @@ namespace Utilities.DVDImport
 							default:
 								break;
 						}
-						//if(inCell)
-						//vobOut.Write(buf, 0, buf.Length);
 					}
 				}
-				//vobOut.Close();
-				progressBar1.Value++;
-				if(bs != null)
+				SetProgress(500);
+				if (bs != null)
 					bs.TRMSFinalize();
 				bs = null;
-				foreach(string name in writers.Keys)
+				foreach (string name in writers.Keys)
 				{
 					FileStream fs = (FileStream)writers[name];
 					fs.Close();
@@ -1026,7 +1119,7 @@ namespace Utilities.DVDImport
 						audio = name;
 
 					// delete anything after the first audio and video streams in the file
-					if(audio != null && name != video && name != audio)
+					if (audio != null && name != video && name != audio)
 						File.Delete(name);
 				}
 				writers.Clear();
@@ -1035,35 +1128,68 @@ namespace Utilities.DVDImport
 					fs.Close();
 				}
 				readers.Clear();
-				progressBar1.Value++;
 
-				audio = ConvertAudio(TempPath + audio);
-				progressBar1.Value++;
+				int duration = 0;
+				if(pgc != null)
+					duration = pgc.Duration;
+				audio = ConvertAudio(TempPath + audio, duration);
+				SetProgress(600);
 
+				SetStatusText("Remuxing elementary mpeg streams...");
 				MultiplexGlue mg = new MultiplexGlue();
-				mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
+				mg.Video = TempPath + video;
+				mg.Audio = audio;
+				mg.Offset = Offset(cells, vobs);
+				mg.Output = saveFile;
+				Thread mt = new Thread(new ThreadStart(mg.Multiplex));
+				mt.Start();
+				while (mt.IsAlive)
+				{
+					if (pgc != null)
+					{
+						SetStatusText("Remuxing elementary mpeg streams..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%"*/);
+						SetProgress(600 + Convert.ToInt32(400.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+					}
+					else
+						SetStatusText("Remuxing elementary mpeg streams...");
+					Thread.Sleep(500);
+				}
+				//mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
+				SetProgress(1000);
 			}
-			catch(Exception ex)
+			catch (ThreadAbortException)
+			{
+				try
+				{
+					if (process != null)
+						process.Kill();
+				}
+				catch { }
+			}
+			catch (Exception ex)
 			{
 				MessageBox.Show("Error: " + ex.Message);
 			}
 			finally
 			{
-				//progressBar1.Visible = false;
-				label2.Text = "";
-				button1.Enabled = true;
-				button2.Enabled = true;
-				textBox1.Enabled = true;
+				EnableForm();
 				thread = null;
-				Cursor = Cursors.Default;
-				progressBar1.Value = 0;
+				SetProgress(0);
+				SetStatusText("");
 			}
+
+			try
+			{
+				Directory.Delete(TempPath, true);
+			}
+			catch { }
 		}
-		private string ConvertAudio(string filename)
+
+		private string ConvertAudio(string filename, int duration)
 		{
 			if (filename.ToLower().EndsWith(".wav"))
 			{
-				label2.Text = "Writing LPCM wave header...";
+				SetStatusText("Writing LPCM wave header...");
 				#region Write out .wav file header
 				FileInfo fi = new FileInfo(filename);
 				FileStream w = File.OpenWrite(filename);
@@ -1147,12 +1273,12 @@ namespace Utilities.DVDImport
 			}
 			
 			if (Settings.Default.AudioMode)
-				return (ConvertAudioNew(filename));
+				return (ConvertAudioNew(filename, duration));
 			else
 				return (ConvertAudioOld(filename));
 		}
 
-		private string ConvertAudioNew(string filename)
+		private string ConvertAudioNew(string filename, int duration)
 		{
 			string output = filename;
 			FileInfo appPath = new FileInfo(Application.ExecutablePath);
@@ -1162,8 +1288,7 @@ namespace Utilities.DVDImport
 			output += ".mp2";
 			
 			#region encode audio
-			Process process = null;
-			label2.Text = "Converting to mpeg audio " + output + "...";
+			SetStatusText("Encoding mpeg audio...");
 			string newAudio = output.Replace(".wav", ".mp2");
 			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
 			if (File.Exists(besweetCommand) == false)
@@ -1192,9 +1317,29 @@ namespace Utilities.DVDImport
 			{
 				if (line == "Conversion Completed !")
 					success = true;
+				else if (line.EndsWith("transcoding ..."))
+				{
+					line = line.TrimStart('[');
+					idx = line.IndexOf(']');
+					if (idx != -1)
+						line = line.Substring(0, idx - 1);
+					idx = line.LastIndexOf(':');
+					if (idx != -1)
+						line = line.Substring(0, idx);
+					// convert time into seconds to get a percentage
+					int len = 0;
+					string[] cols = line.Split(':');
+					if (cols.Length == 3)
+						len = (Convert.ToInt32(cols[0]) * 3600) + (Convert.ToInt32(cols[1]) * 60) + Convert.ToInt32(cols[2]);
+					if (len != 0 && duration != 0)
+					{
+						SetStatusText("Encoding mpeg audio..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))) + "%"*/);
+						SetProgress(500 + Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))));
+					}
+				}
 			}
 			process.WaitForExit();
-
+			process = null;
 			try
 			{
 				File.Delete(filename);
@@ -1212,7 +1357,7 @@ namespace Utilities.DVDImport
 
 			if (filename.ToLower().EndsWith(".ac3"))
 			{
-				label2.Text = "Converting AC3 to wav...";
+				SetStatusText("Decoding AC3 audio...");
 				output = output.Replace(".ac3", ".wav");
 				#region decode ac3
 				try
@@ -1223,25 +1368,26 @@ namespace Utilities.DVDImport
 				string command = appPath.Directory + "\\ac3dec.exe";
 				if (File.Exists(command) == false)
 					return (null);
-				Process p = new Process();
-				p.StartInfo.UseShellExecute = false;
-				p.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-				p.StartInfo.RedirectStandardOutput = true;
-				p.StartInfo.RedirectStandardError = true;
-				p.StartInfo.FileName = command;
-				p.StartInfo.Arguments = "\"" + filename + "\" -pcmwav \"" + output + "\"";
-				p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				p.StartInfo.CreateNoWindow = true;
-				p.Start();
+				process = new Process();
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+				process.StartInfo.RedirectStandardOutput = true;
+				process.StartInfo.RedirectStandardError = true;
+				process.StartInfo.FileName = command;
+				process.StartInfo.Arguments = "\"" + filename + "\" -pcmwav \"" + output + "\"";
+				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				process.StartInfo.CreateNoWindow = true;
+				process.Start();
 				string line;
 				bool success = false;
-				StreamReader sr = p.StandardOutput;
+				StreamReader sr = process.StandardOutput;
 				while ((line = sr.ReadLine()) != null)
 				{
 					if (line == "Decoding complete.")
 						success = true;
 				}
-				p.WaitForExit();
+				process.WaitForExit();
+				process = null;
 				#endregion
 				File.Delete(filename);
 				if(success == false)
@@ -1255,10 +1401,9 @@ namespace Utilities.DVDImport
 				}
 			}
 			#region encode audio to mpeg if it isn't
-			Process process = null;
 			if (output.EndsWith(".wav"))
 			{
-				label2.Text = "Converting wav to mpeg audio " + output + "...";
+				SetStatusText("Encoding mpeg audio...");
 				string newAudio = output.Replace(".wav", ".mp2");
 				string lameCommand = appPath.Directory + "\\tooLame.exe";
 				if (File.Exists(lameCommand) == false)
@@ -1285,6 +1430,7 @@ namespace Utilities.DVDImport
 						success = true;
 				}
 				process.WaitForExit();
+				process = null;
 				if (success)
 				{
 					File.Delete(output);
@@ -1311,15 +1457,19 @@ namespace Utilities.DVDImport
 
 		private void button2_Click(object sender, System.EventArgs e)
 		{
-			textBox1.Enabled = false;
-			button1.Enabled = false;
-			button2.Enabled = false;
+			if (treeView1.SelectedNode == null)
+				return;
 			thread = new Thread(new ThreadStart(ProcessVOB));
 			thread.Start();
 		}
 
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			Settings.Default.AudioLevel = trackBar1.Value;
+			Settings.Default.Normalize = checkBox1.Checked;
+			Settings.Default.DynamicCompress = checkBox2.Checked;
+			Settings.Default.Save();
+			
 			if(thread != null)
 			{
 				thread.Abort();
@@ -1343,7 +1493,14 @@ namespace Utilities.DVDImport
 				Settings.Default.Save();
 			}
 
+			trackBar1.Value = Settings.Default.AudioLevel;
+			checkBox1.Checked = Settings.Default.Normalize;
+			checkBox2.Checked = Settings.Default.DynamicCompress;
 			SetupControls();
+
+			button3.Enabled = false;
+			button4.Enabled = false;
+			button5.Enabled = false;
 
 			comboBox1.Items.Clear();
 			string[] drives = Environment.GetLogicalDrives();
@@ -1387,6 +1544,9 @@ namespace Utilities.DVDImport
 		private void LoadTitles()
 		{
 			treeView1.Nodes.Clear();
+			button3.Enabled = false;
+			button4.Enabled = false;
+			button5.Enabled = false;
 			string path = "";
 			if(tabControl1.SelectedIndex == 0)
 			{
@@ -1422,8 +1582,7 @@ namespace Utilities.DVDImport
 					{
 						IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
 						TreeNode n = new TreeNode();
-						int offset = Offset(pgc.Cells, pgc.Title.VOBs);
-						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration) + " (" + offset + "ms)";
+						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
 						n.ToolTipText = pgc.Cells.Count + " cells";
 						n.Tag = pgc;
 						titleNode.Nodes.Add(n);
@@ -1461,9 +1620,8 @@ namespace Utilities.DVDImport
 					c.FirstSector = 0;
 					c.LastSector = (int)v.LastSector;
 					cells.Add(c);
-					int offset = Offset(cells, vobs);
 
-					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length) + " (" + offset + "ms)";
+					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
 					titleNode.Tag = fi;
 					treeView1.Nodes.Add(titleNode);
 				}
@@ -1495,7 +1653,12 @@ namespace Utilities.DVDImport
 
 			lock (this)
 			{
+				button3.Enabled = true;
+				button4.Enabled = false;
+				button5.Enabled = false;
 				m_ds.Stop();
+				label9.Visible = false;
+				label10.Visible = false;
 				m_ds = null;
 				m_videoThread = null;
 			}
@@ -1547,6 +1710,14 @@ namespace Utilities.DVDImport
 					vobNames.Add(vobs[v].Sectors);
 				}
 				m_ds.Preview(ranges, vobNames, panel1.Handle, trackBar1.Value);
+				button3.Enabled = false;
+				button4.Enabled = true;
+				button5.Enabled = true;
+				if (Settings.Default.AudioMode)
+				{
+					label9.Visible = true;
+					label10.Visible = true;
+				}
 
 				m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
 				m_videoThread.Start();
@@ -1560,6 +1731,11 @@ namespace Utilities.DVDImport
 				if (m_ds == null)
 					return;
 				m_ds.Stop();
+				label9.Visible = false;
+				label10.Visible = false;
+				button3.Enabled = true;
+				button4.Enabled = false;
+				button5.Enabled = false;
 			}
 		}
 
@@ -1585,10 +1761,15 @@ namespace Utilities.DVDImport
 			{
 				button2.Enabled = false;
 				groupBox2.Enabled = false;
+				button3.Enabled = false;
+				button4.Enabled = false;
+				button5.Enabled = false;
 				textBox3.Text = "";
 			}
 			else
 			{
+				if(m_ds == null)
+					button3.Enabled = true;
 				button2.Enabled = true;
 				groupBox2.Enabled = true;
 

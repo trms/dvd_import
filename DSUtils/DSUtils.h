@@ -267,15 +267,10 @@ namespace Utilities {
 		public ref class DSUtils
 		{
 		public:
-			void Test(String ^stream);
 			long Preview(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs, System::IntPtr hwnd, int level);
 			void Stop();
 			void Pause();
 			bool IsPlaying();
-			bool IsPlaying(HRESULT *hrRet);
-			long DemuxAudio(System::Collections::ArrayList ^ranges, System::Collections::ArrayList ^vobs);
-			System::String ^ConvertAudio(System::String ^filename, int level, bool compress);
-
 		};
 	}
 }

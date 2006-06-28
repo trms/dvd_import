@@ -1,0 +1,21 @@
+                                                                                
+tooLAME - an optimized mpeg 1/2 layer 2 audio encoder
+Copyright (C) 2002, 2003 Michael Cheng [mikecheng at NOT planckenergy.com] remove the NOT
+http://www.planckenergy.com/
+
+All changes to the ISO source are licensed under the LGPL  
+(see LGPL.txt for details)
+
+tooLAME is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+tooLAME is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with tooLAME; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA

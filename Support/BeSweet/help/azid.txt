@@ -1,0 +1,191 @@
+this file lists all supported azid-switches for BeSweet v1.5.
+beware : switches are case-sensitive.
+
+Usage :
+BeSweet -core(..) -ota(..) -azid(..) -shibatch(..) -boost(..) -lame(..) -mp2enc(..) -ac3enc(..) -ogg(..) -split( .. ) -plugin( .. )
+
+Dg.
+
+
+-g GAIN
+-------
+
+Default: 1.0 (or 0db)
+
+This option controls the main (output speaker) gain. The value can be given
+in db's, in percentage, or a positive numerical value. 
+Examples: -g 5.3, -g 95%, -g -3db, -g 6db.
+
+"-g max" is a special switch for finding maximum gain. (Normalize)
+"-g 90%", for example, will normalize a track to 90% of its maximal gain.
+
+
+--maximize  
+----------
+
+Default: omitted
+
+This option will enable a two-pass maximize function of azid. BeSweet
+will in the first pass scan the entire file to find the maximum
+level. In the second pass the audio will be properly decoded, gaining
+it up to 0dB FS.
+
+NOTE: Sometimes when you use this function, the output will still
+create downmix overflow warnings. This is normal. It happens because
+the signal has touched the 0dB FS, or because of some random value
+within the signal has caused it to slightly overload.
+
+
+-L LRLFE_LEVEL
+----------------
+
+Default: 0.0
+
+This controls the downmix-level of the LFE channel into the LR channels.
+
+
+
+-l LFE_LEVEL
+------------
+
+Default: 0.0
+
+This controls the downmix-level of the LFE channel into the LFE output
+speaker. I.e. if this options is set to a non-zero value, the LFE channel
+output may be listened to with the -olfe option.
+
+
+-C LEVEL
+--------
+
+Default: BSI
+
+This command option controls the center dowmix level into the LR channels.
+Normally, the BSI section contains a field which tells the decoder of how to
+downmix the center channel into the LR channels. 
+
+With this option, the user may override the BSI center downmix level and 
+specify a custom value. Note that this option is only active when the 
+output decode mode (-d) is 2/x.
+
+Allowable values is gain values (either in db's or a positive numerical
+value) or BSI. When BSI is selected, the center downmix level gets its value
+from the BSI section.
+
+
+-S LEVEL
+--------
+
+Default: BSI
+
+This command option controls the surround dowmix level into the LR channels.
+Normally, the BSI section contains a field which tells the decoder of how to
+downmix the surround channels into the LR channels. 
+
+With this option, the user may override the BSI surround downmix level and 
+specify a custom value. Note that this option is only active when the 
+output decode mode (-d) is 2/x and the input stream is either x/1 or x/2.
+
+Allowable values is gain values (either in db's or a positive numerical
+value) or BSI. When BSI is selected, the surround downmix level gets its value
+from the BSI section.
+
+
+-c COMPR
+--------
+
+Default: none
+
+This option sets the overall dynamic compression in the decoder. This value
+is applied to every output speaker.
+
+The bitstream contains information of how much to amplify or attenuate the
+sound to decrease the overall dynamic variations (loudness) in the program
+contents. Different options exists to choose the wanted dynamic reduction:
+
+
+    o none	No dynamic compression. The program contents is unchanged.
+
+    o normal	Normal dynamic compression. Normal in-store decoders use
+		this as an hardcoded default.
+
+    o light	Light dynamic compression. This is 50% (-6db) of the
+		reduction/gain that normal dynamic compression would give.
+
+    o heavy	Heavy dynamic compression. Intended for poor listening
+		environment with much background noise.
+
+    o inverse	Dynamic expansion. This is the inverse value of the light
+		dynamic compression, i.e. it makes strong sounds stronger
+		and weaker sounds weaker.
+
+
+
+-s STEREO_MODE
+--------------
+
+Default: surround
+
+this option controls what kind of stereo downmix should be applied.
+
+    o stereo	Simple stereo downmix.
+
+    o surround	Dolby surround compatible downmix.
+
+    o surround2	Dolby surround 2 compatible downmix.
+
+
+
+-f BOOL
+-------
+
+Default: off
+
+This option controls rear-channel filtering. The filter is a 2nd order Butterworth
+filter with at -3 dB point at 7 kHz. There are two
+major applications for this feature: 
+
+    o To provide proper Pro Logic downmix of the rear channels
+
+    o Phasing-problems in the downmix (washy sound) caused by the rear
+      channel downmix into the L R channels.
+
+Usually the rear channels are phased 90 deg in respect of the front channels
+prior or inside the ac3 encoder. This is done to avoid phasing problems when
+downmixing the program contents to two channels. Some sources do not provide
+this shifting, and thus this feature is added.
+
+The filter provides an increasing phase shift according to frequency. It is
+90 deg at 7kHz.
+
+NOTE: This option isn't effective when Six-Waves output mode is selected (-6ch).
+
+
+
+-n BOOL
+-------
+
+Default: false
+
+This selects if the decoder should use dialog normalization reduction. The
+normal dialogue level in a program is defined a reference of loudness, 0db.
+The BSI info variable "dialogue level" informs how much this dialogue level
+is under 0db full-scale (FS) - or how much headroom there is above the
+dialogue level before clip.
+
+One of Dolby's intentions with this variable is to ensure that all dialogue
+levels are played back with the same volume, regardless of the program's
+amount of headroom. It is good to have when the movie you're looking at is
+interrupted by a commercial break, where the headroom varies enormously.
+(It prevents blowing your ears off when the break comes.)
+
+This feature is implemented by attenuate everything such that all programs
+have 31 db headroom, regardless of its original headroom. For a typical
+-27db headroom program, this will case a -4db gain.
+
+
+
+-about
+------
+
+This will print legal & copyright information regarding azid.dll .

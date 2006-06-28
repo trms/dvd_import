@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;">
+  <title>BeSweet's ota switches</title>
+</head>
+<body>
+<big><small>this manual lists all the available switches under the
+-ota( ) section of BeSweet v1.5.<br>
+for more info, read the <a
+ href="http://forum.doom9.org/showthread.php?s=&amp;threadid=15738">BeSweet
+FAQ</a> !<br>
+<br>
+pay attention : switches are case-sensitive.</small><br>
+<br>
+<small></small><span style="text-decoration: underline;"><span
+ style="font-weight: bold;"></span></span><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;">Gain
+Switches</span></big><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-g<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">apply
+an absolute gain level on decoded stream, but before encoding
+("pre-gain")<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-g 6db" will apply 6db of gain<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">example : "-g
+max" will apply the highest gain level that still does not distort the
+original signal</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">example : "-g
+peak" will apply the gain level written in the wave's peak chunk</span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="font-weight: bold; color: rgb(255, 255, 255);">* if inputfile
+is not wave, or it doesn't have a peak chunk, "-g peak" will act like
+"-g max"</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-norm<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">apply
+relative normlization on decoded stream, but before encoding ("pre-gain
+normalization") </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-norm 0.95" will apply 95% of <span
+ style="color: rgb(255, 255, 255); font-weight: bold;"> the highest
+gain level that still does not distort the original signal</span> </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="font-weight: bold;"><span style="color: rgb(255, 255, 255);">note
+that "-g max" &amp; "-norm xx" are implementing two-pass of processing
+: one for analyzing the input file and determing the maxgain value, and
+the second for the actual encoding</span></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-G<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">apply
+relative normlization on the encoded file ("post-gain normalization") </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255); font-weight: bold;">example
+: "-G 0.97" will apply 97% of <span
+ style="color: rgb(255, 255, 255); font-weight: bold;"> the highest
+gain level that still does not distort the original signal</span> </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="font-weight: bold;"><span style="color: rgb(255, 255, 255);">note
+that unlike "-norm", the processes of finding maxgain and stream
+encoding are done in the same single pass</span></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">* if output file
+is not mp2/mp3/ogg, "-G xx" will act like "-norm xx"</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-hybridgain
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">apply
+absolute pre-gain and relative post-gain normalization ("hybridgain")<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">if
+inputfile is a stereo ac3, disable dialog normlization and pregain<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">if
+inputfile is six channels ac3, enable dialog normilzation and apply
+pregain in accordance to dynamic range compression level :<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">no
+compression : 7db. light compression : 8db. normal compression : 10db.
+heavy compression : 14db. inverse compression : 5db.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">if
+outputfile is mp3, set lame's scale switch to 1.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">if
+outputfile is mp2/mp3/ogg, apply postgain of 97% on the processed file<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">* if output file
+is not mp2/mp3/ogg, "-hybridgain" will act like "-g max"</span></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<span style="text-decoration: underline;"><span
+ style="font-weight: bold;"></span></span><big
+ style="text-decoration: underline; color: rgb(204, 0, 0);"><span
+ style="font-weight: bold;">Rate Switches</span></big><big
+ style="text-decoration: underline;"><span
+ style="color: rgb(204, 0, 0); font-weight: bold;"><br>
+</span></big>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-fs<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">force
+a sample-rate value<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">this
+bypass BeSweet's engine for determing the sample-rate of input files,
+and sets is manually<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">usefull sometime
+when processing an headerless pcm stream</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-r
+      <br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">a
+frame rate convertor<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-r 23976 25000" will convert a 23.976fps stream (NTSC) to a
+25.000fps stream (PAL)<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;"><br>
+Delay
+Switches</span></big><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-d</td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">apply
+delay correction to file<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-d 10" will add 10miliseconds of silence to the beginning of the
+encoded file<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">example : "-d
+-20' will skip the first 20milliseconds of the original file</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-e</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">append
+silence to file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-e 8" will add 8miliseconds of silence to the end of encoded file </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 204);"><span
+ style="font-weight: bold; color: rgb(204, 204, 204);">-sc</span><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255);"><span
+ style="font-weight: bold; color: rgb(255, 255, 255);">this sets the
+minimum resolution of samples for delay assertions</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0);"><span
+ style="color: rgb(255, 255, 255); font-weight: bold;">used in
+AacMachine to add delay of size of full aac-frames </span></td>
+    </tr>
+  </tbody>
+</table>
+<big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;"></span></big><big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;"></span></big><br>
+<br>
+<!-- nested -->
+<table cellpadding="0" cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td class="info"><a href="http://besweet.notrace.dk" target="_top">
+      <img src="http://s12.sitemeter.com/meter.asp?site=s12DSPguru"
+ alt="Site Meter" border="0"></a></td>
+      <td class="info" align="center"><b> copyright &copy; DSPguru</b> </td>
+    </tr>
+  </tbody>
+</table>
+<!-- end nested -->
+</body>
+</html>

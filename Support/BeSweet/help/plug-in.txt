@@ -1,0 +1,30 @@
+this file lists all switches for using a PlugIn in BeSweet v1.5.
+beware : switches are case-sensitive.
+
+
+-name DLL_NAME
+--------------
+
+Default: Not Set.
+
+This sets the name of the dll plugin.
+
+
+-func EFFECT_NAME
+-----------------
+
+Default: Not Set.
+
+This choose the effect function from all the functions in the dll.
+
+
+-6ch
+-----
+
+Default: Not Set.
+
+This tells BeSweet to deliver the plugin a six-channel samples interleaved.
+this switch is useful for plugins that implements downmix matrix (eg. Dolby ProLogic 2).
+
+
+for more info on this, download the plugin-examples source codes from http://DSPguru.doom9.org/effects.html

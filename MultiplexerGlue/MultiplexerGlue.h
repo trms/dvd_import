@@ -10,7 +10,13 @@ namespace Utilities {
 		public ref class MultiplexGlue
 		{
 		public:
-			int Multiplex(System::String ^video, System::String ^audio, int offset, System::String ^output);
+			System::String ^Video;
+			System::String ^Audio;
+			System::String ^Output;
+			int Offset;
+
+			long long CurrentSCR();
+			void Multiplex();
 		};
 	}
 }

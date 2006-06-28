@@ -15,16 +15,26 @@
 typedef int log_level_t;
 #include "..\mjpgTools\mplex\outputstream.h"
 
-int Utilities::DVDImport::MultiplexGlue::Multiplex(System::String ^video, System::String ^audio, int offset, System::String ^output)
+OutputStream *ostrm = 0;
+
+long long Utilities::DVDImport::MultiplexGlue::CurrentSCR()
+{
+	if(ostrm == 0)
+		return(0);
+	else
+		return(ostrm->current_SCR / CLOCKS);
+}
+
+void Utilities::DVDImport::MultiplexGlue::Multiplex()
 {
 	// set up params
 	opt_mux_format				= 3;
 	opt_mpeg					= 2;
 	opt_audio_offset			= 0;
-	opt_video_offset			= offset;
-	IntPtr vidStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(video);
-	IntPtr audStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(audio);
-	IntPtr outStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(output);
+	opt_video_offset			= Offset;
+	IntPtr vidStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Video);
+	IntPtr audStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Audio);
+	IntPtr outStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Output);
 	LPTSTR lVideo = (LPTSTR)vidStr.ToPointer();
 	LPTSTR lAudio = (LPTSTR)audStr.ToPointer();
 	LPTSTR lOutput = (LPTSTR)outStr.ToPointer();
@@ -32,11 +42,13 @@ int Utilities::DVDImport::MultiplexGlue::Multiplex(System::String ^video, System
 
 	vector<IBitStream *>		mpa_files;
 	vector<IBitStream *>		video_files;
-	OutputStream				ostrm;
+	//OutputStream				ostrm;
 	vector<ElementaryStream *>	strms;
 	clockticks first_frame_PTS = 0;
 	UINT32						frame_interval;
 	int							i;
+
+	ostrm = new OutputStream();
 
 	IBitStream *bs;
 	bs = new IBitStream;
@@ -58,7 +70,7 @@ int Utilities::DVDImport::MultiplexGlue::Multiplex(System::String ^video, System
 	//info_Message("Found %d video streams, %d MPEG audio streams, and %d AC3 streams.", video_files.size(),
 	//			mpa_files.size(), ac3_files.size());
 
-	ostrm.InitSyntaxParameters();
+	ostrm->InitSyntaxParameters();
 
 	//if ((video_files.size() < 1) && (opt_mux_format == MPEG_FORMAT_VCD))
 	//	warn_Message("Multiplexing audio-only for a standard VCD is very inefficient");
@@ -69,22 +81,22 @@ int Utilities::DVDImport::MultiplexGlue::Multiplex(System::String ^video, System
 		// The first DVD video stream is made the master stream...
 
 		if ((i == 0) && (opt_mux_format == MPEG_FORMAT_DVD))
-			videoStrm = new DVDVideoStream( *video_files[i], ostrm);
+			videoStrm = new DVDVideoStream( *video_files[i], *ostrm);
 		else
-			videoStrm = new VideoStream( *video_files[i],ostrm);
+			videoStrm = new VideoStream( *video_files[i],*ostrm);
 		videoStrm->Init( i );
 		strms.push_back( videoStrm );
 	}
 	for( i=0; i < mpa_files.size() ; i++ )
 	{
-		AudioStream* audioStrm = new MPAStream( *mpa_files[i], ostrm);
+		AudioStream* audioStrm = new MPAStream( *mpa_files[i], *ostrm);
 		audioStrm->Init ( i );
 		strms.push_back(audioStrm);
 	}
 
 	// MultiPlex !
 	sprintf(tmp, "%ls", lOutput);
-	ostrm.OutputMultiplex( &strms,  tmp);
+	ostrm->OutputMultiplex( &strms,  tmp);
 
 	for( i=0; i < strms.size(); i++)
 		delete strms[i];
@@ -103,9 +115,10 @@ int Utilities::DVDImport::MultiplexGlue::Multiplex(System::String ^video, System
 		delete bs;
 	}
 
+	delete ostrm;
+	ostrm = 0;
+
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(vidStr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(audStr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(outStr);
-
-	return(0);
 }

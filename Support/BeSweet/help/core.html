@@ -1,0 +1,606 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;">
+  <title>BeSweet's core switches</title>
+</head>
+<body>
+<big><small>this manual lists all the available switches under the
+-core( ) section of BeSweet v1.5.<br>
+for more info, read the <a
+ href="http://forum.doom9.org/showthread.php?s=&amp;threadid=15738">BeSweet
+FAQ</a> !<br>
+<br>
+pay attention : switches are case-sensitive.</small><br>
+<br
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;">
+<span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;">Basic
+Switches</span></big><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-input<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">set
+input path &amp; filename (supported filetypes are listed below)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-input d:\music-in.wav"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-output<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">set
+output path &amp; filename <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-output D:\music-out.mp2"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-logfile<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+a logfile with nam. <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255); font-weight: bold;">example
+: "-logfile d:\BeSweet.log"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-logfilea<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">append
+to existing logfile<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">example
+: "-logfilea d:\Besweet.log"<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<big style="text-decoration: underline; color: rgb(204, 0, 0);"><span
+ style="font-weight: bold;">Output Switches</span></big><big
+ style="text-decoration: underline;"><span
+ style="color: rgb(204, 0, 0); font-weight: bold;"><br>
+</span></big>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-2ch<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">create
+stereo, 16bit, wave as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channels
+order of output file is FL,FR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6chfloat<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+six, mono, 32bit floating-point waves as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channels
+order of input file is assumed to be : FL,FR,C,LFE,SL,SR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6ch</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+six, mono, 16bit waves as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255); font-weight: bold;">channels
+order of input file is assumed to be : FL,FR,C,LFE,SL,SR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6CH</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+six, mono, 16bit waves as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channels
+order of input file is assumed to be : FL,C,FR,SL,SR,LFE<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6chwav</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+mutlichannel, 16bit, wave as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channel
+order of output file is FL,FR,C,LFE,SL,SR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-5chaiff</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+multichannel, 16bit, big-endian, aiff as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255); font-weight: bold;">channel
+order of output file is FL,FR,C,SL,SR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6chaiff</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+multichannel, 16bit, big-endian, aiff as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channel
+order of output file is FL,FR,C,LFE,SL,SR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6chliff</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+multichannel, 16bit, little-endian, aiff as output file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channels
+order of input file is assumed to be : FL,FR,C,LFE,SL,SR<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-6chogg</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+mutlichannl Ogg Vorbis stream<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">channels
+order of input file is assumed to be : FL,C,FR,SL,SR,LFE</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-wavmp3</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">encode
+to mp3, and wrap inside wav container</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">sometime
+useful when wanting to mux mp3 with tools that can only mux waves</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-ddwav</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">create
+a dolby-digital wave<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255); font-weight: bold;">this
+is an ac3 stream that can be bruned as wav and playback on surround
+systems<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-payload</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">manipulation
+of payload data. no decoder is involved<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255);"><span
+ style="font-weight: bold;">useful for demuxins streams, chopping, and
+delay assetions</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;">VOB-Input
+Switches</span></big><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-seek</td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">print
+all avialable audio substreams<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">useful
+for selecting the right substream of multilingual stream<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-substream</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">set
+substream to encode<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">omitting
+this switch will engage BeSweet's auto mode of decoding the first
+avialable substream<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;">Tweaking
+Switches</span></big><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 204, 204); font-weight: bold; background-color: rgb(102, 102, 204);">-6chnothing</td>
+      <td
+ style="vertical-align: top; background-color: rgb(51, 102, 255); color: rgb(255, 255, 255); font-weight: bold;">process
+a six channel stream, but don't write decoded samples to harddisk<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">used
+by AacMachine to demux an audio stream from VOB while finding maxgain
+value<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-2chnothing</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">process
+a six channel stream, but don't write decoded samples to harddisk&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">used
+by AacMachine to demux an audio stream from VOB while finding maxgain
+value </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-noid3</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">avoid
+adding ID3v1 tag to encoded file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 204, 0); color: rgb(255, 255, 255); font-weight: bold;">by
+default, BeSweet adds an ID3v1 tag to encoded file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204); background-color: rgb(102, 102, 204);">-be</td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(51, 102, 255); font-weight: bold;">assume
+input wave file is 16bit, stereo, big-endian file<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; color: rgb(204, 204, 204);"><br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(255, 255, 255); background-color: rgb(102, 204, 0); font-weight: bold;">useful
+when demuxed pcm samples are flipped<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;">BeSweet
+accepts the following filetypes as inputs<br>
+</span></big>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 102, 0); color: rgb(204, 255, 255); font-weight: bold;">Mpeg
+Audio<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".MP3",".MP2",".MPA"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 102, 0); color: rgb(204, 255, 255); font-weight: bold;">Dolby
+Digital<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".AC3"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 102, 0); color: rgb(204, 255, 255); font-weight: bold;">Ogg
+Vorbis<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".OGG"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 102, 0); color: rgb(204, 255, 255); font-weight: bold;">Linear
+PCM<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".PCM".&nbsp;</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">assumed
+to be 16bit, stereo, 48khz</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">* to
+force a different sample rate, use the "-ota( -fs )" switch <br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 102, 0); color: rgb(204, 255, 255); font-weight: bold;">Wave</td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 204, 204); color: rgb(153, 51, 0);">".WAV"
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">
+mono/stereo/multichannel 16bit waves smaller than 2gb</td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">mono/stereo/multichannel
+32bit floating-point waves at any size<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); background-color: rgb(204, 102, 0); font-weight: bold;">AVI<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".AVI"
+with AC3/MPx/PCM soundtrack<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">here,
+PCM stands for : 8/16 bits, mono/stereo/multichannel streams<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); background-color: rgb(204, 102, 0); font-weight: bold;">Video
+Object<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".VOB"
+with AC3/PCM soundtrack<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">same as
+the AVI case - 20/24bits PCM is not supported<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); background-color: rgb(204, 102, 0); font-weight: bold;">BeSweet's
+LIST file<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(255, 204, 204); color: rgb(153, 51, 0);">".LST"<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold;"><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(153, 51, 0);">allows
+transcoding multiple files into one<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(204, 255, 255); font-weight: bold; background-color: rgb(204, 102, 0);">BeSweet's
+MUX file<br>
+      </td>
+      <td
+ style="vertical-align: top; color: rgb(153, 51, 0); background-color: rgb(255, 204, 204);">".MUX"<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(153, 51, 0);">allows feeding BeSweet with multiple
+mono waves instead of single multichannel wave</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(153, 51, 0);">to find out the correct channels
+order, advise the info above (output switches)</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<big><span
+ style="color: rgb(204, 0, 0); font-weight: bold; text-decoration: underline;"></span></big><br>
+<br>
+<!-- nested -->
+<table cellpadding="0" cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td class="info"><a href="http://besweet.notrace.dk" target="_top">
+      <img src="http://s12.sitemeter.com/meter.asp?site=s12DSPguru"
+ alt="Site Meter" border="0"></a></td>
+      <td class="info" align="center"><b> copyright &copy; DSPguru</b>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- end nested -->
+</body>
+</html>

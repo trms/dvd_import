@@ -1,0 +1,57 @@
+this file lists all supported WaveBooster switches for BeSweet v1.4.
+beware : switches are case-sensitive.
+
+Usage :
+BeSweet -core(..) -ota(..) -azid(..) -shibatch(..) -boost(..) -lame(..) -2lame(..) -ogg(..) -split( .. ) -plugin( .. ) -ac3enc(..)
+
+Dg.
+
+
+/l= Limit Factor
+----------------
+
+Default: 0.95
+
+This controls the maximum gain of output file.
+Values should vary from 0 to 1.
+
+
+
+/b= Boost Factor
+----------------
+
+Default: 3
+
+This controls the compression level.
+Values should vary from 1 to 10.
+implements a DRC algorithm by LigH.
+
+
+/b2= Boost Factor
+----------------
+
+Default: 3
+
+This controls the compression level.
+Values should vary from 1 to 10.
+implements a DRC algorithm by Dg.
+
+
+
+/b3= Boost Factor
+----------------
+
+Default: 3
+
+This controls the compression level.
+Values should vary from 1 to 10.
+implements a DRC algorithm by Tera.
+
+
+/disable
+--------
+
+Default: Disabled.
+
+This disables WaveBooster engine.
+WaveBooster is disabled by default and this switch is mostly used in list files, when the use of the WaveBooster is needed to be disabled after was enabled.

@@ -1,0 +1,26 @@
+AZID Readme v1.9 build 922 (2003-12-18).
+Copyright (C) 1997-2002 Midas <midas@egon.gyaloglo.hu>
+-------------------------------------------------------------------------------
+
+
+Introduction
+============
+
+This is the documentation for the AC3 decoder application plugin,
+Azid.dll. It is written by Midas <midas@egon.gyaloglo.hu>, copyright
+(C) 1997-2002 Midas.
+
+The most recent update of this program can be found on the excellent
+pages of http://www.doom9.org/
+
+
+
+Usage and legal conditions:
+---------------------------
+  This is a test implemenation of standard A/52 from ATSC (Digital Audio
+  Compression Standard), and it may contain algorithms covered by pending
+  patents. This application may solely be used for proving that bitstreams
+  are compliant to this standard for test and demonstration purposes only.
+  Any other use may be prohibited by law in your country. The author has
+  no liability regarding this application whatsoever. This application
+  may be distributed freely unless prohibited by law.

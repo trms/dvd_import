@@ -1,0 +1,49 @@
+this manual lists all the available switches under the -ogg( ) section of BeSweet v1.5.
+use this to encode Ogg Vorbis streams.
+
+beware : switches are case-sensitive.
+
+
+-b BITRATE
+-----------
+
+Default: Not Set.
+
+This controls the nominal bitrate of the encoded Ogg track.
+Bitrates should be treated as KBPS. for example -ogg( -b 128 ).
+
+
+-m BITRATE
+-----------
+
+Default: Not Set.
+
+This controls the minimum bitrate of the encoded Ogg track.
+Bitrates should be treated as KBPS. for example -ogg( -m 64 ).
+
+
+-M BITRATE
+-----------
+
+Default: Not Set.
+
+This controls the maximum bitrate of the encoded Ogg track.
+Bitrates should be treated as KBPS. for example -ogg( -M 192 ).
+
+
+-q QUALITY
+-----------
+
+Default: Not Set.
+
+This sets the desired quality of the OGG stream.
+Quality values should vary from 0 to 1. 
+-ogg( -q 0 ) will produce the smallest ogg filesizes.
+-ogg( -q 1 ) will produce the biggest ogg filesize.
+
+
+-6ch
+-----
+Default: Not Set.
+
+This sets BeSweet to produce a 5.1 Vorbis stream.

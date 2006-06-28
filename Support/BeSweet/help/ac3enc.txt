@@ -1,0 +1,16 @@
+this manual lists all the available switches under the -ac3enc( ) section of BeSweet v1.5.
+beware : switches are case-sensitive.
+
+
+
+-b
+---
+
+Default: 384
+
+This sets the bitrate of AC3 output.
+
+
+-6ch
+---
+Encode a 5.1 AC3 Stream.

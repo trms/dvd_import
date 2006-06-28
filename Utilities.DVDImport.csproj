@@ -156,7 +156,10 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)Support\ac3dec.exe" "$(TargetDir)"
+copy "$(SolutionDir)Support\tooLame.exe" "$(TargetDir)"
+md "$(TargetDir)\BeSweet"
+xcopy /E /Y "$(SolutionDir)Support\BeSweet" "$(TargetDir)\BeSweet"
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

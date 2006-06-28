@@ -1,0 +1,21 @@
+SoundTouch audio processing library v1.2.1 (27/Dec/2003)
+SoundTouch library Copyright (c) Olli Parviainen 2002-2003 
+--------------------------------------------------------------------------------
+
+SoundTouch is an open-source audio processing library that allows changing the sound tempo, pitch and playback rate parameters independently from each other, i.e.:
+
+Sound tempo can be incresed or decreased while maintaining the original pitch 
+Sound pitch can be incresed or decreased while maintaining the original tempo 
+Change playback rate that affects both tempo and pitch at the same time 
+Choose any combination of tempo/pitch/rate 
+
+Contact information 
+Author email: oparviai @ iki.fi 
+
+SoundTouch WWW page: http://www.iki.fi/oparviai/soundtouch
+
+Note: The above URL is a relay address that will forward the browser to the actual server. If you'll create a link to SoundTouch library page, please use the above URL instead of the actual address, so that the correct link address will be maintained although the pages would move to another server.
+
+
+
+* soundtouch.dll was created by DSPguru. source-code, under Lesser GNU Public License, can be obtained from http://DSPguru.doom9.org

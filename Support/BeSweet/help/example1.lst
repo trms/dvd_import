@@ -1,0 +1,5 @@
+-core( -input "e:\BeSweet\shuttle shivers.vob" -substream 0x80 ) -azid( -l-1db -c light ) 
+-core( -input d:\temp\05.ac3 ) -azid( -g 3db -c none ) -boost( /b=3 /l=0.95 )
+-core( -input c:\vobs\01.vob -substream 0x82 ) -azid( -g max ) -boost( /disable )
+-core( -input c:\vobs\02.vob -substream 0x82 )
+-core( -input "f:\cool stuff\applause.ac3" ) -azid( -g 6 -c normal ) 

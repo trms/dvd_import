@@ -1,0 +1,42 @@
+this manual lists all the available switches under the -mp2enc( ) section of BeSweet v1.5.
+use this to encode Mpeg Audio, Layer II, streams.
+beware : switches are case-sensitive.
+
+
+-b
+---
+
+Default: 128
+
+This sets the bitrate of MP2 output.
+
+
+-m
+---
+
+Default: Joint Stereo
+
+This sets the output channel modes :
+
+   o s   Stereo
+  
+   o d   Dual Channel
+
+   o j   Intensity Stereo
+
+
+-e
+---
+
+Default: not set
+
+This adds error protection to the MP2 output.
+
+
+-v QUALITY
+----------
+
+Default: not set
+
+This generates a VBR (Variable Bitrate) MP2.
+Quality value can vary from 0 to 9.

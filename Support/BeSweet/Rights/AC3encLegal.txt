@@ -1,0 +1,15 @@
+
+	The simplest AC3 encoder
+ 		* Copyright (c) 2000 Gerard Lantau.
+
+  ac3enc.dll is a dll release of FFMpeg's AC3ENC.
+  interfacing source-code to AC3ENC can be found at http://DSPguru.doom9.net
+
+Contact information of original developer :
+
+Homepage : http://ffmpeg.org/
+e-mail   : fabrice.bellard@free.fr
+
+
+<Conditions of distribution>
+  This program is distributed under LGPL. 
