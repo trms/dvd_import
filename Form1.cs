@@ -1296,7 +1296,7 @@ namespace Utilities.DVDImport
 			process = new Process();
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-			process.StartInfo.RedirectStandardOutput = true;
+			//process.StartInfo.RedirectStandardOutput = true;
 			process.StartInfo.RedirectStandardError = true;
 			process.StartInfo.FileName = besweetCommand;
 			process.StartInfo.Arguments = "-core( -input \"" + filename + "\" -output \"" + output + "\" ) -toolame( -m j -b 192 )";
@@ -1372,7 +1372,7 @@ namespace Utilities.DVDImport
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
 				process.StartInfo.RedirectStandardOutput = true;
-				process.StartInfo.RedirectStandardError = true;
+				//process.StartInfo.RedirectStandardError = true;
 				process.StartInfo.FileName = command;
 				process.StartInfo.Arguments = "\"" + filename + "\" -pcmwav \"" + output + "\"";
 				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -1411,7 +1411,7 @@ namespace Utilities.DVDImport
 				process = new Process();
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
-				process.StartInfo.RedirectStandardOutput = true;
+				//process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
 				process.StartInfo.FileName = lameCommand;
 				string extraOptions = " -g";
