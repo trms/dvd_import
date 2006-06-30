@@ -64,6 +64,11 @@ namespace Utilities.DVDImport
 		private Label label9;
 		private Label label10;
 		volatile private bool m_run = true;
+		private DateTime m_startTime = DateTime.MinValue;
+		private Label label11;
+		private readonly int m_demuxCount = 400;
+		private readonly int m_audioCount = 600;
+		private readonly int m_remuxCount = 1000;
 
 		/// <summary>
 		/// Required designer variable.
@@ -142,6 +147,7 @@ namespace Utilities.DVDImport
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.button7 = new System.Windows.Forms.Button();
+			this.label11 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.groupBox2.SuspendLayout();
@@ -206,7 +212,7 @@ namespace Utilities.DVDImport
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.Location = new System.Drawing.Point(-1, 292);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(612, 15);
+			this.label2.Size = new System.Drawing.Size(512, 15);
 			this.label2.TabIndex = 5;
 			// 
 			// panel1
@@ -504,10 +510,20 @@ namespace Utilities.DVDImport
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
+			// label11
+			// 
+			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label11.Location = new System.Drawing.Point(517, 293);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(100, 15);
+			this.label11.TabIndex = 26;
+			this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(760, 320);
+			this.Controls.Add(this.label11);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.button7);
 			this.Controls.Add(this.treeView1);
@@ -759,6 +775,17 @@ namespace Utilities.DVDImport
 				label2.Text = text;
 		}
 
+		private void SetETAText(string text)
+		{
+			if (label11.InvokeRequired)
+			{
+				SetStatusTextCallback d = new SetStatusTextCallback(SetETAText);
+				this.Invoke(d, new object[] { text });
+			}
+			else
+				label11.Text = text;
+		}
+
 		delegate void SetProgressCallback(int progress);
 		private void SetProgress(int progress)
 		{
@@ -770,8 +797,20 @@ namespace Utilities.DVDImport
 			else
 			{
 				progressBar1.Minimum = 0;
-				progressBar1.Maximum = 1000;
+				progressBar1.Maximum = m_remuxCount;
 				progressBar1.Value = progress;
+
+				try
+				{
+					if (progress > 0)
+					{
+						TimeSpan elapsed = DateTime.Now - m_startTime;
+						double secPerTick = elapsed.TotalSeconds / progress;
+						double remainingSec = secPerTick * (m_remuxCount - progress);
+						label11.Text = Utilities.SecondsToLength(Convert.ToInt32(remainingSec));
+					}
+				}
+				catch { }
 			}
 		}
 
@@ -925,6 +964,8 @@ namespace Utilities.DVDImport
 				string audio = null;
 				string video = null;
 
+				m_startTime = DateTime.Now;
+
 				try
 				{
 					SetProgress(0);
@@ -949,7 +990,7 @@ namespace Utilities.DVDImport
 							if (updateInterval++ % 10 == 0)
 							{
 								//SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
-								SetProgress(Convert.ToInt32(500.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
+								SetProgress(Convert.ToInt32(m_demuxCount * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
 							}
 							currentSector++;
 							uint code = ReadCode(buf, 0);
@@ -1126,7 +1167,7 @@ namespace Utilities.DVDImport
 								return;
 						}
 					}
-					SetProgress(500);
+					SetProgress(m_demuxCount);
 				}
 				finally
 				{
@@ -1161,7 +1202,7 @@ namespace Utilities.DVDImport
 				audio = ConvertAudio(TempPath + audio, duration);
 				if (audio == null)
 					return;
-				SetProgress(600);
+				SetProgress(m_audioCount);
 
 				DisableCancel();
 				SetStatusText("Remuxing elementary mpeg streams...");
@@ -1177,14 +1218,14 @@ namespace Utilities.DVDImport
 					if (pgc != null)
 					{
 						SetStatusText("Remuxing elementary mpeg streams..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%"*/);
-						SetProgress(600 + Convert.ToInt32(400.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+						SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
 					}
 					else
 						SetStatusText("Remuxing elementary mpeg streams...");
 					Thread.Sleep(500);
 				}
 				//mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
-				SetProgress(1000);
+				SetProgress(m_remuxCount);
 			}
 			catch (ThreadAbortException)
 			{
@@ -1207,6 +1248,7 @@ namespace Utilities.DVDImport
 				thread = null;
 				SetProgress(0);
 				SetStatusText("");
+				SetETAText("");
 
 				try
 				{
@@ -1367,7 +1409,7 @@ namespace Utilities.DVDImport
 					if (len != 0 && duration != 0)
 					{
 						SetStatusText("Encoding mpeg audio..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))) + "%"*/);
-						SetProgress(500 + Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))));
+						SetProgress(m_demuxCount + Convert.ToInt32((m_audioCount - m_demuxCount) * (Convert.ToDouble(len) / Convert.ToDouble(duration))));
 					}
 				}
 			}
