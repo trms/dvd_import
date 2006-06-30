@@ -63,6 +63,8 @@ namespace Utilities.DVDImport
 		private Process process = null;
 		private Label label9;
 		private Label label10;
+		volatile private bool m_run = true;
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -787,7 +789,7 @@ namespace Utilities.DVDImport
 				progressBar1.Visible = true;
 				textBox1.Enabled = false;
 				button1.Enabled = false;
-				button2.Enabled = false;
+				button2.Text = "Cancel";
 				button3.Enabled = false;
 				groupBox1.Enabled = false;
 				groupBox2.Enabled = false;
@@ -797,6 +799,19 @@ namespace Utilities.DVDImport
 				textBox2.Enabled = false;
 				textBox3.Enabled = false;
 				textBox4.Enabled = false;
+			}
+		}
+
+		private void DisableCancel()
+		{
+			if (this.InvokeRequired)
+			{
+				NullCallback d = new NullCallback(DisableCancel);
+				this.Invoke(d);
+			}
+			else
+			{
+				button2.Enabled = false;
 			}
 		}
 
@@ -813,6 +828,7 @@ namespace Utilities.DVDImport
 				progressBar1.Visible = false;
 				textBox1.Enabled = true;
 				button1.Enabled = true;
+				button2.Text = "Import";
 				button2.Enabled = true;
 				button3.Enabled = true;
 				groupBox1.Enabled = true;
@@ -904,237 +920,250 @@ namespace Utilities.DVDImport
 				}
 				#endregion
 
-				SetProgress(0);
 				int audioOffset = 0;
 				int videoOffset = 0;
 				string audio = null;
 				string video = null;
-				byte[] buf = new byte[2048];
-				long totalSectors = 0;
-				long currentSector = 0;
-				// find total number of sectors for all cells
-				for (int cellNum = 0; cellNum < cells.Count; cellNum++)
-				{
-					IFOParse.Cell cell = cells[cellNum];
-					totalSectors += cell.LastSector - cell.FirstSector;
-				}
 
-				SetStatusText("Reading from DVD...");
-				for (int cellNum = 0; cellNum < cells.Count; cellNum++)
+				try
 				{
-					IFOParse.Cell cell = cells[cellNum];
-					ulong updateInterval = 0;
-					for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
+					SetProgress(0);
+					byte[] buf = new byte[2048];
+					long totalSectors = 0;
+					long currentSector = 0;
+					// find total number of sectors for all cells
+					for (int cellNum = 0; cellNum < cells.Count; cellNum++)
 					{
-						ReadSector(vobs, buf, sector);
-						if (updateInterval++ % 10 == 0)
+						IFOParse.Cell cell = cells[cellNum];
+						totalSectors += cell.LastSector - cell.FirstSector;
+					}
+
+					SetStatusText("Reading from DVD...");
+					for (int cellNum = 0; cellNum < cells.Count; cellNum++)
+					{
+						IFOParse.Cell cell = cells[cellNum];
+						ulong updateInterval = 0;
+						for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
 						{
-							//SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
-							SetProgress(Convert.ToInt32(500.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
-						}
-						currentSector++;
-						uint code = ReadCode(buf, 0);
-						if (code != BLOCK_START_CODE)
-							continue;
+							ReadSector(vobs, buf, sector);
+							if (updateInterval++ % 10 == 0)
+							{
+								//SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
+								SetProgress(Convert.ToInt32(500.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
+							}
+							currentSector++;
+							uint code = ReadCode(buf, 0);
+							if (code != BLOCK_START_CODE)
+								continue;
 
-						int i = 0x0e;
-						ulong systemCode = ReadCode(buf, i);
-						i += 4;
-						UInt16 headerLength = ReadWord(buf, i);
-						i += 2;
+							int i = 0x0e;
+							ulong systemCode = ReadCode(buf, i);
+							i += 4;
+							UInt16 headerLength = ReadWord(buf, i);
+							i += 2;
 
-						switch (systemCode)
-						{
-							case AC3_DETECT_BYTES:
-								//if (!inCell)
-								//	break;
-								//audPacks++;
-								#region write non-mpeg audio data to temp file
-								UInt16 flags = ReadWord(buf, i);
-								i += 2;
-								byte b = buf[i++];
-								#region find ms offset
-								if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
-								{
-									byte c = buf[i++];
-									int offset = (c & 0x0e) << 29;
-									offset += (ReadWord(buf, i) & 0xfffe) << 14;
+							switch (systemCode)
+							{
+								case AC3_DETECT_BYTES:
+									//if (!inCell)
+									//	break;
+									//audPacks++;
+									#region write non-mpeg audio data to temp file
+									UInt16 flags = ReadWord(buf, i);
 									i += 2;
-									offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+									byte b = buf[i++];
+									#region find ms offset
+									if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
+									{
+										byte c = buf[i++];
+										int offset = (c & 0x0e) << 29;
+										offset += (ReadWord(buf, i) & 0xfffe) << 14;
+										i += 2;
+										offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+										i += 2;
+										offset /= 90;
+										i += b - 5;
+										audioOffset = offset;
+									}
+									else
+										i += b;
+									#endregion
+									byte substream = buf[i++];
+									i++; // # frame headers
+									UInt16 pointer = ReadWord(buf, i);
 									i += 2;
-									offset /= 90;
-									i += b - 5;
-									audioOffset = offset;
-								}
-								else
-									i += b;
-								#endregion
-								byte substream = buf[i++];
-								i++; // # frame headers
-								UInt16 pointer = ReadWord(buf, i);
-								i += 2;
-								int t = substream;
-								string name = t.ToString("000");
-								if (t >= 0xA8) // nothing
-									continue;
-								else if (t >= 0xA0) // PCM
-								{
-									// http://dvd.sourceforge.net/dvdinfo/index.html
-									name += ".wav";
-									i++; // emph, mute, reserved, frame #
-									byte details = buf[i++];
-									i++; // dynamic range;
+									int t = substream;
+									string name = t.ToString("000");
+									if (t >= 0xA8) // nothing
+										continue;
+									else if (t >= 0xA0) // PCM
+									{
+										// http://dvd.sourceforge.net/dvdinfo/index.html
+										name += ".wav";
+										i++; // emph, mute, reserved, frame #
+										byte details = buf[i++];
+										i++; // dynamic range;
 
-									// these seem to be zeroed out in my tests, ignore them
-									int bitsPerSample = (details & 0xC0) >> 6;
-									int sampleRate = (details & 0x30) >> 4;
-									int numChannels = details & 0x07;
-									b += 3;
-								}
-								else if (t >= 0x88) // DTS
-									name += ".dts"; // dts audio will be ignored (most dvds are ac3, or at least have an ac3 track)
-								else if (t >= 0x80) // AC3
-									name += ".ac3";
-								else
-									continue;
-								FileStream w = null;
-								if (writers.ContainsKey(name))
-									w = (FileStream)writers[name];
-								else
-								{
-									w = File.Create(TempPath + name);
-									writers[name] = w;
-									if (name.EndsWith(".wav")) // leave room for wav header
-										w.Seek(44, SeekOrigin.Begin);
-								}
-								//SaveData(w, buf, i, 2048 - i, t);
-								SaveData(w, buf, i, (headerLength - 7 - b), t);
-								#endregion
-								break;
-							case VID_DETECT_BYTES:
-								//if (!inCell)
-								//	break;
-								//vidPacks++;
-								#region write mpeg video to temp file
-								flags = ReadWord(buf, i);
-								i += 2;
-								b = buf[i++];
-								#region find ms offset
-								if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && videoOffset == 0)
-								{
-									byte c = buf[i++];
-									int offset = (c & 0x0e) << 29;
-									offset += (ReadWord(buf, i) & 0xfffe) << 14;
+										// these seem to be zeroed out in my tests, ignore them
+										int bitsPerSample = (details & 0xC0) >> 6;
+										int sampleRate = (details & 0x30) >> 4;
+										int numChannels = details & 0x07;
+										b += 3;
+									}
+									else if (t >= 0x88) // DTS
+										name += ".dts"; // dts audio will be ignored (most dvds are ac3, or at least have an ac3 track)
+									else if (t >= 0x80) // AC3
+										name += ".ac3";
+									else
+										continue;
+									FileStream w = null;
+									if (writers.ContainsKey(name))
+										w = (FileStream)writers[name];
+									else
+									{
+										w = File.Create(TempPath + name);
+										writers[name] = w;
+										if (name.EndsWith(".wav")) // leave room for wav header
+											w.Seek(44, SeekOrigin.Begin);
+									}
+									//SaveData(w, buf, i, 2048 - i, t);
+									SaveData(w, buf, i, (headerLength - 7 - b), t);
+									#endregion
+									break;
+								case VID_DETECT_BYTES:
+									//if (!inCell)
+									//	break;
+									//vidPacks++;
+									#region write mpeg video to temp file
+									flags = ReadWord(buf, i);
 									i += 2;
-									offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+									b = buf[i++];
+									#region find ms offset
+									if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && videoOffset == 0)
+									{
+										byte c = buf[i++];
+										int offset = (c & 0x0e) << 29;
+										offset += (ReadWord(buf, i) & 0xfffe) << 14;
+										i += 2;
+										offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+										i += 2;
+										offset /= 90;
+										i += b - 5;
+										videoOffset = offset;
+									}
+									else
+										i += b;
+									#endregion
+									string vname = "video.m2v";
+									video = vname;
+									FileStream vw = null;
+									if (writers.ContainsKey(vname))
+										vw = (FileStream)writers[vname];
+									else
+									{
+										vw = File.Create(TempPath + vname);
+										writers[vname] = vw;
+									}
+									//SaveData(vw, buf, i, 2048 - i, 1);
+									SaveData(vw, buf, i, (headerLength - 3 - b), 1);
+									#endregion
+									break;
+								case AUD_DETECT_BYTES:
+									//if (!inCell)
+									//	break;
+									//audPacks++;
+									#region write mpeg audio to temp file
+									flags = ReadWord(buf, i);
 									i += 2;
-									offset /= 90;
-									i += b - 5;
-									videoOffset = offset;
-								}
-								else
-									i += b;
-								#endregion
-								string vname = "video.m2v";
-								video = vname;
-								FileStream vw = null;
-								if (writers.ContainsKey(vname))
-									vw = (FileStream)writers[vname];
-								else
-								{
-									vw = File.Create(TempPath + vname);
-									writers[vname] = vw;
-								}
-								//SaveData(vw, buf, i, 2048 - i, 1);
-								SaveData(vw, buf, i, (headerLength - 3 - b), 1);
-								#endregion
-								break;
-							case AUD_DETECT_BYTES:
-								//if (!inCell)
-								//	break;
-								//audPacks++;
-								#region write mpeg audio to temp file
-								flags = ReadWord(buf, i);
-								i += 2;
-								b = buf[i++];
-								#region find ms offset
-								if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
-								{
-									byte c = buf[i++];
-									int offset = (c & 0x0e) << 29;
-									offset += (ReadWord(buf, i) & 0xfffe) << 14;
-									i += 2;
-									offset += (ReadWord(buf, i) >> 1) & 0x7fff;
-									i += 2;
-									offset /= 90;
-									i += b - 5;
-									audioOffset = offset;
-								}
-								else
-									i += b;
-								#endregion
-								string aname = "vob.mp2";
-								if (audio == null)
-									audio = aname;
-								FileStream aw = null;
-								if (writers.ContainsKey(aname))
-									aw = (FileStream)writers[aname];
-								else
-								{
-									aw = File.Create(TempPath + aname);
-									writers[aname] = aw;
-								}
-								//SaveData(aw, buf, i, 2048 - i, 0);
-								SaveData(aw, buf, i, (headerLength - 3 - b), 1);
-								#endregion
-								break;
-							case NAV_DETECT_BYTES:
-								//navPacks++;
-								#region find vobID and cellID
-								int cellID = buf[0x422];
-								int vobID = (buf[0x41f] << 8) + buf[0x420];
-								//if (cellID == cell.CellID && vobID == cell.VobID)
-								//	inCell = true;
-								//else
-								//	inCell = false;
-								#endregion
-								break;
-							default:
-								break;
+									b = buf[i++];
+									#region find ms offset
+									if ((flags & 0xc000) == 0x8000 && (flags & 0xff) >= 0x80 && audioOffset == 0)
+									{
+										byte c = buf[i++];
+										int offset = (c & 0x0e) << 29;
+										offset += (ReadWord(buf, i) & 0xfffe) << 14;
+										i += 2;
+										offset += (ReadWord(buf, i) >> 1) & 0x7fff;
+										i += 2;
+										offset /= 90;
+										i += b - 5;
+										audioOffset = offset;
+									}
+									else
+										i += b;
+									#endregion
+									string aname = "vob.mp2";
+									if (audio == null)
+										audio = aname;
+									FileStream aw = null;
+									if (writers.ContainsKey(aname))
+										aw = (FileStream)writers[aname];
+									else
+									{
+										aw = File.Create(TempPath + aname);
+										writers[aname] = aw;
+									}
+									//SaveData(aw, buf, i, 2048 - i, 0);
+									SaveData(aw, buf, i, (headerLength - 3 - b), 1);
+									#endregion
+									break;
+								case NAV_DETECT_BYTES:
+									//navPacks++;
+									#region find vobID and cellID
+									int cellID = buf[0x422];
+									int vobID = (buf[0x41f] << 8) + buf[0x420];
+									//if (cellID == cell.CellID && vobID == cell.VobID)
+									//	inCell = true;
+									//else
+									//	inCell = false;
+									#endregion
+									break;
+								default:
+									break;
+							}
+
+							if (m_run == false)
+								return;
 						}
 					}
+					SetProgress(500);
 				}
-				SetProgress(500);
-				if (bs != null)
-					bs.TRMSFinalize();
-				bs = null;
-				foreach (string name in writers.Keys)
+				finally
 				{
-					FileStream fs = (FileStream)writers[name];
-					fs.Close();
+					if (bs != null)
+						bs.TRMSFinalize();
+					bs = null;
+					foreach (string name in writers.Keys)
+					{
+						FileStream fs = (FileStream)writers[name];
+						fs.Close();
 
-					if (name.EndsWith(".m2v"))
-						video = name;
-					else if (name.EndsWith(".ac3") || name.EndsWith(".dts") || name.EndsWith(".wav") || name.EndsWith(".mp2"))
-						audio = name;
+						if (name.EndsWith(".m2v"))
+							video = name;
+						else if (name.EndsWith(".ac3") || name.EndsWith(".dts") || name.EndsWith(".wav") || name.EndsWith(".mp2"))
+							audio = name;
 
-					// delete anything after the first audio and video streams in the file
-					if (audio != null && name != video && name != audio)
-						File.Delete(name);
+						// delete anything after the first audio and video streams in the file
+						if (audio != null && name != video && name != audio)
+							File.Delete(name);
+					}
+					writers.Clear();
+					foreach (FileStream fs in readers.Values)
+					{
+						fs.Close();
+					}
+					readers.Clear();
 				}
-				writers.Clear();
-				foreach (FileStream fs in readers.Values)
-				{
-					fs.Close();
-				}
-				readers.Clear();
 
 				int duration = 0;
-				if(pgc != null)
+				if (pgc != null)
 					duration = pgc.Duration;
 				audio = ConvertAudio(TempPath + audio, duration);
+				if (audio == null)
+					return;
 				SetProgress(600);
 
+				DisableCancel();
 				SetStatusText("Remuxing elementary mpeg streams...");
 				MultiplexGlue mg = new MultiplexGlue();
 				mg.Video = TempPath + video;
@@ -1161,7 +1190,7 @@ namespace Utilities.DVDImport
 			{
 				try
 				{
-					if (process != null)
+					if (process != null && process.HasExited == false)
 						process.Kill();
 				}
 				catch { }
@@ -1172,17 +1201,19 @@ namespace Utilities.DVDImport
 			}
 			finally
 			{
+				if (process != null && process.HasExited == false)
+					process.Kill();
 				EnableForm();
 				thread = null;
 				SetProgress(0);
 				SetStatusText("");
-			}
 
-			try
-			{
-				Directory.Delete(TempPath, true);
+				try
+				{
+					Directory.Delete(TempPath, true);
+				}
+				catch { }
 			}
-			catch { }
 		}
 
 		private string ConvertAudio(string filename, int duration)
@@ -1315,6 +1346,8 @@ namespace Utilities.DVDImport
 			StreamReader sr = process.StandardError;
 			while ((line = sr.ReadLine()) != null)
 			{
+				if (m_run == false)
+					return (null);
 				if (line == "Conversion Completed !")
 					success = true;
 				else if (line.EndsWith("transcoding ..."))
@@ -1383,6 +1416,8 @@ namespace Utilities.DVDImport
 				StreamReader sr = process.StandardOutput;
 				while ((line = sr.ReadLine()) != null)
 				{
+					if (m_run == false)
+						return (null);
 					if (line == "Decoding complete.")
 						success = true;
 				}
@@ -1426,6 +1461,8 @@ namespace Utilities.DVDImport
 				StreamReader sr = process.StandardError;
 				while ((line = sr.ReadLine()) != null)
 				{
+					if (m_run == false)
+						return (null);
 					if (line == "Done")
 						success = true;
 				}
@@ -1457,10 +1494,16 @@ namespace Utilities.DVDImport
 
 		private void button2_Click(object sender, System.EventArgs e)
 		{
-			if (treeView1.SelectedNode == null)
-				return;
-			thread = new Thread(new ThreadStart(ProcessVOB));
-			thread.Start();
+			if (thread == null)
+			{
+				if (treeView1.SelectedNode == null)
+					return;
+				m_run = true;
+				thread = new Thread(new ThreadStart(ProcessVOB));
+				thread.Start();
+			}
+			else
+				m_run = false;
 		}
 
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
