@@ -69,6 +69,7 @@ namespace Utilities.DVDImport
 		private readonly int m_demuxCount = 400;
 		private readonly int m_audioCount = 600;
 		private readonly int m_remuxCount = 1000;
+		private int m_lastSecond = 0;
 
 		/// <summary>
 		/// Required designer variable.
@@ -212,7 +213,7 @@ namespace Utilities.DVDImport
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.Location = new System.Drawing.Point(-1, 292);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(512, 15);
+			this.label2.Size = new System.Drawing.Size(424, 15);
 			this.label2.TabIndex = 5;
 			// 
 			// panel1
@@ -513,9 +514,9 @@ namespace Utilities.DVDImport
 			// label11
 			// 
 			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label11.Location = new System.Drawing.Point(517, 293);
+			this.label11.Location = new System.Drawing.Point(429, 293);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(100, 15);
+			this.label11.Size = new System.Drawing.Size(188, 15);
 			this.label11.TabIndex = 26;
 			this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
@@ -805,9 +806,31 @@ namespace Utilities.DVDImport
 					if (progress > 0)
 					{
 						TimeSpan elapsed = DateTime.Now - m_startTime;
-						double secPerTick = elapsed.TotalSeconds / progress;
-						double remainingSec = secPerTick * (m_remuxCount - progress);
-						label11.Text = Utilities.SecondsToLength(Convert.ToInt32(remainingSec));
+						int curSecond = Convert.ToInt32(elapsed.TotalSeconds);
+						if (curSecond > 5 && curSecond != m_lastSecond) // don't update more frequently than each second
+						{
+							m_lastSecond = curSecond;
+							double secPerTick = elapsed.TotalSeconds / progress;
+							double remainingSec = secPerTick * (m_remuxCount - progress);
+							int inputSecs = Convert.ToInt32(remainingSec);
+							int seconds = inputSecs % 60;
+							int minutes = 0;
+							inputSecs = inputSecs - seconds;
+							if (inputSecs > 0)
+							{
+								inputSecs = inputSecs / 60;
+								minutes = inputSecs % 60;
+							}
+							string remaining = "";
+							if (minutes > 1)
+								remaining = "About " + minutes.ToString() + " minutes";
+							else if(minutes == 1)
+								remaining = "About a minute";
+							else
+								remaining = "Less than a minute";
+							remaining += " left";
+							label11.Text = remaining;
+						}
 					}
 				}
 				catch { }
@@ -965,6 +988,7 @@ namespace Utilities.DVDImport
 				string video = null;
 
 				m_startTime = DateTime.Now;
+				m_lastSecond = 0;
 
 				try
 				{
