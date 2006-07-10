@@ -799,11 +799,11 @@ namespace Utilities.DVDImport
 			{
 				progressBar1.Minimum = 0;
 				progressBar1.Maximum = m_remuxCount;
-				progressBar1.Value = progress;
-
-				try
+				if (progress > 0 && progress < m_remuxCount)
 				{
-					if (progress > 0)
+					progressBar1.Value = progress;
+
+					try
 					{
 						TimeSpan elapsed = DateTime.Now - m_startTime;
 						int curSecond = Convert.ToInt32(elapsed.TotalSeconds);
@@ -824,7 +824,7 @@ namespace Utilities.DVDImport
 							string remaining = "";
 							if (minutes > 1)
 								remaining = "About " + minutes.ToString() + " minutes";
-							else if(minutes == 1)
+							else if (minutes == 1)
 								remaining = "About a minute";
 							else
 								remaining = "Less than a minute";
@@ -832,8 +832,8 @@ namespace Utilities.DVDImport
 							label11.Text = remaining;
 						}
 					}
+					catch { }
 				}
-				catch { }
 			}
 		}
 
