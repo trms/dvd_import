@@ -640,7 +640,12 @@ namespace Utilities.DVDImport
 			{
 				if (m_tempPath == "")
 				{
-					m_tempPath = Settings.Default.TempPath + "\\" + Guid.NewGuid().ToString() + "\\";
+					string tmp = Settings.Default.TempPath;
+					if(tmp == "")
+						tmp = Environment.GetEnvironmentVariable("TEMP");
+					if (tmp == null || tmp == "")
+						tmp = "C:\\";
+					m_tempPath = tmp + "\\" + Guid.NewGuid().ToString() + "\\";
 					Directory.CreateDirectory(m_tempPath);
 				}
 				if (!Directory.Exists(m_tempPath))
