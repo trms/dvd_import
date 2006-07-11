@@ -28,17 +28,23 @@ long long Utilities::DVDImport::MultiplexGlue::CurrentSCR()
 void Utilities::DVDImport::MultiplexGlue::Multiplex()
 {
 	// set up params
-	opt_mux_format				= 3;
+	//opt_mux_format				= MPEG_FORMAT_DVD;
+	opt_mux_format				= MPEG_FORMAT_MPEG2;
+	opt_VBR						= 1;
 	opt_mpeg					= 2;
 	opt_audio_offset			= 0;
 	opt_video_offset			= Offset;
+	opt_split_at_seq_end		= false;
 	IntPtr vidStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Video);
 	IntPtr audStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Audio);
 	IntPtr outStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Output);
+	IntPtr logStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Log);
 	LPTSTR lVideo = (LPTSTR)vidStr.ToPointer();
 	LPTSTR lAudio = (LPTSTR)audStr.ToPointer();
 	LPTSTR lOutput = (LPTSTR)outStr.ToPointer();
-
+	LPTSTR lLog = (LPTSTR)logStr.ToPointer();
+	opt_logfile = (char*)malloc(wcslen(lLog) + 1);
+	sprintf(opt_logfile, "%ls", lLog);
 
 	vector<IBitStream *>		mpa_files;
 	vector<IBitStream *>		video_files;
@@ -98,6 +104,7 @@ void Utilities::DVDImport::MultiplexGlue::Multiplex()
 	sprintf(tmp, "%ls", lOutput);
 	ostrm->OutputMultiplex( &strms,  tmp);
 
+
 	for( i=0; i < strms.size(); i++)
 		delete strms[i];
 
@@ -121,4 +128,7 @@ void Utilities::DVDImport::MultiplexGlue::Multiplex()
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(vidStr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(audStr);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(outStr);
+	System::Runtime::InteropServices::Marshal::FreeHGlobal(logStr);
+	free(opt_logfile);
+	opt_logfile = 0;
 }

@@ -57,6 +57,7 @@ int opt_emul_vcdmplex = 0;
 bool opt_ignore_underrun = true;
 bool opt_split_at_seq_end = true;
 off_t opt_max_segment_size = 0;
+char *opt_logfile = 0;
 
 /*************************************************************************
     Startbildschirm und Anzahl der Argumente

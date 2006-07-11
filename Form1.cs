@@ -1240,6 +1240,8 @@ namespace Utilities.DVDImport
 				mg.Audio = audio;
 				mg.Offset = Offset(cells, vobs);
 				mg.Output = saveFile;
+				string mplexLog = TempPath + "mplex.log";
+				mg.Log = mplexLog;
 				Thread mt = new Thread(new ThreadStart(mg.Multiplex));
 				mt.Start();
 				while (mt.IsAlive)
@@ -1247,7 +1249,11 @@ namespace Utilities.DVDImport
 					if (pgc != null)
 					{
 						SetStatusText("Remuxing elementary mpeg streams..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%"*/);
-						SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+						try
+						{
+							SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+						}
+						catch { }
 					}
 					else
 						SetStatusText("Remuxing elementary mpeg streams...");
@@ -1255,6 +1261,23 @@ namespace Utilities.DVDImport
 				}
 				//mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
 				SetProgress(m_remuxCount);
+				if (File.Exists(mplexLog))
+				{
+					StreamReader sr = File.OpenText(mplexLog);
+					string line = "";
+					while((line = sr.ReadLine()) != null)
+					{
+						if (line.StartsWith("MUX STATUS: ") || line.StartsWith("Average bit-rate"))
+						{
+							line = line.Replace("MUX STATUS: ", "");
+							SetStatusText("Remuxing elementary mpeg streams... " + line);
+							Thread.Sleep(500);
+						}
+					}
+					sr.Close();
+
+					File.Delete(mplexLog);
+				}
 			}
 			catch (ThreadAbortException)
 			{
@@ -1276,7 +1299,7 @@ namespace Utilities.DVDImport
 				EnableForm();
 				thread = null;
 				SetProgress(0);
-				SetStatusText("");
+				//SetStatusText("");
 				SetETAText("");
 
 				try
@@ -1600,6 +1623,9 @@ namespace Utilities.DVDImport
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
+			System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			string versionText = v.ToString(3) + " Build " + v.Revision;
+			this.Text += " " + versionText;
 			if (Settings.Default.IsFirstRun == true)
 			{
 				Settings.Default.Upgrade();
