@@ -1013,12 +1013,12 @@ namespace Utilities.DVDImport
 					{
 						IFOParse.Cell cell = cells[cellNum];
 						ulong updateInterval = 0;
-						for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
+						for (int sector = cell.FirstSector; sector <= cell.LastSector; sector++)
 						{
 							ReadSector(vobs, buf, sector);
 							if (updateInterval++ % 10 == 0)
 							{
-								//SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
+								SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
 								SetProgress(Convert.ToInt32(m_demuxCount * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
 							}
 							currentSector++;
@@ -1248,9 +1248,9 @@ namespace Utilities.DVDImport
 				{
 					if (pgc != null)
 					{
-						SetStatusText("Remuxing elementary mpeg streams..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%"*/);
 						try
 						{
+							SetStatusText("Remuxing elementary mpeg streams..." + Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%");
 							SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
 						}
 						catch { }
@@ -1460,7 +1460,7 @@ namespace Utilities.DVDImport
 						len = (Convert.ToInt32(cols[0]) * 3600) + (Convert.ToInt32(cols[1]) * 60) + Convert.ToInt32(cols[2]);
 					if (len != 0 && duration != 0)
 					{
-						SetStatusText("Encoding mpeg audio..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))) + "%"*/);
+						SetStatusText("Encoding mpeg audio..." + Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))) + "%");
 						SetProgress(m_demuxCount + Convert.ToInt32((m_audioCount - m_demuxCount) * (Convert.ToDouble(len) / Convert.ToDouble(duration))));
 					}
 				}
@@ -1623,6 +1623,20 @@ namespace Utilities.DVDImport
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
+			FileInfo appPath = new FileInfo(Application.ExecutablePath);
+			string ac3decCommand = appPath.Directory + "\\ac3dec.exe";
+			string lameCommand = appPath.Directory + "\\tooLame.exe";
+			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
+			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand))
+			{
+				// okay
+			}
+			else
+			{
+				MessageBox.Show("Check installation, helper utilities are not installed properly", "Installation Error", MessageBoxButtons.OK);
+				Application.Exit();
+			}
+
 			System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 			string versionText = v.ToString(3) + " Build " + v.Revision;
 			this.Text += " " + versionText;

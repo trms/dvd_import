@@ -36,6 +36,7 @@ namespace Utilities.DVDImport
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -50,7 +51,7 @@ namespace Utilities.DVDImport
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(20, 36);
+			this.label2.Location = new System.Drawing.Point(20, 43);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(92, 13);
 			this.label2.TabIndex = 1;
@@ -59,7 +60,7 @@ namespace Utilities.DVDImport
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(118, 9);
+			this.linkLabel1.Location = new System.Drawing.Point(120, 9);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(0, 13);
 			this.linkLabel1.TabIndex = 4;
@@ -68,7 +69,7 @@ namespace Utilities.DVDImport
 			// radioButton1
 			// 
 			this.radioButton1.AutoSize = true;
-			this.radioButton1.Location = new System.Drawing.Point(118, 34);
+			this.radioButton1.Location = new System.Drawing.Point(120, 43);
 			this.radioButton1.Name = "radioButton1";
 			this.radioButton1.Size = new System.Drawing.Size(60, 17);
 			this.radioButton1.TabIndex = 5;
@@ -79,7 +80,7 @@ namespace Utilities.DVDImport
 			// radioButton2
 			// 
 			this.radioButton2.AutoSize = true;
-			this.radioButton2.Location = new System.Drawing.Point(118, 57);
+			this.radioButton2.Location = new System.Drawing.Point(120, 64);
 			this.radioButton2.Name = "radioButton2";
 			this.radioButton2.Size = new System.Drawing.Size(181, 17);
 			this.radioButton2.TabIndex = 6;
@@ -110,6 +111,14 @@ namespace Utilities.DVDImport
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(120, 26);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(0, 13);
+			this.label3.TabIndex = 9;
+			// 
 			// Options
 			// 
 			this.AcceptButton = this.button1;
@@ -117,6 +126,7 @@ namespace Utilities.DVDImport
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.button2;
 			this.ClientSize = new System.Drawing.Size(436, 135);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.radioButton2);
@@ -143,5 +153,6 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.RadioButton radioButton2;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Label label3;
 	}
 }
