@@ -271,6 +271,7 @@ namespace Utilities {
 			void Stop();
 			void Pause();
 			bool IsPlaying();
+			ULONGLONG GetDVDDiscID(System::String ^disc);
 		};
 	}
 }

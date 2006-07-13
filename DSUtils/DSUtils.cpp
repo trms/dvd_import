@@ -303,3 +303,25 @@ bool Utilities::DVDImport::DSUtils::IsPlaying()
 		return(true);
 	return(false);
 }
+
+ULONGLONG Utilities::DVDImport::DSUtils::GetDVDDiscID(System::String ^disc)
+{
+	HRESULT hr;
+	ULONGLONG result = 0;
+
+	IntPtr str = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(disc);
+	LPTSTR path = (LPTSTR)str.ToPointer();
+
+	CoInitialize(0);
+	IDvdInfo2 *dvdInfo = NULL;
+	hr = CoCreateInstance(CLSID_DVDNavigator, NULL, CLSCTX_ALL, IID_IDvdInfo2, (void**)&dvdInfo);
+	if(SUCCEEDED((hr)))
+		hr = dvdInfo->GetDiscID(path, &result);
+	if(FAILED(hr))
+		result = 0;
+
+	System::Runtime::InteropServices::Marshal::FreeHGlobal(str);
+	RELEASE(dvdInfo);
+	CoUninitialize();
+	return(result);
+}

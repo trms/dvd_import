@@ -370,6 +370,7 @@ namespace Utilities.DVDImport
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(464, 80);
 			this.tabControl1.TabIndex = 12;
+			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			// 
 			// tabPage1
 			// 
@@ -390,6 +391,7 @@ namespace Utilities.DVDImport
 			this.button6.Size = new System.Drawing.Size(64, 23);
 			this.button6.TabIndex = 14;
 			this.button6.Text = "Refresh";
+			this.button6.Visible = false;
 			this.button6.Click += new System.EventHandler(this.button6_Click);
 			// 
 			// label3
@@ -413,7 +415,7 @@ namespace Utilities.DVDImport
 			// 
 			this.volumeLabel.Location = new System.Drawing.Point(120, 16);
 			this.volumeLabel.Name = "volumeLabel";
-			this.volumeLabel.Size = new System.Drawing.Size(208, 16);
+			this.volumeLabel.Size = new System.Drawing.Size(328, 16);
 			this.volumeLabel.TabIndex = 13;
 			// 
 			// tabPage2
@@ -568,6 +570,22 @@ namespace Utilities.DVDImport
 		static void Main() 
 		{
 			Application.Run(new Form1());
+		}
+
+		protected override void WndProc(ref Message m)
+		{
+			//from dbt.h and winuser.h
+			const int WM_DEVICECHANGE = 0x0219;
+			//const int DBT_DEVICEARRIVAL = 0x8000; // system detected a new device
+			//const int DBT_DEVTYP_VOLUME = 0x00000002; // logical volume
+
+			//we detect the media arrival event
+			if (m.Msg == WM_DEVICECHANGE)
+			{
+				tabControl1.SelectedIndex = 0;
+				RefreshDVD();
+			}
+			base.WndProc(ref m);
 		}
 
 		private void button1_Click(object sender, System.EventArgs e)
@@ -1675,6 +1693,8 @@ namespace Utilities.DVDImport
 			if(comboBox1.Items.Count == 0)
 				return;
 			string drive = comboBox1.Items[comboBox1.SelectedIndex].ToString();
+			//DSUtils ds = new DSUtils();
+			//ulong id = ds.GetDVDDiscID(drive);
 			uint serNum = 0;
 			uint maxCompLen = 0;
 			StringBuilder volLabel = new StringBuilder(256); // Label
@@ -1687,6 +1707,8 @@ namespace Utilities.DVDImport
 				volumeLabel.Text = volLabel.ToString();
 				LoadTitles();
 			}
+			else
+				treeView1.Nodes.Clear();
 		}
 
 		private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -2004,6 +2026,14 @@ namespace Utilities.DVDImport
 			trackBar1.Enabled = !checkBox1.Checked;
 			label7.Enabled = !checkBox1.Checked;
 			label8.Enabled = !checkBox1.Checked;
+		}
+
+		private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (tabControl1.SelectedIndex == 1)
+				LoadTitles();
+			else
+				RefreshDVD();
 		}
 	}
 }
