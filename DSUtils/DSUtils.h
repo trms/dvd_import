@@ -108,7 +108,7 @@ public:
 			startSector = FindSector(m_llPosition, &startSectorOffset);
 			endSector = FindSector(m_llPosition + dwReadLength, &endSectorOffset);
 
-			for(int sector = startSector; sector <= endSector; sector++)
+			for(int sector = startSector; sector < endSector; sector++)
 			{
 				PBYTE buf[2048];
 				ReadSector(buf, FindVOBSector(sector));

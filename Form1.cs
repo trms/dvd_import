@@ -330,6 +330,7 @@ namespace Utilities.DVDImport
 			// 
 			// label10
 			// 
+			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label10.AutoSize = true;
 			this.label10.Location = new System.Drawing.Point(7, 252);
 			this.label10.Name = "label10";
@@ -1606,6 +1607,9 @@ namespace Utilities.DVDImport
 			Settings.Default.Normalize = checkBox1.Checked;
 			Settings.Default.DynamicCompress = checkBox2.Checked;
 			Settings.Default.Save();
+
+			if (m_ds != null)
+				m_ds.Stop();
 			
 			if(thread != null)
 			{
