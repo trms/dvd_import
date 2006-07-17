@@ -1723,92 +1723,99 @@ namespace Utilities.DVDImport
 
 		private void LoadTitles()
 		{
-			treeView1.Nodes.Clear();
-			button3.Enabled = false;
-			button4.Enabled = false;
-			button5.Enabled = false;
-			string path = "";
-			if(tabControl1.SelectedIndex == 0)
+			try
 			{
-				string drive = comboBox1.Items[comboBox1.SelectedIndex].ToString();
-				path = drive + "VIDEO_TS";
-			}
-			else
-				path = textBox1.Text;
-			if(!Directory.Exists(path))
-				return;
-
-			int index = 0;
-			int maxLength = 0;
-			TreeNode longestNode = null;
-			foreach(string file in Directory.GetFiles(path, "*.IFO"))
-			{
-				FileInfo fi = new FileInfo(file);
-				string name = fi.Name.ToUpper();
-				if(name == "VIDEO_TS.IFO")
-					continue;
-				try
+				treeView1.Nodes.Clear();
+				button3.Enabled = false;
+				button4.Enabled = false;
+				button5.Enabled = false;
+				string path = "";
+				if (tabControl1.SelectedIndex == 0)
 				{
-					int title = Convert.ToInt32(name.Replace("VTS_", "").Replace("_0.IFO", ""));
-					IFOParse ifo = new IFOParse(file);
+					string drive = comboBox1.Items[comboBox1.SelectedIndex].ToString();
+					path = drive + "VIDEO_TS";
+				}
+				else
+					path = textBox1.Text;
+				if (!Directory.Exists(path))
+					return;
 
-					// add to tree view
-					TreeNode titleNode = new TreeNode();
-					titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio";
-					titleNode.Tag = ifo;
-					titleNode.Nodes.Clear();
-					titleNode.ToolTipText = ifo.ProgramChainCount + " programs";
-					for(int pgcNum = 0; pgcNum < ifo.ProgramChainCount; pgcNum++)
-					{
-						IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
-						TreeNode n = new TreeNode();
-						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
-						n.ToolTipText = pgc.Cells.Count + " cells";
-						n.Tag = pgc;
-						titleNode.Nodes.Add(n);
-						if (pgc.Duration > maxLength)
-						{
-							longestNode = n;
-							maxLength = pgc.Duration;
-						}
-					}
-					treeView1.Nodes.Add(titleNode);
-				}
-				catch(Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
-			}
-			if(treeView1.Nodes.Count == 0)
-			{
-				// found no IFO files, load raw VOB list
-				foreach(string file in Directory.GetFiles(path, "*.VOB"))
+				int index = 0;
+				int maxLength = 0;
+				TreeNode longestNode = null;
+				foreach (string file in Directory.GetFiles(path, "*.IFO"))
 				{
 					FileInfo fi = new FileInfo(file);
 					string name = fi.Name.ToUpper();
+					if (name == "VIDEO_TS.IFO")
+						continue;
+					try
+					{
+						int title = Convert.ToInt32(name.Replace("VTS_", "").Replace("_0.IFO", ""));
+						IFOParse ifo = new IFOParse(file);
 
-					TreeNode titleNode = new TreeNode();
-
-					List<IFOParse.VOB> vobs = new List<IFOParse.VOB>();
-					IFOParse.VOB v = new IFOParse.VOB(file);
-					vobs = new List<IFOParse.VOB>();
-					vobs.Add(v);
-
-					// create dummy cell list
-					List<IFOParse.Cell> cells = new List<IFOParse.Cell>();
-					IFOParse.Cell c = new IFOParse.Cell();
-					c.FirstSector = 0;
-					c.LastSector = (int)v.LastSector;
-					cells.Add(c);
-
-					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
-					titleNode.Tag = fi;
-					treeView1.Nodes.Add(titleNode);
+						// add to tree view
+						TreeNode titleNode = new TreeNode();
+						titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio";
+						titleNode.Tag = ifo;
+						titleNode.Nodes.Clear();
+						titleNode.ToolTipText = ifo.ProgramChainCount + " programs";
+						for (int pgcNum = 0; pgcNum < ifo.ProgramChainCount; pgcNum++)
+						{
+							IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
+							TreeNode n = new TreeNode();
+							n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
+							n.ToolTipText = pgc.Cells.Count + " cells";
+							n.Tag = pgc;
+							titleNode.Nodes.Add(n);
+							if (pgc.Duration > maxLength)
+							{
+								longestNode = n;
+								maxLength = pgc.Duration;
+							}
+						}
+						treeView1.Nodes.Add(titleNode);
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
+				if (treeView1.Nodes.Count == 0)
+				{
+					// found no IFO files, load raw VOB list
+					foreach (string file in Directory.GetFiles(path, "*.VOB"))
+					{
+						FileInfo fi = new FileInfo(file);
+						string name = fi.Name.ToUpper();
+
+						TreeNode titleNode = new TreeNode();
+
+						List<IFOParse.VOB> vobs = new List<IFOParse.VOB>();
+						IFOParse.VOB v = new IFOParse.VOB(file);
+						vobs = new List<IFOParse.VOB>();
+						vobs.Add(v);
+
+						// create dummy cell list
+						List<IFOParse.Cell> cells = new List<IFOParse.Cell>();
+						IFOParse.Cell c = new IFOParse.Cell();
+						c.FirstSector = 0;
+						c.LastSector = (int)v.LastSector;
+						cells.Add(c);
+
+						titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
+						titleNode.Tag = fi;
+						treeView1.Nodes.Add(titleNode);
+					}
+				}
+				if (longestNode != null)
+					treeView1.SelectedNode = longestNode;
+				treeView1.ExpandAll();
 			}
-			if (longestNode != null)
-				treeView1.SelectedNode = longestNode;
-			treeView1.ExpandAll();
+			catch (Exception ex)
+			{
+				MessageBox.Show("An error occurred reading DVD, it may be corrupt or a failed burn.\n\n" + ex.Message);
+			}
 		}
 
 		#region Video Playback
