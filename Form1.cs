@@ -330,6 +330,7 @@ namespace Utilities.DVDImport
 			// 
 			// label10
 			// 
+			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label10.AutoSize = true;
 			this.label10.Location = new System.Drawing.Point(7, 252);
 			this.label10.Name = "label10";
@@ -369,6 +370,7 @@ namespace Utilities.DVDImport
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(464, 80);
 			this.tabControl1.TabIndex = 12;
+			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			// 
 			// tabPage1
 			// 
@@ -389,6 +391,7 @@ namespace Utilities.DVDImport
 			this.button6.Size = new System.Drawing.Size(64, 23);
 			this.button6.TabIndex = 14;
 			this.button6.Text = "Refresh";
+			this.button6.Visible = false;
 			this.button6.Click += new System.EventHandler(this.button6_Click);
 			// 
 			// label3
@@ -412,7 +415,7 @@ namespace Utilities.DVDImport
 			// 
 			this.volumeLabel.Location = new System.Drawing.Point(120, 16);
 			this.volumeLabel.Name = "volumeLabel";
-			this.volumeLabel.Size = new System.Drawing.Size(208, 16);
+			this.volumeLabel.Size = new System.Drawing.Size(328, 16);
 			this.volumeLabel.TabIndex = 13;
 			// 
 			// tabPage2
@@ -569,6 +572,22 @@ namespace Utilities.DVDImport
 			Application.Run(new Form1());
 		}
 
+		protected override void WndProc(ref Message m)
+		{
+			//from dbt.h and winuser.h
+			const int WM_DEVICECHANGE = 0x0219;
+			//const int DBT_DEVICEARRIVAL = 0x8000; // system detected a new device
+			//const int DBT_DEVTYP_VOLUME = 0x00000002; // logical volume
+
+			//we detect the media arrival event
+			if (m.Msg == WM_DEVICECHANGE)
+			{
+				tabControl1.SelectedIndex = 0;
+				RefreshDVD();
+			}
+			base.WndProc(ref m);
+		}
+
 		private void button1_Click(object sender, System.EventArgs e)
 		{
 			if(folderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -640,7 +659,12 @@ namespace Utilities.DVDImport
 			{
 				if (m_tempPath == "")
 				{
-					m_tempPath = Settings.Default.TempPath + "\\" + Guid.NewGuid().ToString() + "\\";
+					string tmp = Settings.Default.TempPath;
+					if(tmp == "")
+						tmp = Environment.GetEnvironmentVariable("TEMP");
+					if (tmp == null || tmp == "")
+						tmp = "C:\\";
+					m_tempPath = tmp + "\\" + Guid.NewGuid().ToString() + "\\";
 					Directory.CreateDirectory(m_tempPath);
 				}
 				if (!Directory.Exists(m_tempPath))
@@ -799,11 +823,11 @@ namespace Utilities.DVDImport
 			{
 				progressBar1.Minimum = 0;
 				progressBar1.Maximum = m_remuxCount;
-				progressBar1.Value = progress;
-
-				try
+				if (progress > 0 && progress < m_remuxCount)
 				{
-					if (progress > 0)
+					progressBar1.Value = progress;
+
+					try
 					{
 						TimeSpan elapsed = DateTime.Now - m_startTime;
 						int curSecond = Convert.ToInt32(elapsed.TotalSeconds);
@@ -824,7 +848,7 @@ namespace Utilities.DVDImport
 							string remaining = "";
 							if (minutes > 1)
 								remaining = "About " + minutes.ToString() + " minutes";
-							else if(minutes == 1)
+							else if (minutes == 1)
 								remaining = "About a minute";
 							else
 								remaining = "Less than a minute";
@@ -832,8 +856,8 @@ namespace Utilities.DVDImport
 							label11.Text = remaining;
 						}
 					}
+					catch { }
 				}
-				catch { }
 			}
 		}
 
@@ -1008,12 +1032,12 @@ namespace Utilities.DVDImport
 					{
 						IFOParse.Cell cell = cells[cellNum];
 						ulong updateInterval = 0;
-						for (int sector = cell.FirstSector; sector < cell.LastSector; sector++)
+						for (int sector = cell.FirstSector; sector <= cell.LastSector; sector++)
 						{
 							ReadSector(vobs, buf, sector);
 							if (updateInterval++ % 10 == 0)
 							{
-								//SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
+								SetStatusText("Reading from DVD..." + Convert.ToInt32(100.0 * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))) + "%");
 								SetProgress(Convert.ToInt32(m_demuxCount * (Convert.ToDouble(currentSector) / Convert.ToDouble(totalSectors))));
 							}
 							currentSector++;
@@ -1235,14 +1259,20 @@ namespace Utilities.DVDImport
 				mg.Audio = audio;
 				mg.Offset = Offset(cells, vobs);
 				mg.Output = saveFile;
+				string mplexLog = TempPath + "mplex.log";
+				mg.Log = mplexLog;
 				Thread mt = new Thread(new ThreadStart(mg.Multiplex));
 				mt.Start();
 				while (mt.IsAlive)
 				{
 					if (pgc != null)
 					{
-						SetStatusText("Remuxing elementary mpeg streams..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%"*/);
-						SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+						try
+						{
+							SetStatusText("Remuxing elementary mpeg streams..." + Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%");
+							SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+						}
+						catch { }
 					}
 					else
 						SetStatusText("Remuxing elementary mpeg streams...");
@@ -1250,6 +1280,23 @@ namespace Utilities.DVDImport
 				}
 				//mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
 				SetProgress(m_remuxCount);
+				if (File.Exists(mplexLog))
+				{
+					StreamReader sr = File.OpenText(mplexLog);
+					string line = "";
+					while((line = sr.ReadLine()) != null)
+					{
+						if (line.StartsWith("MUX STATUS: ") || line.StartsWith("Average bit-rate"))
+						{
+							line = line.Replace("MUX STATUS: ", "");
+							SetStatusText("Remuxing elementary mpeg streams... " + line);
+							Thread.Sleep(500);
+						}
+					}
+					sr.Close();
+
+					File.Delete(mplexLog);
+				}
 			}
 			catch (ThreadAbortException)
 			{
@@ -1271,7 +1318,7 @@ namespace Utilities.DVDImport
 				EnableForm();
 				thread = null;
 				SetProgress(0);
-				SetStatusText("");
+				//SetStatusText("");
 				SetETAText("");
 
 				try
@@ -1432,7 +1479,7 @@ namespace Utilities.DVDImport
 						len = (Convert.ToInt32(cols[0]) * 3600) + (Convert.ToInt32(cols[1]) * 60) + Convert.ToInt32(cols[2]);
 					if (len != 0 && duration != 0)
 					{
-						SetStatusText("Encoding mpeg audio..." /*+ Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))) + "%"*/);
+						SetStatusText("Encoding mpeg audio..." + Convert.ToInt32(100.0 * (Convert.ToDouble(len) / Convert.ToDouble(duration))) + "%");
 						SetProgress(m_demuxCount + Convert.ToInt32((m_audioCount - m_demuxCount) * (Convert.ToDouble(len) / Convert.ToDouble(duration))));
 					}
 				}
@@ -1578,6 +1625,9 @@ namespace Utilities.DVDImport
 			Settings.Default.Normalize = checkBox1.Checked;
 			Settings.Default.DynamicCompress = checkBox2.Checked;
 			Settings.Default.Save();
+
+			if (m_ds != null)
+				m_ds.Stop();
 			
 			if(thread != null)
 			{
@@ -1595,6 +1645,23 @@ namespace Utilities.DVDImport
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
+			FileInfo appPath = new FileInfo(Application.ExecutablePath);
+			string ac3decCommand = appPath.Directory + "\\ac3dec.exe";
+			string lameCommand = appPath.Directory + "\\tooLame.exe";
+			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
+			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand))
+			{
+				// okay
+			}
+			else
+			{
+				MessageBox.Show("Check installation, helper utilities are not installed properly", "Installation Error", MessageBoxButtons.OK);
+				Application.Exit();
+			}
+
+			System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			string versionText = v.ToString(3) + " Build " + v.Revision;
+			this.Text += " " + versionText;
 			if (Settings.Default.IsFirstRun == true)
 			{
 				Settings.Default.Upgrade();
@@ -1626,6 +1693,8 @@ namespace Utilities.DVDImport
 			if(comboBox1.Items.Count == 0)
 				return;
 			string drive = comboBox1.Items[comboBox1.SelectedIndex].ToString();
+			//DSUtils ds = new DSUtils();
+			//ulong id = ds.GetDVDDiscID(drive);
 			uint serNum = 0;
 			uint maxCompLen = 0;
 			StringBuilder volLabel = new StringBuilder(256); // Label
@@ -1638,6 +1707,8 @@ namespace Utilities.DVDImport
 				volumeLabel.Text = volLabel.ToString();
 				LoadTitles();
 			}
+			else
+				treeView1.Nodes.Clear();
 		}
 
 		private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -1652,92 +1723,99 @@ namespace Utilities.DVDImport
 
 		private void LoadTitles()
 		{
-			treeView1.Nodes.Clear();
-			button3.Enabled = false;
-			button4.Enabled = false;
-			button5.Enabled = false;
-			string path = "";
-			if(tabControl1.SelectedIndex == 0)
+			try
 			{
-				string drive = comboBox1.Items[comboBox1.SelectedIndex].ToString();
-				path = drive + "VIDEO_TS";
-			}
-			else
-				path = textBox1.Text;
-			if(!Directory.Exists(path))
-				return;
-
-			int index = 0;
-			int maxLength = 0;
-			TreeNode longestNode = null;
-			foreach(string file in Directory.GetFiles(path, "*.IFO"))
-			{
-				FileInfo fi = new FileInfo(file);
-				string name = fi.Name.ToUpper();
-				if(name == "VIDEO_TS.IFO")
-					continue;
-				try
+				treeView1.Nodes.Clear();
+				button3.Enabled = false;
+				button4.Enabled = false;
+				button5.Enabled = false;
+				string path = "";
+				if (tabControl1.SelectedIndex == 0)
 				{
-					int title = Convert.ToInt32(name.Replace("VTS_", "").Replace("_0.IFO", ""));
-					IFOParse ifo = new IFOParse(file);
+					string drive = comboBox1.Items[comboBox1.SelectedIndex].ToString();
+					path = drive + "VIDEO_TS";
+				}
+				else
+					path = textBox1.Text;
+				if (!Directory.Exists(path))
+					return;
 
-					// add to tree view
-					TreeNode titleNode = new TreeNode();
-					titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio";
-					titleNode.Tag = ifo;
-					titleNode.Nodes.Clear();
-					titleNode.ToolTipText = ifo.ProgramChainCount + " programs";
-					for(int pgcNum = 0; pgcNum < ifo.ProgramChainCount; pgcNum++)
-					{
-						IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
-						TreeNode n = new TreeNode();
-						n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
-						n.ToolTipText = pgc.Cells.Count + " cells";
-						n.Tag = pgc;
-						titleNode.Nodes.Add(n);
-						if (pgc.Duration > maxLength)
-						{
-							longestNode = n;
-							maxLength = pgc.Duration;
-						}
-					}
-					treeView1.Nodes.Add(titleNode);
-				}
-				catch(Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
-			}
-			if(treeView1.Nodes.Count == 0)
-			{
-				// found no IFO files, load raw VOB list
-				foreach(string file in Directory.GetFiles(path, "*.VOB"))
+				int index = 0;
+				int maxLength = 0;
+				TreeNode longestNode = null;
+				foreach (string file in Directory.GetFiles(path, "*.IFO"))
 				{
 					FileInfo fi = new FileInfo(file);
 					string name = fi.Name.ToUpper();
+					if (name == "VIDEO_TS.IFO")
+						continue;
+					try
+					{
+						int title = Convert.ToInt32(name.Replace("VTS_", "").Replace("_0.IFO", ""));
+						IFOParse ifo = new IFOParse(file);
 
-					TreeNode titleNode = new TreeNode();
-
-					List<IFOParse.VOB> vobs = new List<IFOParse.VOB>();
-					IFOParse.VOB v = new IFOParse.VOB(file);
-					vobs = new List<IFOParse.VOB>();
-					vobs.Add(v);
-
-					// create dummy cell list
-					List<IFOParse.Cell> cells = new List<IFOParse.Cell>();
-					IFOParse.Cell c = new IFOParse.Cell();
-					c.FirstSector = 0;
-					c.LastSector = (int)v.LastSector;
-					cells.Add(c);
-
-					titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
-					titleNode.Tag = fi;
-					treeView1.Nodes.Add(titleNode);
+						// add to tree view
+						TreeNode titleNode = new TreeNode();
+						titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio";
+						titleNode.Tag = ifo;
+						titleNode.Nodes.Clear();
+						titleNode.ToolTipText = ifo.ProgramChainCount + " programs";
+						for (int pgcNum = 0; pgcNum < ifo.ProgramChainCount; pgcNum++)
+						{
+							IFOParse.ProgramChain pgc = ifo.ProgramChains[pgcNum];
+							TreeNode n = new TreeNode();
+							n.Text = "PGC " + (pgcNum + 1) + ": " + Utilities.SecondsToLength(pgc.Duration);
+							n.ToolTipText = pgc.Cells.Count + " cells";
+							n.Tag = pgc;
+							titleNode.Nodes.Add(n);
+							if (pgc.Duration > maxLength)
+							{
+								longestNode = n;
+								maxLength = pgc.Duration;
+							}
+						}
+						treeView1.Nodes.Add(titleNode);
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message);
+					}
 				}
+				if (treeView1.Nodes.Count == 0)
+				{
+					// found no IFO files, load raw VOB list
+					foreach (string file in Directory.GetFiles(path, "*.VOB"))
+					{
+						FileInfo fi = new FileInfo(file);
+						string name = fi.Name.ToUpper();
+
+						TreeNode titleNode = new TreeNode();
+
+						List<IFOParse.VOB> vobs = new List<IFOParse.VOB>();
+						IFOParse.VOB v = new IFOParse.VOB(file);
+						vobs = new List<IFOParse.VOB>();
+						vobs.Add(v);
+
+						// create dummy cell list
+						List<IFOParse.Cell> cells = new List<IFOParse.Cell>();
+						IFOParse.Cell c = new IFOParse.Cell();
+						c.FirstSector = 0;
+						c.LastSector = (int)v.LastSector;
+						cells.Add(c);
+
+						titleNode.Text = name + ": " + Utilities.BytesToSize(fi.Length);
+						titleNode.Tag = fi;
+						treeView1.Nodes.Add(titleNode);
+					}
+				}
+				if (longestNode != null)
+					treeView1.SelectedNode = longestNode;
+				treeView1.ExpandAll();
 			}
-			if (longestNode != null)
-				treeView1.SelectedNode = longestNode;
-			treeView1.ExpandAll();
+			catch (Exception ex)
+			{
+				MessageBox.Show("An error occurred reading DVD, it may be corrupt or a failed burn.\n\n" + ex.Message);
+			}
 		}
 
 		#region Video Playback
@@ -1955,6 +2033,14 @@ namespace Utilities.DVDImport
 			trackBar1.Enabled = !checkBox1.Checked;
 			label7.Enabled = !checkBox1.Checked;
 			label8.Enabled = !checkBox1.Checked;
+		}
+
+		private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (tabControl1.SelectedIndex == 1)
+				LoadTitles();
+			else
+				RefreshDVD();
 		}
 	}
 }

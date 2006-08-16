@@ -74,7 +74,9 @@ extern int opt_packets_per_pack;
 extern clockticks opt_max_PTS;
 extern int opt_emul_vcdmplex;
 extern bool opt_stills;
+extern bool opt_split_at_seq_end;
 extern bool opt_ignore_underrun;
+extern char *opt_logfile;
 // extern int verbose;
 
 extern off_t opt_max_segment_size;

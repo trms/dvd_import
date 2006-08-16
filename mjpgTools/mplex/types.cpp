@@ -19,18 +19,13 @@
 #include <string.h>
 #include <stdio.h>
 #include "types.h"
+#include "interact.h"
 
-#ifdef _DEBUG
 bool				DEBUG_TO_STDERR	= false;
-#endif
 const char*			defaultTitle	= "mjpegTools Library";
 const char*			msgTitle		= NULL;
 const char*			defTitle		= NULL;
-#ifndef _DEBUG
-uint8_t				verbose		= 0;
-#else
-uint8_t				verbose		= 2;
-#endif
+uint8_t				verbose		= 1;
 
 
 
@@ -39,36 +34,14 @@ uint8_t				verbose		= 2;
 //////////////////////////////////////////////////////////////////////
 static int Message(uint32_t buttons, LPCTSTR lpFilter, va_list argList)
 {
-	char ttl[128];
-	LPCTSTR tAddon = _T(" - ");
-
-	strcpy(ttl, defaultTitle);
-	if ((defTitle) && (defTitle[0]))
-	{
-		strcat(ttl, tAddon);
-		strcat(ttl, defTitle);
-	}
-
-	if ((msgTitle) && (msgTitle[0]))
-	{
-		strcat(ttl, tAddon);
-		strcat(ttl, msgTitle);
-	}
-
 	TCHAR buf[512]; buf[0]=0;
 	wvsprintf(buf, lpFilter, argList);
 
-	// show message in a MessageBox
-	int result = 0;
-#ifdef DEBUG_AND_INFO_2CONSOLE
-	if (DEBUG_TO_STDERR == true)
-		fprintf(stderr, "%s\n", buf);
-	else
-#endif
-		// TODO: report messages
-		//result = MessageBox(GetActiveWindow(), buf, ttl, buttons);
+	FILE *f = fopen(opt_logfile, "a");
+	fprintf(f, "%s\n", buf);
+	fclose(f);
 
-	return result;
+	return 0;
 }
 
 void err_Message(const char* lpFilter, ...)
@@ -106,7 +79,7 @@ void info_Message(const char* lpFilter, ...)
 }
 void debug_Message(const char* lpFilter, ...)
 {
-	if (verbose <= 1) return;
+	if (verbose <= 2) return;
 
 	char ddefTitle[64];
 	LPCTSTR old_defTitle = defTitle;

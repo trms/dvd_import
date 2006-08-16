@@ -28,6 +28,7 @@ namespace Utilities.DVDImport
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -36,6 +37,8 @@ namespace Utilities.DVDImport
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// label1
@@ -46,11 +49,13 @@ namespace Utilities.DVDImport
 			this.label1.Size = new System.Drawing.Size(100, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Temporary Storage:";
+			this.toolTip1.SetToolTip(this.label1, "NOTE: Select temporary space on a different disk than you are importing to for be" +
+					"st performance.");
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(20, 36);
+			this.label2.Location = new System.Drawing.Point(20, 43);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(92, 13);
 			this.label2.TabIndex = 1;
@@ -59,27 +64,30 @@ namespace Utilities.DVDImport
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(118, 9);
+			this.linkLabel1.Location = new System.Drawing.Point(116, 9);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(0, 13);
 			this.linkLabel1.TabIndex = 4;
+			this.toolTip1.SetToolTip(this.linkLabel1, "NOTE: Select temporary space on a different disk than you are importing to for be" +
+					"st performance.");
 			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
 			// 
 			// radioButton1
 			// 
 			this.radioButton1.AutoSize = true;
-			this.radioButton1.Location = new System.Drawing.Point(118, 34);
+			this.radioButton1.Location = new System.Drawing.Point(116, 43);
 			this.radioButton1.Name = "radioButton1";
 			this.radioButton1.Size = new System.Drawing.Size(60, 17);
 			this.radioButton1.TabIndex = 5;
 			this.radioButton1.TabStop = true;
 			this.radioButton1.Text = "Legacy";
+			this.toolTip1.SetToolTip(this.radioButton1, "Use this if you have problems with audio conversion in Advanced mode.");
 			this.radioButton1.UseVisualStyleBackColor = true;
 			// 
 			// radioButton2
 			// 
 			this.radioButton2.AutoSize = true;
-			this.radioButton2.Location = new System.Drawing.Point(118, 57);
+			this.radioButton2.Location = new System.Drawing.Point(116, 64);
 			this.radioButton2.Name = "radioButton2";
 			this.radioButton2.Size = new System.Drawing.Size(181, 17);
 			this.radioButton2.TabIndex = 6;
@@ -110,13 +118,22 @@ namespace Utilities.DVDImport
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(116, 26);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(0, 13);
+			this.label3.TabIndex = 9;
+			this.toolTip1.SetToolTip(this.label3, "Make sure you choose a directory on a volume with about 1.5 times the size of you" +
+					"r DVD you are importing (usually about 5GB).");
+			// 
 			// Options
 			// 
-			this.AcceptButton = this.button1;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.button2;
 			this.ClientSize = new System.Drawing.Size(436, 135);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.radioButton2);
@@ -143,5 +160,7 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.RadioButton radioButton2;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

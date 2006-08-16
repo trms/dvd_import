@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Configuration;
+using System.Management;
 
 namespace Utilities.DVDImport
 {
@@ -22,7 +23,10 @@ namespace Utilities.DVDImport
 			if(Directory.Exists(linkLabel1.Text))
 				folderBrowserDialog1.SelectedPath = linkLabel1.Text;
 			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+			{
 				linkLabel1.Text = folderBrowserDialog1.SelectedPath;
+				UpdateFreeSpace();
+			}
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -79,6 +83,36 @@ namespace Utilities.DVDImport
 				tempPath = di.FullName;
 			}
 			linkLabel1.Text = tempPath;
+			UpdateFreeSpace();
+		}
+
+		private void UpdateFreeSpace()
+		{
+			string path = linkLabel1.Text;
+			try
+			{
+				#region QueryObjects
+				ManagementScope ms1 = new ManagementScope("root\\cimv2");
+				ObjectQuery oq1 = new ObjectQuery("SELECT * FROM Win32_LogicalDisk");
+				ManagementObjectSearcher query1 = new ManagementObjectSearcher(ms1, oq1);
+				ManagementObjectCollection queryCollection1 = query1.Get();
+				#endregion
+				foreach (ManagementObject mo1 in queryCollection1)
+				{
+					string letter = mo1["Name"].ToString();
+					if (letter != null && path.ToUpper().StartsWith(letter.ToUpper()))
+					{
+						//Convert.ToUInt64(mo1["Size"]);
+						long freeSpace = Convert.ToInt64(mo1["FreeSpace"]);
+						label3.Text = Utilities.BytesToSize(freeSpace) + " available";
+						break;
+					}
+				}
+			}
+			catch
+			{
+				label3.Text = "";
+			}
 		}
 	}
 }
