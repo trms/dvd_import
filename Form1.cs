@@ -1607,6 +1607,9 @@ namespace Utilities.DVDImport
 
 		private void button2_Click(object sender, System.EventArgs e)
 		{
+			// stop preview if there is one
+			button4_Click(null, null);
+
 			if (thread == null)
 			{
 				if (treeView1.SelectedNode == null)
