@@ -125,7 +125,7 @@ int ask_Message(uint32_t buttons, const char* lpFilter, ...)
 
 void error_exit()
 {
-	RaiseException( USER_EXCEPTION_FAILURE, 0, 0, 0 );
+	//RaiseException( USER_EXCEPTION_FAILURE, 0, 0, 0 );
 }
 void error_exit_msg(const char* lpFilter, ...)
 {
@@ -134,5 +134,5 @@ void error_exit_msg(const char* lpFilter, ...)
 	Message(MB_OK | MB_ICONHAND, lpFilter, argList);
 	va_end(argList);
 
-	RaiseException( USER_EXCEPTION_FAILURE, 0, 0, 0 );
+	//RaiseException( USER_EXCEPTION_FAILURE, 0, 0, 0 );
 }

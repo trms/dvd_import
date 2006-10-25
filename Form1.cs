@@ -1284,8 +1284,11 @@ namespace Utilities.DVDImport
 				{
 					StreamReader sr = File.OpenText(mplexLog);
 					string line = "";
+					int streams = 0;
 					while((line = sr.ReadLine()) != null)
 					{
+						if (line == "New sequence commences...")
+							streams++;
 						if (line.StartsWith("MUX STATUS: ") || line.StartsWith("Average bit-rate"))
 						{
 							line = line.Replace("MUX STATUS: ", "");
