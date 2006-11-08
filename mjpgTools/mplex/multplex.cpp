@@ -808,6 +808,7 @@ void OutputStream::OutputMultiplex( vector<ElementaryStream *> *strms,
 			   the suffix switch file, and start muxing a new segment.
 			*/
 		case runout_segment :
+			// sjann -- keep writing to existing file;
 			runout_incomplete = false;
 			for( str = estreams->begin(); str < estreams->end(); ++str )
 			{
@@ -819,11 +820,14 @@ void OutputStream::OutputMultiplex( vector<ElementaryStream *> *strms,
 
 			/* Otherwise we write the stream suffix and start a new
 			   stream file */
-			OutputSuffix();
-			psstrm->NextFile();
+			//OutputSuffix();
+			//psstrm->NextFile();
 
 			running_out = false;
-			seg_state = start_segment;
+			//seg_state = start_segment;
+
+			// don't do NextFile(), or write new segment header
+			break;
 
 			/* Starting a new segment.
 			   We send the segment prefix, video and audio reciever

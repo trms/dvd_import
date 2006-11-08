@@ -35,6 +35,7 @@ void Utilities::DVDImport::MultiplexGlue::Multiplex()
 	opt_audio_offset			= 0;
 	opt_video_offset			= Offset;
 	opt_split_at_seq_end		= false;
+	opt_max_segment_size		= Int32::MaxValue;
 	IntPtr vidStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Video);
 	IntPtr audStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Audio);
 	IntPtr outStr = System::Runtime::InteropServices::Marshal::StringToHGlobalAuto(Output);
@@ -103,7 +104,6 @@ void Utilities::DVDImport::MultiplexGlue::Multiplex()
 	// MultiPlex !
 	sprintf(tmp, "%ls", lOutput);
 	ostrm->OutputMultiplex( &strms,  tmp);
-
 
 	for( i=0; i < strms.size(); i++)
 		delete strms[i];
