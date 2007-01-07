@@ -1436,7 +1436,6 @@ namespace Utilities.DVDImport
 			
 			#region encode audio
 			SetStatusText("Encoding mpeg audio...");
-			string newAudio = output.Replace(".wav", ".mp2");
 			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
 			if (File.Exists(besweetCommand) == false)
 				return (null);
@@ -1448,24 +1447,25 @@ namespace Utilities.DVDImport
 			process.StartInfo.FileName = besweetCommand;
 			process.StartInfo.Arguments = "-core( -input \"" + filename + "\" -output \"" + output + "\" ) -toolame( -m j -b 192 )";
 			string dynamicCompression = "";
-			if (checkBox2.Checked)
+			if (checkBox2.Enabled && checkBox2.Checked)
 				dynamicCompression += " -c normal";
 			if (checkBox1.Checked)
-				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db --maximize )";
+				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db ) -ota( -g max )";
 			else
-				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db -g " + trackBar1.Value + "db )";
+				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db ) -ota( -g " + trackBar1.Value + "db )";
 			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 			process.StartInfo.CreateNoWindow = true;
 			process.Start();
 			string line;
-			bool success = false;
 			StreamReader sr = process.StandardError;
 			while ((line = sr.ReadLine()) != null)
 			{
 				if (m_run == false)
 					return (null);
 				if (line == "Conversion Completed !")
-					success = true;
+				{
+					//success = true;
+				}
 				else if (line.EndsWith("transcoding ..."))
 				{
 					line = line.TrimStart('[');
@@ -1746,7 +1746,7 @@ namespace Utilities.DVDImport
 				if (!Directory.Exists(path))
 					return;
 
-				int index = 0;
+				//int index = 0;
 				int maxLength = 0;
 				TreeNode longestNode = null;
 				foreach (string file in Directory.GetFiles(path, "*.IFO"))
@@ -1981,6 +1981,10 @@ namespace Utilities.DVDImport
 				else
 				{
 					string val = e.Node.Parent.Text;
+					if (val.EndsWith("LPCM audio"))
+						checkBox2.Enabled = false;
+					else
+						checkBox2.Enabled = true;
 					int idx = val.IndexOfAny(":.".ToCharArray());
 					if (idx != -1)
 						val = val.Substring(0, idx);
