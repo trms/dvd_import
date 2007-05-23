@@ -1749,16 +1749,20 @@ namespace Utilities.DVDImport
 				//int index = 0;
 				int maxLength = 0;
 				TreeNode longestNode = null;
-				foreach (string file in Directory.GetFiles(path, "*.IFO"))
+				int ifoIdx = 1;
+				while (true)
 				{
-					FileInfo fi = new FileInfo(file);
+					FileInfo fi = new FileInfo(path + Path.DirectorySeparatorChar + "VTS_" + ifoIdx.ToString("00") + "_0.IFO");
+					if (fi.Exists == false)
+						break;
+					ifoIdx++;
 					string name = fi.Name.ToUpper();
-					if (name == "VIDEO_TS.IFO")
-						continue;
+					//if (name == "VIDEO_TS.IFO")
+					//	continue;
 					try
 					{
 						int title = Convert.ToInt32(name.Replace("VTS_", "").Replace("_0.IFO", ""));
-						IFOParse ifo = new IFOParse(file);
+						IFOParse ifo = new IFOParse(fi.FullName);
 
 						// add to tree view
 						TreeNode titleNode = new TreeNode();
