@@ -5,3 +5,4 @@ obj
 *.user
 [Dd]ebug
 [Rr]elease
+*.bak
