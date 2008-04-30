@@ -32,7 +32,6 @@ welcome.dfm.miaf
 wizard.dfm
 wizard.dfm.miaf
 $
-blue.avi
 icon.ico
 $
 
@@ -298,7 +297,7 @@ Cablecast DVD Import
 Cablecast DVD Import Installation
 Tightrope Media Systems
 All rights reserved
-{ED084F35-5E07-4FA7-A7DB-871B21F407A6}
+{267367AA-57FA-4281-8A97-CC38D43B09FE}
 Tightrope Media Systems
 Tightrope Media Systems
 http://www.trms.com/
@@ -327,12 +326,14 @@ FALSE
 FALSE
 FALSE
 
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\checkmsi30.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\setupmsi30.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\checknet20.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\setupnet20.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\checkmsi20.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\setupmsi20.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\checknet11.mia
-C:\Program Files\InstallAware\InstallAware Studio 5\runtimes\setupnet11.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\checkmsi30.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\setupmsi30.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\checknet20.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\setupnet20.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\checkmsi20.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\setupmsi20.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\checknet11.mia
+C:\Program Files\InstallAware\InstallAware 7\runtimes\setupnet11.mia
 $
+FALSE
+
