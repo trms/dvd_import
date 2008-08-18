@@ -161,6 +161,6 @@
 copy "$(SolutionDir)Support\tooLame.exe" "$(TargetDir)"
 md "$(TargetDir)\BeSweet"
 xcopy /E /Y "$(SolutionDir)Support\BeSweet" "$(TargetDir)\BeSweet"
-</PostBuildEvent>
+"C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\corflags.exe" "$(TargetPath)" /32bit+</PostBuildEvent>
   </PropertyGroup>
 </Project>
