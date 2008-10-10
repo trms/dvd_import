@@ -119,6 +119,12 @@
     <Compile Include="Options.Designer.cs">
       <DependentUpon>Options.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectAudio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectAudio.Designer.cs">
+      <DependentUpon>SelectAudio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -134,6 +140,10 @@
     <EmbeddedResource Include="Options.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectAudio.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SelectAudio.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

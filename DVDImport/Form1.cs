@@ -937,6 +937,7 @@ namespace Utilities.DVDImport
 				List<IFOParse.VOB> vobs = null;
 				IFOParse.ProgramChain pgc = null;
 				List<IFOParse.Cell> cells = null;
+				int selectedAudioTrack = 0;
 				if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
 				{
 					// treat a single vob file with no ifo file as all data
@@ -958,6 +959,14 @@ namespace Utilities.DVDImport
 					pgc = (IFOParse.ProgramChain)treeView1.SelectedNode.Tag;
 					vobs = pgc.Title.VOBs;
 					cells = pgc.Cells;
+					// if we have multiple audio streams, allow the user to select which one to use
+					if (pgc.Title.AudioFormat.Count > 1)
+					{
+						SelectAudio audioSelector = new SelectAudio(pgc.Title.AudioFormat);
+						if (audioSelector.ShowDialog() == DialogResult.Cancel)
+							return;
+						selectedAudioTrack = audioSelector.SelectedSubstreamID;
+					}
 				}
 
 				//string outputDir = "";
@@ -1227,9 +1236,15 @@ namespace Utilities.DVDImport
 						FileStream fs = (FileStream)writers[name];
 						fs.Close();
 
+						// determine the audio track to use by selecting the first one we encounter,
+						// or the one the user selected if there is more than one
+						// (if the audio is .mp2, it will already be set and we don't have to worry about the non-digit
+						// name at this point)
 						if (name.EndsWith(".m2v"))
 							video = name;
-						else if (name.EndsWith(".ac3") || name.EndsWith(".dts") || name.EndsWith(".wav") || name.EndsWith(".mp2"))
+						else if (audio == null && selectedAudioTrack == 0 && (name.EndsWith(".ac3") || name.EndsWith(".dts") || name.EndsWith(".wav") || name.EndsWith(".mp2"))) // select first audio track we encounter, unless otherwise directed
+							audio = name;
+						else if (audio == null && selectedAudioTrack == Convert.ToInt32(Path.GetFileNameWithoutExtension(name)))
 							audio = name;
 
 						// delete anything after the first audio and video streams in the file
@@ -1247,6 +1262,8 @@ namespace Utilities.DVDImport
 				int duration = 0;
 				if (pgc != null)
 					duration = pgc.Duration;
+				if (audio == null) // don't process empty audio (will screw things up)
+					return;
 				audio = ConvertAudio(TempPath + audio, duration);
 				if (audio == null)
 					return;
@@ -1766,7 +1783,12 @@ namespace Utilities.DVDImport
 
 						// add to tree view
 						TreeNode titleNode = new TreeNode();
-						titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + ifo.AudioFormat + " audio";
+						string audioTracks = "No audio";
+						if (ifo.AudioFormat.Count == 1)
+							audioTracks = ifo.AudioFormat[0].ToString();
+						else if(ifo.AudioFormat.Count > 1)
+							audioTracks = "Multiple audio streams";
+						titleNode.Text = "Title " + title + ": " + ifo.VideoMode + " video, " + audioTracks;
 						titleNode.Tag = ifo;
 						titleNode.Nodes.Clear();
 						titleNode.ToolTipText = ifo.ProgramChainCount + " programs";
@@ -1965,9 +1987,13 @@ namespace Utilities.DVDImport
 			}
 			else
 			{
-				if(m_ds == null)
+				if (m_ds == null)
 					button3.Enabled = true;
-				button2.Enabled = true;
+				// don't allow PGCs with no audio to be imported
+				if (e.Node.Tag.GetType() == typeof(IFOParse.ProgramChain) && ((IFOParse.ProgramChain)e.Node.Tag).Title.AudioFormat.Count == 0)
+					button2.Enabled = false;
+				else
+					button2.Enabled = true;
 				groupBox2.Enabled = true;
 
 				if (e.Node.Parent == null)
@@ -1985,7 +2011,7 @@ namespace Utilities.DVDImport
 				else
 				{
 					string val = e.Node.Parent.Text;
-					if (val.EndsWith("LPCM audio"))
+					if (val.Contains("LPCM "))
 						checkBox2.Enabled = false;
 					else
 						checkBox2.Enabled = true;
@@ -2003,7 +2029,7 @@ namespace Utilities.DVDImport
 					textBox3.Text += val;
 				}
 			}
-				
+
 		}
 
 		private void treeView1_BeforeCollapse(object sender, TreeViewCancelEventArgs e)

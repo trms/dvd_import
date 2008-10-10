@@ -78,9 +78,51 @@ namespace Utilities.DVDImport
 
 		}
 
+		public class AudioFormatDetails
+		{
+			private string m_encoding = "AC3";
+			private string m_language = "en 2ch";
+			private int m_streamID = 0x80;
+
+			public AudioFormatDetails(string encoding, string language, int streamID)
+			{
+				m_encoding = encoding;
+				m_language = language;
+				m_streamID = streamID;
+			}
+
+			public string Encoding
+			{
+				get { return (m_encoding); }
+			}
+
+			public string Language
+			{
+				get { return (m_language); }
+			}
+
+			public int StreamID
+			{
+				get { return (m_streamID); }
+			}
+
+			public override string ToString()
+			{
+				return String.Format("{0} {1} audio", m_encoding, m_language);
+			}
+		}
+
+		private UInt16 ReadWord(byte[] p, int offset)
+		{
+			UInt16 x;
+			x = p[offset]; x <<= 8;
+			x |= p[offset + 1];
+			return (x);
+		}
+
 		private FileInfo m_file = null;
 		private int m_numAudio = 0;
-		private string m_audioFormat = "";
+		private List<AudioFormatDetails> m_audioFormat = new List<AudioFormatDetails>();
 		private string m_aspectRatio = "";
 		private string m_resolution = "";
 		private string m_videoMode = "";
@@ -318,34 +360,134 @@ namespace Utilities.DVDImport
 				#endregion
 
 				#region Audio
+				// http://dvd.sourceforge.net/dvdinfo/ifo.html
 				// find count of audio streams
-				if(fs.Seek(0x203, SeekOrigin.Begin) != 0x203)
+				if (fs.Seek(0x203, SeekOrigin.Begin) != 0x203)
 					throw new IOException("Error reading IFO file");
 				byte[] numAudio = new byte[1];
 				if(fs.Read(numAudio, 0, 1) != 1)
 					throw new IOException("Error reading IFO file");
 				m_numAudio = numAudio[0];
-				byte[] audioFormatData = new byte[1];
-				if(fs.Read(audioFormatData, 0, 1) != 1)
-					throw new IOException("Error reading IFO file");
-				int audioFormat = (audioFormatData[0] & 0xe0) >> 5;
-				switch(audioFormat)
+				for (int i = 0; i < m_numAudio; i++)
 				{
-					case 0:
-						m_audioFormat = "AC3";
-						break;
-					case 2:
-						m_audioFormat = "MPEG1";
-						break;
-					case 3:
-						m_audioFormat = "MPEG2";
-						break;
-					case 4:
-						m_audioFormat = "LPCM";
-						break;
-					case 6:
-						m_audioFormat = "DTS";
-						break;
+					byte[] audioFormatData = new byte[8];
+					if (fs.Read(audioFormatData, 0, 8) != 8)
+						throw new IOException("Error reading IFO file");
+
+					// check if the language is 'specified'
+					string lang = "";
+					if (((audioFormatData[0] & 0xC) >> 2) > 0)
+					{
+						// extract the two character ASCII code for the language
+						char langID1 = (char)audioFormatData[2];
+						char langID2 = (char)audioFormatData[3];
+						lang = String.Format("{0}{1}", (char)audioFormatData[2], (char)audioFormatData[3]);
+						// translate some language codes
+						//http://www.dvd-replica.com/DVD/vtslanguage.php
+						if (lang == "en")
+							lang = "English";
+						else if(lang == "es")
+							lang = "Spanish";
+						else if(lang == "fr")
+							lang = "French";
+						else if(lang == "ja")
+							lang = "Japanese";
+						else if(lang == "ar")
+							lang = "Arabic";
+						else if(lang == "no")
+							lang = "Norwegian";
+						else if(lang == "pl")
+							lang = "Polish";
+						else if(lang == "km")
+							lang = "Cambodian";
+						else if(lang == "pt")
+							lang = "Portuguese";
+						else if(lang == "zh")
+							lang = "Chinese";
+						else if(lang == "ro")
+							lang = "Romanian";
+						else if(lang == "ru")
+							lang = "Russian";
+						else if(lang == "cs")
+							lang = "Czech";
+						else if(lang == "da")
+							lang = "Danish";
+						else if(lang == "nl")
+							lang = "Dutch";
+						else if(lang == "sa")
+							lang = "Sanskrit";
+						else if(lang == "eo")
+							lang = "Esperanto";
+						else if(lang == "fi")
+							lang = "Finnish";
+						else if(lang == "de")
+							lang = "German";
+						else if(lang == "el")
+							lang = "Greek";
+						else if(lang == "sw")
+							lang = "Swahili";
+						else if(lang == "sv")
+							lang = "Swedish";
+						else if(lang == "iw")
+							lang = "Hebrew";
+						else if(lang == "hi")
+							lang = "Hindi";
+						else if(lang == "th")
+							lang = "Thai";
+						else if(lang == "ga")
+							lang = "Irish";
+						else if(lang == "it")
+							lang = "Italian";
+						else if(lang == "vi")
+							lang = "Vietnamese";
+						else if(lang == "ko")
+							lang = "Korean";
+						else if(lang == "ji")
+							lang = "Yiddish";
+						else if(lang == "la")
+							lang = "Latin";
+
+						int audioType = audioFormatData[5];
+						switch (audioType)
+						{
+							case 0:
+							case 1:
+							case 2: //for visually impaired
+								break;
+							case 3: //director's comments
+							case 4: //alt. director's comments
+								lang += "/c";
+								break;
+						}
+					}
+
+					// display the number of channels in the audio stream
+					int channels = (audioFormatData[1] & 0x7) + 1;
+					if (lang != "")
+						lang += " ";
+					lang += String.Format("{0}ch", channels);
+
+					// find the format for the stream and add it to the format list if it is supported
+					int audioFormat = (audioFormatData[0] & 0xe0) >> 5;
+					switch (audioFormat)
+					{
+						case 0:
+							m_audioFormat.Add(new AudioFormatDetails("AC3", lang, 0x80 + i));
+							break;
+						case 2:
+							m_audioFormat.Add(new AudioFormatDetails("MPEG1", lang, 0xC0 + i));
+							break;
+						case 4:
+							m_audioFormat.Add(new AudioFormatDetails("LPCM", lang, 0xA0 + i));
+							break;
+						case 6: // DTS
+						case 3: // MPEG 2
+						default:
+							// ignore other stream types (don't add to the list)
+							//throw new IOException("This DVD contains an unsupported audio type");
+							//m_audioFormat.Add(new AudioFormatDetails("DTS", lang, 0x88 + i));
+							break;
+					}
 				}
 				#endregion
 
@@ -446,11 +588,11 @@ namespace Utilities.DVDImport
 			}
 		}
 
-		public string AudioFormat
+		public List<AudioFormatDetails> AudioFormat
 		{
 			get
 			{
-				return(m_audioFormat);
+				return (m_audioFormat);
 			}
 		}
 
