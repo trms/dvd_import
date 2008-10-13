@@ -1449,7 +1449,7 @@ namespace Utilities.DVDImport
 			int idx = output.LastIndexOf('.');
 			if (idx != -1)
 				output = output.Substring(0, idx);
-			output += ".mp2";
+			output += "_OUT.mp2";
 			
 			#region encode audio
 			SetStatusText("Encoding mpeg audio...");
