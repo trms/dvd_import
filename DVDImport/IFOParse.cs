@@ -386,66 +386,68 @@ namespace Utilities.DVDImport
 						//http://www.dvd-replica.com/DVD/vtslanguage.php
 						if (lang == "en")
 							lang = "English";
-						else if(lang == "es")
+						else if (lang == "es")
 							lang = "Spanish";
-						else if(lang == "fr")
+						else if (lang == "fr")
 							lang = "French";
-						else if(lang == "ja")
+						else if (lang == "ja")
 							lang = "Japanese";
-						else if(lang == "ar")
+						else if (lang == "ar")
 							lang = "Arabic";
-						else if(lang == "no")
+						else if (lang == "no")
 							lang = "Norwegian";
-						else if(lang == "pl")
+						else if (lang == "pl")
 							lang = "Polish";
-						else if(lang == "km")
+						else if (lang == "km")
 							lang = "Cambodian";
-						else if(lang == "pt")
+						else if (lang == "pt")
 							lang = "Portuguese";
-						else if(lang == "zh")
+						else if (lang == "zh")
 							lang = "Chinese";
-						else if(lang == "ro")
+						else if (lang == "ro")
 							lang = "Romanian";
-						else if(lang == "ru")
+						else if (lang == "ru")
 							lang = "Russian";
-						else if(lang == "cs")
+						else if (lang == "cs")
 							lang = "Czech";
-						else if(lang == "da")
+						else if (lang == "da")
 							lang = "Danish";
-						else if(lang == "nl")
+						else if (lang == "nl")
 							lang = "Dutch";
-						else if(lang == "sa")
+						else if (lang == "sa")
 							lang = "Sanskrit";
-						else if(lang == "eo")
+						else if (lang == "eo")
 							lang = "Esperanto";
-						else if(lang == "fi")
+						else if (lang == "fi")
 							lang = "Finnish";
-						else if(lang == "de")
+						else if (lang == "de")
 							lang = "German";
-						else if(lang == "el")
+						else if (lang == "el")
 							lang = "Greek";
-						else if(lang == "sw")
+						else if (lang == "sw")
 							lang = "Swahili";
-						else if(lang == "sv")
+						else if (lang == "sv")
 							lang = "Swedish";
-						else if(lang == "iw")
+						else if (lang == "iw")
 							lang = "Hebrew";
-						else if(lang == "hi")
+						else if (lang == "hi")
 							lang = "Hindi";
-						else if(lang == "th")
+						else if (lang == "th")
 							lang = "Thai";
-						else if(lang == "ga")
+						else if (lang == "ga")
 							lang = "Irish";
-						else if(lang == "it")
+						else if (lang == "it")
 							lang = "Italian";
-						else if(lang == "vi")
+						else if (lang == "vi")
 							lang = "Vietnamese";
-						else if(lang == "ko")
+						else if (lang == "ko")
 							lang = "Korean";
-						else if(lang == "ji")
+						else if (lang == "ji")
 							lang = "Yiddish";
-						else if(lang == "la")
+						else if (lang == "la")
 							lang = "Latin";
+						else if (audioFormatData[2] == 0)
+							lang = "";
 
 						int audioType = audioFormatData[5];
 						switch (audioType)
