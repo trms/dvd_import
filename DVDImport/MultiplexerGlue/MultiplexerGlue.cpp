@@ -47,6 +47,13 @@ void Utilities::DVDImport::MultiplexGlue::Multiplex()
 	opt_logfile = (char*)malloc(wcslen(lLog) + 1);
 	sprintf(opt_logfile, "%ls", lLog);
 
+	if( opt_video_offset < 0 )
+	{
+		opt_audio_offset = - opt_video_offset;
+		opt_video_offset = 0;
+	}
+
+
 	vector<IBitStream *>		mpa_files;
 	vector<IBitStream *>		video_files;
 	//OutputStream				ostrm;
