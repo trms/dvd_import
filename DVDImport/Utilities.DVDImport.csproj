@@ -158,10 +158,6 @@
       <Project>{EA2D3DAF-AEBD-4296-9038-985281F9B8ED}</Project>
       <Name>DSUtils</Name>
     </ProjectReference>
-    <ProjectReference Include="MultiplexerGlue\MultiplexerGlue.vcproj">
-      <Project>{8DF99485-CB65-471B-B676-DB47017E9D57}</Project>
-      <Name>MultiplexerGlue</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -169,6 +165,7 @@
     </PreBuildEvent>
     <PostBuildEvent>copy "$(SolutionDir)Support\ac3dec.exe" "$(TargetDir)"
 copy "$(SolutionDir)Support\tooLame.exe" "$(TargetDir)"
+copy "$(SolutionDir)Support\mplex.exe" "$(TargetDir)"
 md "$(TargetDir)\BeSweet"
 xcopy /E /Y "$(SolutionDir)Support\BeSweet" "$(TargetDir)\BeSweet"
 "C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\corflags.exe" "$(TargetPath)" /32bit+</PostBuildEvent>

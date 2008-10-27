@@ -3,16 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities.DVDImport", "Utilities.DVDImport.csproj", "{F25E5154-30D2-4CF2-993C-4742ED603897}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DSUtils", "DSUtils\DSUtils.vcproj", "{EA2D3DAF-AEBD-4296-9038-985281F9B8ED}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84} = {E2BE3521-354D-46D8-84A9-067AC7BDAE84}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiplexerGlue", "MultiplexerGlue\MultiplexerGlue.vcproj", "{8DF99485-CB65-471B-B676-DB47017E9D57}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84} = {E2BE3521-354D-46D8-84A9-067AC7BDAE84}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mplex", "mjpgTools\mplex\mplex.vcproj", "{E2BE3521-354D-46D8-84A9-067AC7BDAE84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,26 +34,6 @@ Global
 		{EA2D3DAF-AEBD-4296-9038-985281F9B8ED}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{EA2D3DAF-AEBD-4296-9038-985281F9B8ED}.Release|Win32.ActiveCfg = Release|Win32
 		{EA2D3DAF-AEBD-4296-9038-985281F9B8ED}.Release|Win32.Build.0 = Release|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Debug|Win32.Build.0 = Debug|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Release|Any CPU.ActiveCfg = Release|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Release|Win32.ActiveCfg = Release|Win32
-		{8DF99485-CB65-471B-B676-DB47017E9D57}.Release|Win32.Build.0 = Release|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Debug|Win32.Build.0 = Debug|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Release|Any CPU.ActiveCfg = Release|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Release|Win32.ActiveCfg = Release|Win32
-		{E2BE3521-354D-46D8-84A9-067AC7BDAE84}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

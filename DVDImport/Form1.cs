@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.DirectX.AudioVideoPlayback;
@@ -69,7 +70,11 @@ namespace Utilities.DVDImport
 		private readonly int m_demuxCount = 400;
 		private readonly int m_audioCount = 600;
 		private readonly int m_remuxCount = 1000;
+		private readonly long m_mplexMpegClock = (300 *90000);
 		private int m_lastSecond = 0;
+		private Label uxAVSyncValue;
+		private TrackBar uxAVSync;
+		private Label label12;
 
 		/// <summary>
 		/// Required designer variable.
@@ -87,6 +92,22 @@ namespace Utilities.DVDImport
 			// TODO: Add any constructor code after InitializeComponent call
 			//
 			CheckForIllegalCrossThreadCalls = false;
+		}
+
+		private bool ShowAVSync
+		{
+			get
+			{
+				try
+				{
+					if (System.Configuration.ConfigurationManager.AppSettings.GetValues("ShowAVSync") != null)
+						return (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings.GetValues("ShowAVSync")[0]));
+				}
+				catch
+				{
+				}
+				return (false);
+			}
 		}
 
 		/// <summary>
@@ -149,12 +170,16 @@ namespace Utilities.DVDImport
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.button7 = new System.Windows.Forms.Button();
 			this.label11 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.uxAVSync = new System.Windows.Forms.TrackBar();
+			this.uxAVSyncValue = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.uxAVSync)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -228,6 +253,9 @@ namespace Utilities.DVDImport
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.uxAVSyncValue);
+			this.groupBox1.Controls.Add(this.uxAVSync);
+			this.groupBox1.Controls.Add(this.label12);
 			this.groupBox1.Controls.Add(this.checkBox2);
 			this.groupBox1.Controls.Add(this.checkBox1);
 			this.groupBox1.Controls.Add(this.label7);
@@ -235,7 +263,7 @@ namespace Utilities.DVDImport
 			this.groupBox1.Controls.Add(this.trackBar1);
 			this.groupBox1.Location = new System.Drawing.Point(313, 96);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(159, 112);
+			this.groupBox1.Size = new System.Drawing.Size(159, 115);
 			this.groupBox1.TabIndex = 25;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Audio Processing";
@@ -523,6 +551,39 @@ namespace Utilities.DVDImport
 			this.label11.TabIndex = 26;
 			this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
+			// label12
+			// 
+			this.label12.Location = new System.Drawing.Point(6, 114);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(39, 19);
+			this.label12.TabIndex = 29;
+			this.label12.Text = "Sync:";
+			this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.label12.Visible = false;
+			// 
+			// uxAVSync
+			// 
+			this.uxAVSync.LargeChange = 132;
+			this.uxAVSync.Location = new System.Drawing.Point(51, 108);
+			this.uxAVSync.Maximum = 990;
+			this.uxAVSync.Minimum = -990;
+			this.uxAVSync.Name = "uxAVSync";
+			this.uxAVSync.Size = new System.Drawing.Size(104, 42);
+			this.uxAVSync.SmallChange = 33;
+			this.uxAVSync.TabIndex = 30;
+			this.uxAVSync.TickFrequency = 330;
+			this.uxAVSync.Visible = false;
+			this.uxAVSync.Scroll += new System.EventHandler(this.uxAVSync_Scroll);
+			// 
+			// uxAVSyncValue
+			// 
+			this.uxAVSyncValue.Location = new System.Drawing.Point(2, 132);
+			this.uxAVSyncValue.Name = "uxAVSyncValue";
+			this.uxAVSyncValue.Size = new System.Drawing.Size(51, 19);
+			this.uxAVSyncValue.TabIndex = 31;
+			this.uxAVSyncValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.uxAVSyncValue.Visible = false;
+			// 
 			// Form1
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -557,6 +618,7 @@ namespace Utilities.DVDImport
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.uxAVSync)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -784,7 +846,7 @@ namespace Utilities.DVDImport
 			else
 				msOffset += 44;
 			msOffset /= 90;
-			return (msOffset);
+			return (msOffset - uxAVSync.Value);
 		}
 
 		#region Thread Safe UI calls
@@ -798,6 +860,7 @@ namespace Utilities.DVDImport
 			}
 			else
 				label2.Text = text;
+			Application.DoEvents();
 		}
 
 		private void SetETAText(string text)
@@ -809,6 +872,7 @@ namespace Utilities.DVDImport
 			}
 			else
 				label11.Text = text;
+			Application.DoEvents();
 		}
 
 		delegate void SetProgressCallback(int progress);
@@ -855,6 +919,7 @@ namespace Utilities.DVDImport
 							remaining += " left";
 							label11.Text = remaining;
 						}
+						Application.DoEvents();
 					}
 					catch { }
 				}
@@ -925,6 +990,8 @@ namespace Utilities.DVDImport
 				textBox2.Enabled = true;
 				textBox3.Enabled = true;
 				textBox4.Enabled = true;
+				uxAVSync.Value = 0;
+				uxAVSync_Scroll(this, null);
 			}
 		}
 		#endregion
@@ -1271,51 +1338,102 @@ namespace Utilities.DVDImport
 
 				DisableCancel();
 				SetStatusText("Remuxing elementary mpeg streams...");
-				MultiplexGlue mg = new MultiplexGlue();
-				mg.Video = TempPath + video;
-				mg.Audio = audio;
-				mg.Offset = Offset(cells, vobs);
-				mg.Output = saveFile;
-				string mplexLog = TempPath + "mplex.log";
-				mg.Log = mplexLog;
-				Thread mt = new Thread(new ThreadStart(mg.Multiplex));
-				mt.Start();
-				while (mt.IsAlive)
+				FileInfo appPath = new FileInfo(Application.ExecutablePath);
+				string mplexCommand = appPath.Directory + "\\mplex.exe";
+				if (File.Exists(mplexCommand) == false)
+					return;
+
+				process = new Process();
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+				//process.StartInfo.RedirectStandardOutput = true;
+				process.StartInfo.RedirectStandardError = true;
+				process.StartInfo.FileName = mplexCommand;
+				// format = MPEG2 (-f 3)
+				// -V = VBR
+				// -v 2 = verbose output
+				// -O x = A/V offset
+				// -S 0 = disable segment splitting
+				// -o <file> = output to final output
+				process.StartInfo.Arguments = String.Format("-f 3 -V -v 2 -O {0} -S 0 -o \"{1}\" \"{2}\" \"{3}\"",
+					Offset(cells, vobs),
+					saveFile,
+					TempPath + video,
+					audio);
+				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				process.StartInfo.CreateNoWindow = true;
+				process.Start();
+				string line;
+				string muxBitrate = String.Empty;
+				string muxStatus = String.Empty;
+				int streams = 0;
+				int overflowCount = 0;
+				long lastSCR = 0;
+				StreamReader sr = process.StandardError;
+				DateTime lastMessage = DateTime.MinValue;
+				while ((line = sr.ReadLine()) != null)
 				{
-					if (pgc != null)
+					line = Regex.Replace(line, @"^[^\[]*\[[^\]]*\]\s+", ""); // get rid of process name at start of string
+					if (m_run == false)
+						return;
+					else if(line.Contains("SCR="))
 					{
+						if (DateTime.Now < lastMessage.AddMilliseconds(50))
+							continue;
 						try
 						{
-							SetStatusText("Remuxing elementary mpeg streams..." + Convert.ToInt32(100.0 * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))) + "%");
-							SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(mg.CurrentSCR()) / Convert.ToDouble(pgc.Duration))));
+							Match m = Regex.Match(line, @"\w\d:\s+SCR=(-?\d+)");
+							if (m.Success)
+							{
+								// workaround for printf in windows truncating 64-bit SCR data
+								long scr = Convert.ToInt64(m.Groups[1].Value);
+								if(scr < lastSCR)
+									overflowCount++;
+								lastSCR = scr;
+								scr += overflowCount * UInt32.MaxValue;
+
+								// divide it by the CLOCK value to get number of seconds
+								scr /= m_mplexMpegClock;
+
+								if (pgc == null)
+								{
+									SetStatusText("Remuxing elementary mpeg streams...");
+								}
+								else
+								{
+									SetStatusText("Remuxing elementary mpeg streams..." + Convert.ToInt32(100.0 * (Convert.ToDouble(scr) / Convert.ToDouble(pgc.Duration))) + "%");
+									SetProgress(m_audioCount + Convert.ToInt32((m_remuxCount - m_audioCount) * (Convert.ToDouble(scr) / Convert.ToDouble(pgc.Duration))));
+								}
+								lastMessage = DateTime.Now;
+							}
 						}
 						catch { }
 					}
-					else
-						SetStatusText("Remuxing elementary mpeg streams...");
+					else if (line == "New sequence commences...")
+						streams++;
+					else if (line.StartsWith("MUX STATUS: "))
+					{
+						line = line.Replace("MUX STATUS: ", "");
+						muxStatus = line;
+					}
+					else if (line.StartsWith("Average bit-rate"))
+					{
+						muxBitrate = line;
+					}
+				}
+				process.WaitForExit();
+				process = null;
+
+				SetProgress(m_remuxCount);
+				if (String.IsNullOrEmpty(muxBitrate) == false)
+				{
+					SetStatusText("Remuxing elementary mpeg streams... " + muxBitrate);
 					Thread.Sleep(500);
 				}
-				//mg.Multiplex(TempPath + video, audio, Offset(cells, vobs), saveFile);
-				SetProgress(m_remuxCount);
-				if (File.Exists(mplexLog))
+				if (String.IsNullOrEmpty(muxStatus) == false)
 				{
-					StreamReader sr = File.OpenText(mplexLog);
-					string line = "";
-					int streams = 0;
-					while((line = sr.ReadLine()) != null)
-					{
-						if (line == "New sequence commences...")
-							streams++;
-						if (line.StartsWith("MUX STATUS: ") || line.StartsWith("Average bit-rate"))
-						{
-							line = line.Replace("MUX STATUS: ", "");
-							SetStatusText("Remuxing elementary mpeg streams... " + line);
-							Thread.Sleep(500);
-						}
-					}
-					sr.Close();
-
-					File.Delete(mplexLog);
+					SetStatusText("Remuxing elementary mpeg streams... " + muxStatus);
+					Thread.Sleep(500);
 				}
 			}
 			catch (ThreadAbortException)
@@ -1709,6 +1827,14 @@ namespace Utilities.DVDImport
 					comboBox1.Items.Add(drive);
 			}
 			comboBox1.SelectedIndex = 0;
+
+			if (ShowAVSync)
+			{
+				groupBox1.Height = 156;
+				uxAVSync.Visible = uxAVSyncValue.Visible = label12.Visible = true;
+				uxAVSync.Value = 0;
+				uxAVSync_Scroll(this, null);
+			}
 		}
 
 		private void RefreshDVD()
@@ -2081,6 +2207,11 @@ namespace Utilities.DVDImport
 				LoadTitles();
 			else
 				RefreshDVD();
+		}
+
+		private void uxAVSync_Scroll(object sender, EventArgs e)
+		{
+			uxAVSyncValue.Text = uxAVSync.Value + "ms";
 		}
 	}
 }

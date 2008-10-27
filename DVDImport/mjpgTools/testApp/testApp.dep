@@ -1,9 +1,0 @@
-# Microsoft Developer Studio Generated Dependency File, included by testApp.mak
-
-.\StdAfx.cpp : \
-	".\StdAfx.h"\
-	
-
-.\testApp.cpp : \
-	".\StdAfx.h"\
-	

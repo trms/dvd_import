@@ -1,9 +1,0 @@
-# Microsoft Developer Studio Generated Dependency File, included by mjpgTools.mak
-
-.\mjpgTools.cpp : \
-	".\StdAfx.h"\
-	
-
-.\StdAfx.cpp : \
-	".\StdAfx.h"\
-	
