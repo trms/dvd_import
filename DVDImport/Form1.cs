@@ -222,7 +222,7 @@ namespace Utilities.DVDImport
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.Location = new System.Drawing.Point(-1, 292);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(424, 15);
+			this.label2.Size = new System.Drawing.Size(466, 15);
 			this.label2.TabIndex = 5;
 			// 
 			// panel1
@@ -562,9 +562,9 @@ namespace Utilities.DVDImport
 			// label11
 			// 
 			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label11.Location = new System.Drawing.Point(429, 293);
+			this.label11.Location = new System.Drawing.Point(471, 293);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(188, 15);
+			this.label11.Size = new System.Drawing.Size(146, 15);
 			this.label11.TabIndex = 26;
 			this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
