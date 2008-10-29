@@ -147,9 +147,9 @@ namespace Utilities.DVDImport
 			this.uxShowSync.AutoSize = true;
 			this.uxShowSync.Location = new System.Drawing.Point(303, 65);
 			this.uxShowSync.Name = "uxShowSync";
-			this.uxShowSync.Size = new System.Drawing.Size(80, 17);
+			this.uxShowSync.Size = new System.Drawing.Size(99, 17);
 			this.uxShowSync.TabIndex = 11;
-			this.uxShowSync.Text = "Show Sync";
+			this.uxShowSync.Text = "Adjust AV Sync";
 			this.uxShowSync.UseVisualStyleBackColor = true;
 			// 
 			// Options
