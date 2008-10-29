@@ -1333,6 +1333,7 @@ namespace Utilities.DVDImport
 				//process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
 				process.StartInfo.FileName = mplexCommand;
+				int AVOffset = Offset(cells, vobs);
 				// format = MPEG2 (-f 3)
 				// -V = VBR
 				// -v 2 = verbose output
@@ -1340,7 +1341,7 @@ namespace Utilities.DVDImport
 				// -S 0 = disable segment splitting
 				// -o <file> = output to final output
 				process.StartInfo.Arguments = String.Format("-f 3 -V -v 2 -O {0} -S 0 -o \"{1}\" \"{2}\" \"{3}\"",
-					Offset(cells, vobs),
+					AVOffset,
 					saveFile,
 					TempPath + video,
 					audio);
@@ -1413,6 +1414,14 @@ namespace Utilities.DVDImport
 				{
 					SetStatusText("Remuxing elementary mpeg streams... " + muxBitrate);
 					Thread.Sleep(500);
+				}
+				if(AVOffset != 0)
+				{
+					if(String.IsNullOrEmpty(muxStatus))
+						muxStatus = "";
+					else 
+						muxStatus += " ";
+					muxStatus += "used " + AVOffset + "ms AV offset";
 				}
 				if (String.IsNullOrEmpty(muxStatus) == false)
 				{
