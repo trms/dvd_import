@@ -840,7 +840,7 @@ namespace Utilities.DVDImport
 			}
 			readers.Clear();
 
-			int msOffset = audioOffset - videoOffset;
+			int msOffset = videoOffset - audioOffset;
 			if (msOffset < 0)
 				msOffset -= 44;
 			else
@@ -1788,9 +1788,10 @@ namespace Utilities.DVDImport
 		{
 			FileInfo appPath = new FileInfo(Application.ExecutablePath);
 			string ac3decCommand = appPath.Directory + "\\ac3dec.exe";
+			string mplexCommand = appPath.Directory + "\\mplex.exe";
 			string lameCommand = appPath.Directory + "\\tooLame.exe";
 			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
-			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand))
+			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand) && File.Exists(mplexCommand))
 			{
 				// okay
 			}
