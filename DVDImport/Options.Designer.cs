@@ -39,6 +39,8 @@ namespace Utilities.DVDImport
 			this.button2 = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.uxSwapChannels = new System.Windows.Forms.CheckBox();
+			this.uxShowSync = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -67,7 +69,7 @@ namespace Utilities.DVDImport
 			this.linkLabel1.Location = new System.Drawing.Point(116, 9);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(0, 13);
-			this.linkLabel1.TabIndex = 4;
+			this.linkLabel1.TabIndex = 0;
 			this.toolTip1.SetToolTip(this.linkLabel1, "NOTE: Select temporary space on a different disk than you are importing to for be" +
 					"st performance.");
 			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
@@ -78,11 +80,12 @@ namespace Utilities.DVDImport
 			this.radioButton1.Location = new System.Drawing.Point(116, 43);
 			this.radioButton1.Name = "radioButton1";
 			this.radioButton1.Size = new System.Drawing.Size(60, 17);
-			this.radioButton1.TabIndex = 5;
+			this.radioButton1.TabIndex = 1;
 			this.radioButton1.TabStop = true;
 			this.radioButton1.Text = "Legacy";
 			this.toolTip1.SetToolTip(this.radioButton1, "Use this if you have problems with audio conversion in Advanced mode.");
 			this.radioButton1.UseVisualStyleBackColor = true;
+			this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
 			// 
 			// radioButton2
 			// 
@@ -90,10 +93,11 @@ namespace Utilities.DVDImport
 			this.radioButton2.Location = new System.Drawing.Point(116, 64);
 			this.radioButton2.Name = "radioButton2";
 			this.radioButton2.Size = new System.Drawing.Size(181, 17);
-			this.radioButton2.TabIndex = 6;
+			this.radioButton2.TabIndex = 2;
 			this.radioButton2.TabStop = true;
 			this.radioButton2.Text = "Advanced (with level adjustment)";
 			this.radioButton2.UseVisualStyleBackColor = true;
+			this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -101,7 +105,7 @@ namespace Utilities.DVDImport
 			this.button1.Location = new System.Drawing.Point(349, 100);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 7;
+			this.button1.TabIndex = 4;
 			this.button1.Text = "Save";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -113,7 +117,7 @@ namespace Utilities.DVDImport
 			this.button2.Location = new System.Drawing.Point(268, 100);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 8;
+			this.button2.TabIndex = 3;
 			this.button2.Text = "Cancel";
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -128,11 +132,33 @@ namespace Utilities.DVDImport
 			this.toolTip1.SetToolTip(this.label3, "Make sure you choose a directory on a volume with about 1.5 times the size of you" +
 					"r DVD you are importing (usually about 5GB).");
 			// 
+			// uxSwapChannels
+			// 
+			this.uxSwapChannels.AutoSize = true;
+			this.uxSwapChannels.Location = new System.Drawing.Point(303, 44);
+			this.uxSwapChannels.Name = "uxSwapChannels";
+			this.uxSwapChannels.Size = new System.Drawing.Size(100, 17);
+			this.uxSwapChannels.TabIndex = 10;
+			this.uxSwapChannels.Text = "Swap Channels";
+			this.uxSwapChannels.UseVisualStyleBackColor = true;
+			// 
+			// uxShowSync
+			// 
+			this.uxShowSync.AutoSize = true;
+			this.uxShowSync.Location = new System.Drawing.Point(303, 65);
+			this.uxShowSync.Name = "uxShowSync";
+			this.uxShowSync.Size = new System.Drawing.Size(80, 17);
+			this.uxShowSync.TabIndex = 11;
+			this.uxShowSync.Text = "Show Sync";
+			this.uxShowSync.UseVisualStyleBackColor = true;
+			// 
 			// Options
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(436, 135);
+			this.Controls.Add(this.uxShowSync);
+			this.Controls.Add(this.uxSwapChannels);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
@@ -162,5 +188,7 @@ namespace Utilities.DVDImport
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.CheckBox uxSwapChannels;
+		private System.Windows.Forms.CheckBox uxShowSync;
 	}
 }

@@ -94,22 +94,6 @@ namespace Utilities.DVDImport
 			CheckForIllegalCrossThreadCalls = false;
 		}
 
-		private bool ShowAVSync
-		{
-			get
-			{
-				try
-				{
-					if (System.Configuration.ConfigurationManager.AppSettings.GetValues("ShowAVSync") != null)
-						return (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings.GetValues("ShowAVSync")[0]));
-				}
-				catch
-				{
-				}
-				return (false);
-			}
-		}
-
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
@@ -1700,9 +1684,9 @@ namespace Utilities.DVDImport
 				//process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
 				process.StartInfo.FileName = lameCommand;
-				string extraOptions = " -g";
-				if (System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions") != null)
-					extraOptions = " " + System.Configuration.ConfigurationManager.AppSettings.GetValues("MPEGEncodeOptions")[0];
+				string extraOptions = "";
+				if (Settings.Default.SwapChannels)
+					extraOptions = " -g";
 				process.StartInfo.Arguments = "-s 48" + extraOptions + " \"" + output + "\" \"" + newAudio + "\"";
 				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 				process.StartInfo.CreateNoWindow = true;
@@ -1829,12 +1813,23 @@ namespace Utilities.DVDImport
 			}
 			comboBox1.SelectedIndex = 0;
 
-			if (ShowAVSync)
+			UpdateShowSync();
+		}
+
+		private void UpdateShowSync()
+		{
+			if (Settings.Default.ShowSync)
 			{
 				groupBox1.Height = 156;
 				uxAVSync.Visible = uxAVSyncValue.Visible = label12.Visible = true;
 				uxAVSync.Value = 0;
 				uxAVSync_Scroll(this, null);
+			}
+			else
+			{
+				groupBox1.Height = 115;
+				uxAVSync.Visible = uxAVSyncValue.Visible = label12.Visible = false;
+				uxAVSync.Value = 0;
 			}
 		}
 
@@ -2189,6 +2184,7 @@ namespace Utilities.DVDImport
 			o.ShowDialog();
 			this.Enabled = true;
 			SetupControls();
+			UpdateShowSync();
 		}
 
 		private void trackBar1_Scroll(object sender, EventArgs e)

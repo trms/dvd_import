@@ -34,6 +34,8 @@ namespace Utilities.DVDImport
 			// save
 			Settings.Default.AudioMode = radioButton2.Checked;
 			Settings.Default.TempPath = linkLabel1.Text;
+			Settings.Default.ShowSync = uxShowSync.Checked;
+			Settings.Default.SwapChannels = uxSwapChannels.Checked;
 			Settings.Default.Save();
 
 			this.Close();
@@ -49,8 +51,9 @@ namespace Utilities.DVDImport
 			FileInfo appPath = new FileInfo(Application.ExecutablePath);
 			string ac3decCommand = appPath.Directory + "\\ac3dec.exe";
 			string lameCommand = appPath.Directory + "\\tooLame.exe";
+			string mplexCommand = appPath.Directory + "\\mplex.exe";
 			string besweetCommand = appPath.Directory + "\\BeSweet\\BeSweet.exe";
-			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand))
+			if (File.Exists(ac3decCommand) && File.Exists(lameCommand) && File.Exists(besweetCommand) && File.Exists(mplexCommand))
 			{
 				radioButton1.Enabled = true;
 				radioButton2.Enabled = true;
@@ -64,6 +67,10 @@ namespace Utilities.DVDImport
 					radioButton1.Checked = true;
 					radioButton2.Checked = false;
 				}
+				uxSwapChannels.Enabled = radioButton1.Checked;
+				uxShowSync.Enabled = !radioButton1.Checked;
+				uxSwapChannels.Checked = Settings.Default.SwapChannels;
+				uxShowSync.Checked = Settings.Default.ShowSync;
 			}
 			else
 			{
@@ -113,6 +120,18 @@ namespace Utilities.DVDImport
 			{
 				label3.Text = "";
 			}
+		}
+
+		private void radioButton1_CheckedChanged(object sender, EventArgs e)
+		{
+			uxSwapChannels.Enabled = radioButton1.Checked;
+			uxShowSync.Enabled = !radioButton1.Checked;
+		}
+
+		private void radioButton2_CheckedChanged(object sender, EventArgs e)
+		{
+			uxSwapChannels.Enabled = radioButton1.Checked;
+			uxShowSync.Enabled = !radioButton1.Checked;
 		}
 	}
 }
