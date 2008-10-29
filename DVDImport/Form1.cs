@@ -141,6 +141,9 @@ namespace Utilities.DVDImport
 			this.label2 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.uxAVSyncValue = new System.Windows.Forms.Label();
+			this.uxAVSync = new System.Windows.Forms.TrackBar();
+			this.label12 = new System.Windows.Forms.Label();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.label7 = new System.Windows.Forms.Label();
@@ -170,16 +173,13 @@ namespace Utilities.DVDImport
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.button7 = new System.Windows.Forms.Button();
 			this.label11 = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
-			this.uxAVSync = new System.Windows.Forms.TrackBar();
-			this.uxAVSyncValue = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.uxAVSync)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.uxAVSync)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -217,7 +217,7 @@ namespace Utilities.DVDImport
 			this.button2.Location = new System.Drawing.Point(704, 285);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(48, 23);
-			this.button2.TabIndex = 3;
+			this.button2.TabIndex = 7;
 			this.button2.Text = "Import";
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
@@ -268,13 +268,46 @@ namespace Utilities.DVDImport
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Audio Processing";
 			// 
+			// uxAVSyncValue
+			// 
+			this.uxAVSyncValue.Location = new System.Drawing.Point(2, 132);
+			this.uxAVSyncValue.Name = "uxAVSyncValue";
+			this.uxAVSyncValue.Size = new System.Drawing.Size(51, 19);
+			this.uxAVSyncValue.TabIndex = 31;
+			this.uxAVSyncValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.uxAVSyncValue.Visible = false;
+			// 
+			// uxAVSync
+			// 
+			this.uxAVSync.LargeChange = 132;
+			this.uxAVSync.Location = new System.Drawing.Point(51, 108);
+			this.uxAVSync.Maximum = 990;
+			this.uxAVSync.Minimum = -990;
+			this.uxAVSync.Name = "uxAVSync";
+			this.uxAVSync.Size = new System.Drawing.Size(104, 42);
+			this.uxAVSync.SmallChange = 33;
+			this.uxAVSync.TabIndex = 30;
+			this.uxAVSync.TickFrequency = 330;
+			this.uxAVSync.Visible = false;
+			this.uxAVSync.Scroll += new System.EventHandler(this.uxAVSync_Scroll);
+			// 
+			// label12
+			// 
+			this.label12.Location = new System.Drawing.Point(6, 114);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(39, 19);
+			this.label12.TabIndex = 29;
+			this.label12.Text = "Sync:";
+			this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.label12.Visible = false;
+			// 
 			// checkBox2
 			// 
 			this.checkBox2.AutoSize = true;
 			this.checkBox2.Location = new System.Drawing.Point(9, 88);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(130, 17);
-			this.checkBox2.TabIndex = 28;
+			this.checkBox2.TabIndex = 3;
 			this.checkBox2.Text = "Dynamic Compression";
 			this.checkBox2.UseVisualStyleBackColor = true;
 			// 
@@ -284,7 +317,7 @@ namespace Utilities.DVDImport
 			this.checkBox1.Location = new System.Drawing.Point(8, 65);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(72, 17);
-			this.checkBox1.TabIndex = 27;
+			this.checkBox1.TabIndex = 2;
 			this.checkBox1.Text = "Normalize";
 			this.checkBox1.UseVisualStyleBackColor = true;
 			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
@@ -313,7 +346,7 @@ namespace Utilities.DVDImport
 			this.trackBar1.Minimum = -20;
 			this.trackBar1.Name = "trackBar1";
 			this.trackBar1.Size = new System.Drawing.Size(104, 42);
-			this.trackBar1.TabIndex = 22;
+			this.trackBar1.TabIndex = 1;
 			this.trackBar1.TickFrequency = 5;
 			this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
 			// 
@@ -324,7 +357,7 @@ namespace Utilities.DVDImport
 			this.button3.Location = new System.Drawing.Point(160, 247);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(32, 23);
-			this.button3.TabIndex = 7;
+			this.button3.TabIndex = 0;
 			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// button4
@@ -334,7 +367,7 @@ namespace Utilities.DVDImport
 			this.button4.Location = new System.Drawing.Point(192, 247);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(32, 23);
-			this.button4.TabIndex = 8;
+			this.button4.TabIndex = 1;
 			this.button4.Click += new System.EventHandler(this.button4_Click);
 			// 
 			// groupBox2
@@ -363,7 +396,7 @@ namespace Utilities.DVDImport
 			this.label10.Location = new System.Drawing.Point(7, 252);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(74, 13);
-			this.label10.TabIndex = 10;
+			this.label10.TabIndex = 3;
 			this.label10.Text = "affect preview";
 			this.label10.Visible = false;
 			// 
@@ -386,7 +419,7 @@ namespace Utilities.DVDImport
 			this.button5.Location = new System.Drawing.Point(224, 247);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(32, 23);
-			this.button5.TabIndex = 0;
+			this.button5.TabIndex = 2;
 			this.button5.Click += new System.EventHandler(this.button5_Click);
 			// 
 			// tabControl1
@@ -397,7 +430,7 @@ namespace Utilities.DVDImport
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(464, 80);
-			this.tabControl1.TabIndex = 12;
+			this.tabControl1.TabIndex = 0;
 			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			// 
 			// tabPage1
@@ -417,7 +450,7 @@ namespace Utilities.DVDImport
 			this.button6.Location = new System.Drawing.Point(384, 16);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(64, 23);
-			this.button6.TabIndex = 14;
+			this.button6.TabIndex = 1;
 			this.button6.Text = "Refresh";
 			this.button6.Visible = false;
 			this.button6.Click += new System.EventHandler(this.button6_Click);
@@ -469,7 +502,7 @@ namespace Utilities.DVDImport
 			this.textBox2.Location = new System.Drawing.Point(75, 229);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(64, 20);
-			this.textBox2.TabIndex = 14;
+			this.textBox2.TabIndex = 3;
 			this.textBox2.Text = "1";
 			// 
 			// textBox3
@@ -478,7 +511,7 @@ namespace Utilities.DVDImport
 			this.textBox3.Location = new System.Drawing.Point(75, 261);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(392, 20);
-			this.textBox3.TabIndex = 15;
+			this.textBox3.TabIndex = 5;
 			// 
 			// label4
 			// 
@@ -513,7 +546,7 @@ namespace Utilities.DVDImport
 			this.textBox4.Location = new System.Drawing.Point(203, 229);
 			this.textBox4.Name = "textBox4";
 			this.textBox4.Size = new System.Drawing.Size(64, 20);
-			this.textBox4.TabIndex = 18;
+			this.textBox4.TabIndex = 4;
 			this.textBox4.Text = "1";
 			// 
 			// treeView1
@@ -527,7 +560,7 @@ namespace Utilities.DVDImport
 			this.treeView1.ShowPlusMinus = false;
 			this.treeView1.ShowRootLines = false;
 			this.treeView1.Size = new System.Drawing.Size(456, 127);
-			this.treeView1.TabIndex = 20;
+			this.treeView1.TabIndex = 2;
 			this.treeView1.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeCollapse);
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
@@ -537,7 +570,7 @@ namespace Utilities.DVDImport
 			this.button7.Location = new System.Drawing.Point(623, 285);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(75, 23);
-			this.button7.TabIndex = 21;
+			this.button7.TabIndex = 6;
 			this.button7.Text = "Options...";
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -550,39 +583,6 @@ namespace Utilities.DVDImport
 			this.label11.Size = new System.Drawing.Size(188, 15);
 			this.label11.TabIndex = 26;
 			this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// label12
-			// 
-			this.label12.Location = new System.Drawing.Point(6, 114);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(39, 19);
-			this.label12.TabIndex = 29;
-			this.label12.Text = "Sync:";
-			this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			this.label12.Visible = false;
-			// 
-			// uxAVSync
-			// 
-			this.uxAVSync.LargeChange = 132;
-			this.uxAVSync.Location = new System.Drawing.Point(51, 108);
-			this.uxAVSync.Maximum = 990;
-			this.uxAVSync.Minimum = -990;
-			this.uxAVSync.Name = "uxAVSync";
-			this.uxAVSync.Size = new System.Drawing.Size(104, 42);
-			this.uxAVSync.SmallChange = 33;
-			this.uxAVSync.TabIndex = 30;
-			this.uxAVSync.TickFrequency = 330;
-			this.uxAVSync.Visible = false;
-			this.uxAVSync.Scroll += new System.EventHandler(this.uxAVSync_Scroll);
-			// 
-			// uxAVSyncValue
-			// 
-			this.uxAVSyncValue.Location = new System.Drawing.Point(2, 132);
-			this.uxAVSyncValue.Name = "uxAVSyncValue";
-			this.uxAVSyncValue.Size = new System.Drawing.Size(51, 19);
-			this.uxAVSyncValue.TabIndex = 31;
-			this.uxAVSyncValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			this.uxAVSyncValue.Visible = false;
 			// 
 			// Form1
 			// 
@@ -611,6 +611,7 @@ namespace Utilities.DVDImport
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.uxAVSync)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
@@ -618,7 +619,6 @@ namespace Utilities.DVDImport
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.uxAVSync)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1851,13 +1851,16 @@ namespace Utilities.DVDImport
 			StringBuilder fsName = new StringBuilder(256);
 			volumeLabel.Text = "";
 			int result = GetVolumeInformation(drive, volLabel, (UInt32)volLabel.Capacity, ref serNum, ref maxCompLen, ref volFlags, fsName, (UInt32)fsName.Capacity);
-			if(result != 0)
+			if (result != 0)
 			{
 				volumeLabel.Text = volLabel.ToString();
 				LoadTitles();
 			}
 			else
+			{
 				treeView1.Nodes.Clear();
+				button2.Enabled = false;
+			}
 		}
 
 		private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
