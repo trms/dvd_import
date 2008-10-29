@@ -1412,7 +1412,7 @@ namespace Utilities.DVDImport
 				SetProgress(m_remuxCount);
 				if (String.IsNullOrEmpty(muxBitrate) == false)
 				{
-					SetStatusText("Remuxing elementary mpeg streams... " + muxBitrate);
+					SetStatusText(muxBitrate);
 					Thread.Sleep(500);
 				}
 				if(AVOffset != 0)
@@ -1425,7 +1425,7 @@ namespace Utilities.DVDImport
 				}
 				if (String.IsNullOrEmpty(muxStatus) == false)
 				{
-					SetStatusText("Remuxing elementary mpeg streams... " + muxStatus);
+					SetStatusText(muxStatus);
 					Thread.Sleep(500);
 				}
 			}
