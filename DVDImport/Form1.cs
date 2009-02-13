@@ -1753,22 +1753,26 @@ namespace Utilities.DVDImport
 				m_run = false;
 		}
 
-		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			Settings.Default.AudioLevel = trackBar1.Value;
-			Settings.Default.Normalize = checkBox1.Checked;
-			Settings.Default.DynamicCompress = checkBox2.Checked;
-			Settings.Default.Save();
+        private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Settings.Default.AudioLevel = trackBar1.Value;
+            Settings.Default.Normalize = checkBox1.Checked;
+            Settings.Default.DynamicCompress = checkBox2.Checked;
+            Settings.Default.Save();
 
-			if (m_ds != null)
-				m_ds.Stop();
-			
-			if(thread != null)
-			{
-				thread.Abort();
-				thread = null;
-			}
-		}
+            try
+            {
+                if (m_ds != null)
+                    m_ds.Stop();
+
+                if (thread != null)
+                {
+                    thread.Abort();
+                    thread = null;
+                }
+            }
+            catch { }
+        }
 
 		[DllImport("kernel32.dll")]
 		private static extern int GetDriveType(string driveLetter);
@@ -1988,118 +1992,139 @@ namespace Utilities.DVDImport
 		private Thread m_videoThread = null;
 		private void PlaybackProgress()
 		{
-			lock (this)
-			{
-				if (m_ds == null)
-					return;
-			}
+            try
+            {
+                lock (this)
+                {
+                    if (m_ds == null)
+                        return;
+                }
 
-			while(true)
-			{
-				lock (this)
-				{
-					if (m_ds.IsPlaying() == false)
-						break;
-				}
-				Thread.Sleep(250);
-			}
+                while (true)
+                {
+                    lock (this)
+                    {
+                        if (m_ds.IsPlaying() == false)
+                            break;
+                    }
+                    Thread.Sleep(250);
+                }
 
-			lock (this)
-			{
-				button3.Enabled = true;
-				button4.Enabled = false;
-				button5.Enabled = false;
-				m_ds.Stop();
-				label9.Visible = false;
-				label10.Visible = false;
-				m_ds = null;
-				m_videoThread = null;
-			}
+                lock (this)
+                {
+                    button3.Enabled = true;
+                    button4.Enabled = false;
+                    button5.Enabled = false;
+                    m_ds.Stop();
+                    label9.Visible = false;
+                    label10.Visible = false;
+                    m_ds = null;
+                    m_videoThread = null;
+                }
+            }
+            catch { }
 		}
 
 		private void button3_Click(object sender, System.EventArgs e)
 		{
-			lock (this)
-			{
-				List<IFOParse.VOB> vobs = null;
-				IFOParse.ProgramChain pgc = null;
-				List<IFOParse.Cell> cells = null;
-				if (treeView1.SelectedNode == null)
-					return;
-				if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
-				{
-					// got single vob file
-					FileInfo fi = (FileInfo)treeView1.SelectedNode.Tag;
-					IFOParse.VOB v = new IFOParse.VOB(fi.FullName);
-					vobs = new List<IFOParse.VOB>();
-					vobs.Add(v);
+            try
+            {
+                lock (this)
+                {
+                    List<IFOParse.VOB> vobs = null;
+                    IFOParse.ProgramChain pgc = null;
+                    List<IFOParse.Cell> cells = null;
+                    if (treeView1.SelectedNode == null)
+                        return;
+                    if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
+                    {
+                        // got single vob file
+                        FileInfo fi = (FileInfo)treeView1.SelectedNode.Tag;
+                        IFOParse.VOB v = new IFOParse.VOB(fi.FullName);
+                        vobs = new List<IFOParse.VOB>();
+                        vobs.Add(v);
 
-					// create dummy cell list
-					cells = new List<IFOParse.Cell>();
-					IFOParse.Cell c = new IFOParse.Cell();
-					c.FirstSector = 0;
-					c.LastSector = (int)v.LastSector;
-					cells.Add(c);
-				}
-				else if (treeView1.SelectedNode.Tag.GetType() == typeof(IFOParse.ProgramChain))
-				{
-					pgc = (IFOParse.ProgramChain)treeView1.SelectedNode.Tag;
-					vobs = pgc.Title.VOBs;
-					cells = pgc.Cells;
-				}
+                        // create dummy cell list
+                        cells = new List<IFOParse.Cell>();
+                        IFOParse.Cell c = new IFOParse.Cell();
+                        c.FirstSector = 0;
+                        c.LastSector = (int)v.LastSector;
+                        cells.Add(c);
+                    }
+                    else if (treeView1.SelectedNode.Tag.GetType() == typeof(IFOParse.ProgramChain))
+                    {
+                        pgc = (IFOParse.ProgramChain)treeView1.SelectedNode.Tag;
+                        vobs = pgc.Title.VOBs;
+                        cells = pgc.Cells;
+                    }
 
 
-				m_ds = new DSUtils();
-				ArrayList ranges = new ArrayList();
-				ArrayList vobNames = new ArrayList();
-				for (int c = 0; c < cells.Count; c++)
-				{
-					ranges.Add(cells[c].FirstSector);
-					ranges.Add(cells[c].LastSector);
-				}
-				for (int v = 0; v < vobs.Count; v++)
-				{
-					vobNames.Add(vobs[v].FileInfo.FullName);
-					vobNames.Add(vobs[v].Sectors);
-				}
-				m_ds.Preview(ranges, vobNames, panel1.Handle, trackBar1.Value);
-				button3.Enabled = false;
-				button4.Enabled = true;
-				button5.Enabled = true;
-				if (Settings.Default.AudioMode)
-				{
-					label9.Visible = true;
-					label10.Visible = true;
-				}
+                    m_ds = new DSUtils();
+                    ArrayList ranges = new ArrayList();
+                    ArrayList vobNames = new ArrayList();
+                    for (int c = 0; c < cells.Count; c++)
+                    {
+                        ranges.Add(cells[c].FirstSector);
+                        ranges.Add(cells[c].LastSector);
+                    }
+                    for (int v = 0; v < vobs.Count; v++)
+                    {
+                        vobNames.Add(vobs[v].FileInfo.FullName);
+                        vobNames.Add(vobs[v].Sectors);
+                    }
+                    m_ds.Preview(ranges, vobNames, panel1.Handle, trackBar1.Value);
+                    button3.Enabled = false;
+                    button4.Enabled = true;
+                    button5.Enabled = true;
+                    if (Settings.Default.AudioMode)
+                    {
+                        label9.Visible = true;
+                        label10.Visible = true;
+                    }
 
-				m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
-				m_videoThread.Start();
-			}
+                    m_videoThread = new Thread(new ThreadStart(PlaybackProgress));
+                    m_videoThread.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Error starting preview: {0}", ex.Message));
+            }
 		}
 
 		private void button4_Click(object sender, System.EventArgs e)
 		{
-			lock (this)
-			{
-				if (m_ds == null)
-					return;
-				m_ds.Stop();
-				label9.Visible = false;
-				label10.Visible = false;
-				button3.Enabled = true;
-				button4.Enabled = false;
-				button5.Enabled = false;
-			}
+            try
+            {
+                lock (this)
+                {
+
+                    if (m_ds == null)
+                        return;
+                    m_ds.Stop();
+                    label9.Visible = false;
+                    label10.Visible = false;
+                    button3.Enabled = true;
+                    button4.Enabled = false;
+                    button5.Enabled = false;
+
+                }
+            }
+            catch { }
 		}
 
 		private void button5_Click(object sender, System.EventArgs e)
 		{
-			lock (this)
-			{
-				if (m_ds == null)
-					return;
-				m_ds.Pause();
-			}
+            try
+            {
+                lock (this)
+                {
+                    if (m_ds == null)
+                        return;
+                    m_ds.Pause();
+                }
+            }
+            catch { }
 		}
 		#endregion
 
@@ -2121,8 +2146,12 @@ namespace Utilities.DVDImport
 			}
 			else
 			{
-				if (m_ds == null)
-					button3.Enabled = true;
+                try
+                {
+                    if (m_ds == null)
+                        button3.Enabled = true;
+                }
+                catch { }
 				// don't allow PGCs with no audio to be imported
 				if (e.Node.Tag.GetType() == typeof(IFOParse.ProgramChain) && ((IFOParse.ProgramChain)e.Node.Tag).Title.AudioFormat.Count == 0)
 					button2.Enabled = false;
