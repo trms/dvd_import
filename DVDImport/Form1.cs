@@ -1820,7 +1820,8 @@ namespace Utilities.DVDImport
 				if(GetDriveType(drive) == 5)
 					comboBox1.Items.Add(drive);
 			}
-			comboBox1.SelectedIndex = 0;
+			if(comboBox1.Items.Count > 0)
+				comboBox1.SelectedIndex = 0;
 
 			UpdateShowSync();
 		}
