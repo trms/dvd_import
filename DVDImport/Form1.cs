@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
 using System.IO;
-using System.Text;
+using System.Text;using System.Management;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
@@ -1792,6 +1792,18 @@ namespace Utilities.DVDImport
 			{
 				MessageBox.Show("Check installation, helper utilities are not installed properly", "Installation Error", MessageBoxButtons.OK);
 				Application.Exit();
+			}
+
+			// check cpu capabilities (mplex requires SSE2)
+			int eax, ebx, ecx, edx = 0;
+			if (CPUID.cpuid.CPUIDIsSupported() && CPUID.cpuid.Invoke(1, out eax, out ebx, out ecx, out edx))
+			{
+				if ((edx & CPUID.cpuid.CPU_FEATURE_SSE2_FLAG) == 0)
+				{
+					// no SSE2 instruction, error out
+					MessageBox.Show("Your system does not have the necessary processor capabilities to run this application.", "Processor Error", MessageBoxButtons.OK);
+					Application.Exit();
+				}
 			}
 
 			System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
