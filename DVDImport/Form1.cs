@@ -884,17 +884,16 @@ namespace Utilities.DVDImport
 							m_lastSecond = curSecond;
 							double secPerTick = elapsed.TotalSeconds / progress;
 							double remainingSec = secPerTick * (m_remuxCount - progress);
-							int inputSecs = Convert.ToInt32(remainingSec);
-							int seconds = inputSecs % 60;
-							int minutes = 0;
-							inputSecs = inputSecs - seconds;
-							if (inputSecs > 0)
-							{
-								inputSecs = inputSecs / 60;
-								minutes = inputSecs % 60;
-							}
+							TimeSpan ts = new TimeSpan(0, 0, Convert.ToInt32(remainingSec));
 							string remaining = "";
-							if (minutes > 1)
+							int hours = Convert.ToInt32(Math.Round(ts.TotalHours));
+							int minutes = Convert.ToInt32(Math.Round(ts.TotalMinutes));
+							//int seconds = Convert.ToInt32(Math.Round(ts.TotalSeconds));
+							if (hours > 1)
+								remaining = "About " + hours.ToString() + " hours";
+							else if (hours == 1 && minutes > 52)
+								remaining = "About an hour";
+							else if (minutes > 1)
 								remaining = "About " + minutes.ToString() + " minutes";
 							else if (minutes == 1)
 								remaining = "About a minute";
@@ -1451,6 +1450,7 @@ namespace Utilities.DVDImport
 				SetProgress(0);
 				//SetStatusText("");
 				SetETAText("");
+				SetStatusText("");
 
 				try
 				{
