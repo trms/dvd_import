@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
 using System.IO;
-using System.Text;
+using System.Text;using System.Management;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
@@ -884,15 +884,15 @@ namespace Utilities.DVDImport
 							m_lastSecond = curSecond;
 							double secPerTick = elapsed.TotalSeconds / progress;
 							double remainingSec = secPerTick * (m_remuxCount - progress);
-                            TimeSpan ts = new TimeSpan(0, 0, Convert.ToInt32(remainingSec));
+							TimeSpan ts = new TimeSpan(0, 0, Convert.ToInt32(remainingSec));
 							string remaining = "";
-                            int hours = Convert.ToInt32(Math.Round(ts.TotalHours));
-                            int minutes = Convert.ToInt32(Math.Round(ts.TotalMinutes));
-                            //int seconds = Convert.ToInt32(Math.Round(ts.TotalSeconds));
-                            if (hours > 1)
-                                remaining = "About " + hours.ToString() + " hours";
-                            else if (hours == 1 && minutes > 52)
-                                remaining = "About an hour";
+							int hours = Convert.ToInt32(Math.Round(ts.TotalHours));
+							int minutes = Convert.ToInt32(Math.Round(ts.TotalMinutes));
+							//int seconds = Convert.ToInt32(Math.Round(ts.TotalSeconds));
+							if (hours > 1)
+								remaining = "About " + hours.ToString() + " hours";
+							else if (hours == 1 && minutes > 52)
+								remaining = "About an hour";
 							else if (minutes > 1)
 								remaining = "About " + minutes.ToString() + " minutes";
 							else if (minutes == 1)
@@ -1450,7 +1450,7 @@ namespace Utilities.DVDImport
 				SetProgress(0);
 				//SetStatusText("");
 				SetETAText("");
-                SetStatusText("");
+				SetStatusText("");
 
 				try
 				{
@@ -1798,6 +1798,18 @@ namespace Utilities.DVDImport
 				Application.Exit();
 			}
 
+			// check cpu capabilities (mplex requires SSE2)
+			int eax, ebx, ecx, edx = 0;
+			if (CPUID.cpuid.CPUIDIsSupported() && CPUID.cpuid.Invoke(1, out eax, out ebx, out ecx, out edx))
+			{
+				if ((edx & CPUID.cpuid.CPU_FEATURE_SSE2_FLAG) == 0)
+				{
+					// no SSE2 instruction, error out
+					MessageBox.Show("Your system does not have the necessary processor capabilities to run this application.", "Processor Error", MessageBoxButtons.OK);
+					Application.Exit();
+				}
+			}
+
 			System.Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 			string versionText = v.ToString(3) + " Build " + v.Revision;
 			this.Text += " " + versionText;
@@ -1824,7 +1836,8 @@ namespace Utilities.DVDImport
 				if(GetDriveType(drive) == 5)
 					comboBox1.Items.Add(drive);
 			}
-			comboBox1.SelectedIndex = 0;
+			if(comboBox1.Items.Count > 0)
+				comboBox1.SelectedIndex = 0;
 
 			UpdateShowSync();
 		}
