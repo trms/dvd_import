@@ -91,7 +91,6 @@ namespace Utilities.DVDImport
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
-			CheckForIllegalCrossThreadCalls = false;
 		}
 
 		/// <summary>
@@ -830,7 +829,7 @@ namespace Utilities.DVDImport
 			else
 				msOffset += 44;
 			msOffset /= 90;
-			return (msOffset - uxAVSync.Value);
+			return (msOffset - AVSyncSetting());
 		}
 
 		#region Thread Safe UI calls
@@ -977,6 +976,79 @@ namespace Utilities.DVDImport
 				uxAVSync_Scroll(this, null);
 			}
 		}
+
+		delegate object SelectedVOBCallback();
+		private object SelectedVOB()
+		{
+			if (this.InvokeRequired)
+			{
+				SelectedVOBCallback d = new SelectedVOBCallback(SelectedVOB);
+				return this.Invoke(d);
+			}
+			else
+			{
+				return treeView1.SelectedNode.Tag;
+			}
+		}
+
+        delegate DialogResult SaveFileCallback();
+        private DialogResult SaveFile()
+        {
+            if (this.InvokeRequired)
+            {
+                SaveFileCallback d = new SaveFileCallback(SaveFile);
+                return (DialogResult)this.Invoke(d);
+            }
+            else
+            {
+                return saveFileDialog1.ShowDialog();
+            }
+        }
+
+		delegate int IntValueCallback();
+		private int AudioLevelSetting()
+		{
+			if (this.InvokeRequired)
+			{
+				IntValueCallback d = new IntValueCallback(AudioLevelSetting);
+				return (int)this.Invoke(d);
+			}
+			else
+			{
+				return trackBar1.Value;
+			}
+		}
+		
+		private int AVSyncSetting()
+		{
+			if (this.InvokeRequired)
+			{
+				IntValueCallback d = new IntValueCallback(AVSyncSetting);
+				return (int)this.Invoke(d);
+			}
+			else
+			{
+				return uxAVSync.Value;
+			}
+		}
+
+		private void PlaybackFinished()
+		{
+			if (this.InvokeRequired)
+			{
+				NullCallback d = new NullCallback(PlaybackFinished);
+				this.Invoke(d);
+			}
+			else
+			{
+				button3.Enabled = true;
+				button4.Enabled = false;
+				button5.Enabled = false;
+				m_ds.Stop();
+				label9.Visible = false;
+				label10.Visible = false;
+			}
+		}
 		#endregion
 
 		private void ProcessVOB()
@@ -988,11 +1060,11 @@ namespace Utilities.DVDImport
 				IFOParse.ProgramChain pgc = null;
 				List<IFOParse.Cell> cells = null;
 				int selectedAudioTrack = 0;
-				if (treeView1.SelectedNode.Tag.GetType() == typeof(FileInfo))
+				if (SelectedVOB().GetType() == typeof(FileInfo))
 				{
 					// treat a single vob file with no ifo file as all data
 					// got single vob file
-					FileInfo fi = (FileInfo)treeView1.SelectedNode.Tag;
+					FileInfo fi = (FileInfo)SelectedVOB();
 					IFOParse.VOB v = new IFOParse.VOB(fi.FullName);
 					vobs = new List<IFOParse.VOB>();
 					vobs.Add(v);
@@ -1004,9 +1076,9 @@ namespace Utilities.DVDImport
 					c.LastSector = (int)v.LastSector;
 					cells.Add(c);
 				}
-				else if (treeView1.SelectedNode.Tag.GetType() == typeof(IFOParse.ProgramChain))
+				else if (SelectedVOB().GetType() == typeof(IFOParse.ProgramChain))
 				{
-					pgc = (IFOParse.ProgramChain)treeView1.SelectedNode.Tag;
+					pgc = (IFOParse.ProgramChain)SelectedVOB();
 					vobs = pgc.Title.VOBs;
 					cells = pgc.Cells;
 					// if we have multiple audio streams, allow the user to select which one to use
@@ -1022,8 +1094,8 @@ namespace Utilities.DVDImport
 				//string outputDir = "";
 				#region Choose a file, default to last directory used
 				string saveFile = "";
-				saveFileDialog1.FileName = textBox2.Text + "-" + textBox4.Text + "-" + textBox3.Text + ".mpg";
-				saveFileDialog1.FileName = new Utilities().MakeSafeFilename(saveFileDialog1.FileName);
+                saveFile = textBox2.Text + "-" + textBox4.Text + "-" + textBox3.Text + ".mpg";
+                saveFileDialog1.FileName = new Utilities().MakeSafeFilename(saveFile);
 
 				RegistryKey rk = Registry.LocalMachine.OpenSubKey(REGISTRY_KEY);
 				if (rk != null)
@@ -1032,7 +1104,7 @@ namespace Utilities.DVDImport
 					if (initialDir != null && Directory.Exists(initialDir))
 						saveFileDialog1.InitialDirectory = initialDir;
 				}
-				DialogResult dr = saveFileDialog1.ShowDialog();
+                DialogResult dr = SaveFile();
 				if (dr == DialogResult.OK && File.Exists(saveFileDialog1.FileName))
 				{
 					dr = DialogResult.Cancel;
@@ -1339,7 +1411,7 @@ namespace Utilities.DVDImport
 				// -O x = A/V offset
 				// -S 0 = disable segment splitting
 				// -o <file> = output to final output
-				process.StartInfo.Arguments = String.Format("-f 3 -V -v 2 -O {0} -S 0 -o \"{1}\" \"{2}\" \"{3}\"",
+				process.StartInfo.Arguments = String.Format("-f 3 -V -v 2 -O {0} -S 0 -M -o \"{1}\" \"{2}\" \"{3}\"",
 					AVOffset,
 					saveFile,
 					TempPath + video,
@@ -1443,8 +1515,12 @@ namespace Utilities.DVDImport
 			}
 			finally
 			{
-				if (process != null && process.HasExited == false)
-					process.Kill();
+				try
+				{
+					if (process != null && process.HasExited == false)
+						process.Kill();
+				}
+				catch { }
 				EnableForm();
 				thread = null;
 				SetProgress(0);
@@ -1580,7 +1656,7 @@ namespace Utilities.DVDImport
 			if (checkBox1.Checked)
 				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db ) -ota( -g max )";
 			else
-				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db ) -ota( -g " + trackBar1.Value + "db )";
+				process.StartInfo.Arguments += " -azid( -s stereo " + dynamicCompression + "-L -3db ) -ota( -g " + AudioLevelSetting() + "db )";
 			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 			process.StartInfo.CreateNoWindow = true;
 			process.Start();
@@ -2019,12 +2095,7 @@ namespace Utilities.DVDImport
 
 			lock (this)
 			{
-				button3.Enabled = true;
-				button4.Enabled = false;
-				button5.Enabled = false;
-				m_ds.Stop();
-				label9.Visible = false;
-				label10.Visible = false;
+				PlaybackFinished();
 				m_ds = null;
 				m_videoThread = null;
 			}
