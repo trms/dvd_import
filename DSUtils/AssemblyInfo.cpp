@@ -19,7 +19,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyCopyrightAttribute("Copyright (c) TRMS 2006")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
-
+[assembly:AssemblyFileVersion("")];
 //
 // Version information for an assembly consists of the following four values:
 //
